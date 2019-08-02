@@ -43,7 +43,7 @@
                   <li class="nav-item"><a class="nav-link" href="confirmation">Confirmation</a></li>
                   <li class="nav-item"><a class="nav-link" href="cart">Shopping Cart</a></li>
                 </ul>
-							</li>
+			  </li>
               <li class="nav-item submenu dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                   aria-expanded="false">Blog</a>
