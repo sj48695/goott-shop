@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<jsp:include page="../include/header.jsp"/>	
+<jsp:include page="include/header.jsp"/>	
 	<!-- ================ start banner area ================= -->	
 	<section class="blog-banner-area" id="blog">
 		<div class="container h-100">
@@ -501,4 +501,4 @@
 		</div>
 	</section>
 	<!--================ end related Product area =================-->
-<jsp:include page="../include/footer.jsp"/>
+<jsp:include page="include/footer.jsp"/>
