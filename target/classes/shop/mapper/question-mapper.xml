@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shop.mapper.QuestionMapper">
+	
+	<select id="selectQuestions" resultType="com.shop.vo.Question">
+		SELECT questionNo, category, title, uploader, regDate,
+		(select count(*) from questioncomment where questionNo=question.questionno) recnt
+		FROM QUESTION
+		WHERE deleted = '0' 
+		ORDER BY questionNo DESC
+	</select>
+	
+	<select id="selectQuestionByQuestionNo" 
+		parameterType="int" resultType="com.shop.vo.Question">
+		SELECT questionNo, category, title, uploader, regDate, readCount, content
+		FROM QUESTION
+		WHERE questionNo = #{ questionNo } AND DELETED = '0'
+	</select>
+	
+	<select id="selectQuestionFilesByQuestionNo"
+		parameterType="int" resultType="com.shop.vo.QuestionFile">
+		SELECT questionFileNo, questionNo, savedFileName, userFileName, downloadCount 
+		FROM QUESTIONFILE
+		WHERE questionNo = #{ questionNo }
+	</select>
+	
+	<select id="selectQuestionFileByQuestionFileNo"
+		parameterType="int" resultType="com.shop.vo.QuestionFile">
+		SELECT questionFileNo, questionNo, savedFileName, userFileName, downloadCount 
+		FROM QUESTIONFILE
+		WHERE questionFILENO = #{ resumeFileNo }
+	</select>
+	
+	
+	
+	<!-- **************************************************** -->
+	
+	<!-- insert가 완료된 후 keyColumn(resumeNo)의 값을 vo의 keyProperty(resumeNo)에 저장 -->
+	<insert id="insertQuestion" parameterType="com.shop.vo.Question"
+			useGeneratedKeys="true" keyColumn="questionNo" keyProperty="questionNo">
+		INSERT INTO QUESTION (questionNo, category, title, uploader, content)
+		VALUES (QUESTION_SEQUENCE.NEXTVAL, #{ category }, #{ title }, #{ uploader }, #{ content })
+	</insert>
+	
+	<!-- insert가 완료된 후 selectKey의 SQL을 실행해서 vo의 resumeNo에 값을 저장 -->
+	<insert id="insertQuestion2" parameterType="com.shop.vo.Question">
+		<selectKey keyProperty="questionNo" order="AFTER" resultType="int">
+			SELECT RESUME_SEQUENCE.CURRVAL FROM DUAL
+		</selectKey>
+		INSERT INTO QUESTION (questionNo, category, title, uploader, content)
+		VALUES (QUESTION_SEQUENCE.NEXTVAL, #{ category }, #{ title }, #{ uploader }, #{ content })
+	</insert>
+	
+	<insert id="insertQuestionFile" parameterType="com.shop.vo.QuestionFile">
+		INSERT INTO QUESTIONFILE (
+			QUESTIONFILENO
+			, questionNO
+			, savedFileName
+			, userFileName
+		)
+		VALUES (
+			QUESTIONFILE_SEQUENCE.NEXTVAL
+			, #{ questionNo }
+			, #{ savedFileName }
+			, #{ userFileName }
+		)
+	</insert>
+	
+	<update id="deleteQuestion" parameterType="int">
+		UPDATE QUESTION
+		SET DELETED = '1'
+		WHERE questionNo = #{ questionNo }
+	</update>
+	
+	<update id="updateCount" parameterType="int">
+		UPDATE QUESTION
+		SET READCOUNT = READCOUNT+1
+		WHERE questionNo = #{ questionNo }
+	</update>
+	
+	
+	<delete id="deleteQuestionFile" parameterType="int">
+		DELETE FROM QUESTIONFILE
+		WHERE QUESTIONFILENO = #{ QUESTIONFileNo }
+	</delete>
+	
+	<update id="updateQuestion" parameterType="com.shop.vo.Question">
+		UPDATE QUESTION
+		SET CATEGORY =  #{ category }, title = #{ title }, content = #{ content }
+		WHERE questionNo = #{ questionNo }
+	</update>
+	
+	<!-- comment -->
+	
+	<insert id="insertComment" parameterType="QuestionComment">
+		INSERT INTO QUESTIONCOMMENT
+		(
+			COMMENTNO, 
+			QUESTIONNO, 
+			WRITER, 
+			CONTENT, 
+			GROUPNO, 
+			STEP, 
+			DEPTH
+		)
+		VALUES
+		(
+			QUESTIONCOMMENT_SEQUENCE.NEXTVAL, 
+			#{ questionNo }, 
+			#{ writer }, 
+			#{ content },
+			QUESTIONCOMMENT_SEQUENCE.CURRVAL,
+			1,
+			0
+		)	
+	</insert>
+	
+	<update id="updateComment" parameterType="QuestionComment">
+		UPDATE QUESTIONCOMMENT
+		SET CONTENT = #{ content }
+		WHERE COMMENTNO = #{ commentNo }
+	</update>
+	
+	<delete id="deleteComment" parameterType="int">
+		DELETE FROM QUESTIONCOMMENT			
+		WHERE COMMENTNO = #{ commentNo }
+	</delete>
+	
+	<select id="selectCommentsByQuestionNo" 
+		parameterType="int" resultType="QuestionComment">
+		SELECT COMMENTNO, QUESTIONNO, WRITER, REGDATE, CONTENT, GROUPNO, STEP, DEPTH 
+		FROM QUESTIONCOMMENT 
+		WHERE QUESTIONNO = #{ questionNo } ORDER BY GROUPNO DESC, STEP ASC 
+	</select>
+	
+	<select id="selectCommentByCommentNo" 
+		parameterType="int" resultType="QuestionComment">
+		SELECT COMMENTNO, QUESTIONNO, WRITER, CONTENT, REGDATE, GROUPNO, STEP, DEPTH 
+		FROM QUESTIONCOMMENT 
+		WHERE COMMENTNO = #{ questionNo }
+	</select>
+	
+	<update id="updateCommentStep" parameterType="QuestionComment">
+		UPDATE QUESTIONCOMMENT
+		SET STEP = STEP + 1
+		WHERE GROUPNO = #{ groupNo } AND STEP <![CDATA[>]]> #{ step }
+	</update>
+	
+	<insert id="insertRecomment" parameterType="QuestionComment">
+		INSERT INTO QUESTIONCOMMENT
+		(
+			COMMENTNO, 
+			QUESTIONNO, 
+			WRITER, 
+			CONTENT, 
+			GROUPNO, 
+			STEP, 
+			DEPTH
+		)
+		VALUES
+		(
+			QUESTIONCOMMENT_SEQUENCE.NEXTVAL, 
+			#{ questionNo },
+			#{ writer },
+			#{ content },
+			#{ groupNo },
+			#{ step },
+			#{ depth }
+		)	
+	</insert>
+	
+	<select id="selectQuestionlist" parameterType="hashmap" resultType="com.shop.vo.Question">
+		SELECT questionNo, category, title, uploader, regDate
+		FROM QUESTION
+		WHERE deleted = '0'		
+		<if test='category != "all"'>
+    		AND  category = #{category}
+  		</if>
+		ORDER BY questionNo DESC
+	</select>
+	
+	
+	
+</mapper>
