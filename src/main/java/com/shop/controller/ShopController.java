@@ -26,4 +26,9 @@ public class ShopController {
 	public String confirmaion(){
 		return "confirmaion";
 	}
+	
+	@RequestMapping(value="/single-product", method = RequestMethod.GET)
+	public String detail(){
+		return "single-product";
+	}
 }
