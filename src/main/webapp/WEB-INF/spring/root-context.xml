@@ -4,5 +4,46 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-		
+		<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:env.mariadb.properties" />
+	</bean>
+	
+	<!-- Apache Commons DBCP -->
+	<bean id="dataSource"
+		  class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName" value="${ds.driver}" />
+		<property name="url" value="${ds.url}" />
+		<property name="username" value="${ds.username}" />
+		<property name="password" value="${ds.password}" />
+		<property name="maxIdle" value="10" />
+		<property name="maxTotal" value="20" />
+		<property name="maxWaitMillis" value="-1" />
+	</bean>	
+	
+	<bean id="sqlSessionFactory"
+		  class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:mybatis-mariadb-config.xml" />
+	</bean>
+	
+	<bean id="sqlSessionTemplate"
+		  class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory" />
+	</bean>
+	
+	<!-- Question -->
+	<bean id="questionService" class="com.shop.service.QuestionServiceImpl">
+		<property name="questionRep" ref="questionRep" />
+	</bean>
+
+	<bean id="questionRep" class="com.shop.repository.QuestionRepImpl">
+		<property name="sessionTemplate" ref="sqlSessionTemplate" />
+		<property name="questionMapper" ref="questionMapper" />
+	</bean>
+	
+	
+	<bean id="questionMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.shop.mapper.QuestionMapper" />
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />  
+	</bean>
 </beans>
