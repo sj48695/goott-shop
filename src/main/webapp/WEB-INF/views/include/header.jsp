@@ -46,10 +46,9 @@
 			  </li>
               <li class="nav-item submenu dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                  aria-expanded="false">Blog</a>
+                  aria-expanded="false">QnA</a>
                 <ul class="dropdown-menu">
-                  <li class="nav-item"><a class="nav-link" href="qna">Blog</a></li>
-                  <li class="nav-item"><a class="nav-link" href="qnaproduct">single-product</a></li>
+                  <li class="nav-item"><a class="nav-link" href="qna">QnA</a></li>
                 </ul>
 							</li>
 							<li class="nav-item submenu dropdown">

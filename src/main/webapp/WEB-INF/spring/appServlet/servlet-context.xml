@@ -23,6 +23,20 @@
 	
 	<context:component-scan base-package="com.shop.controller" />
 	
+		
+	<beans:bean id="authInterceptor"
+				class="com.shop.interceptor.AuthInterceptor" />
+				
+	<interceptors>
+		<interceptor>
+			<mapping path="/upload/**" />
+			<beans:ref bean="authInterceptor" />
+		</interceptor>
+	</interceptors>
 	
+	<!-- File Upload Handler (Class, Bean) Registration -->
+	<beans:bean id="multipartResolver"
+				class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	</beans:bean>
 	
 </beans:beans>
