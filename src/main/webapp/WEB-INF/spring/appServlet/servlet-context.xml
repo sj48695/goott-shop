@@ -30,6 +30,7 @@
 	<interceptors>
 		<interceptor>
 			<mapping path="/upload/**" />
+			<!-- <mapping path="/qa-upload/**" /> -->
 			<beans:ref bean="authInterceptor" />
 		</interceptor>
 	</interceptors>

@@ -26,7 +26,7 @@ import com.shop.vo.Question;
 import com.shop.vo.QuestionComment;
 import com.shop.vo.QuestionFile;
 @Controller
-@RequestMapping(path = "/qa-upload")
+//@RequestMapping(path = "/qna")
 public class QuestionController {
 
 	@Autowired
@@ -35,7 +35,7 @@ public class QuestionController {
 	
 	@RequestMapping(value="/qna", method = RequestMethod.GET)
 	public String qna(){
-		return "qna/blog";
+		return "question/qa-list";
 	}
 	
 	@RequestMapping(path = "/qa-list", method = RequestMethod.GET)

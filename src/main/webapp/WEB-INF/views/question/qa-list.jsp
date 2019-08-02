@@ -3,62 +3,16 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-
-
-
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="description" content="">
-
-
-<!-- <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
-<!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
-<!-- Title  -->
-<title>CatWebSite | List</title>
-
-<!-- Favicon  -->
-<!-- <link rel="icon" href="/catopia/resources/img/core-img/favicon.ico"> -->
-
+<jsp:include page="/WEB-INF/views/include/header.jsp" />
 <!-- Core Style CSS -->
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="/catopia/resources/css/core-style.css">
 <link rel="stylesheet" href="/catopia/resources/style.css">
 
-
-
-
-</head>
-
-<body>
-
 	<!-- ##### Main Content Wrapper Start ##### -->
 	<div class="main-content-wrapper d-flex clearfix">
-
-		<!-- <!-- Mobile Nav (max width 767px)
-		<div class="mobile-nav">
-			Navbar Brand
-			<div class="amado-navbar-brand">
-				<a href="/catopia/home"><img
-					src="/resources/img/core-img/logo.png" alt=""></a>
-			</div>
-			Navbar Toggler
-			<div class="amado-navbar-toggler">
-				<span></span><span></span><span></span>
-			</div>
-		</div> --> 
-
-		<!--header start  -->
-		<jsp:include page="/WEB-INF/views/include/header.jsp" />
-		<!--header end  -->
-
-
-
+		
 		<!-- Product Catagories Area Start -->
 		<div class="products-catagories-area clearfix">
 			<div class="amado-pro-catagory clearfix">
@@ -162,6 +116,5 @@
 			});
 		});
 	</script>
-</body>
-</html>
 
+<jsp:include page="../include/footer.jsp"/>

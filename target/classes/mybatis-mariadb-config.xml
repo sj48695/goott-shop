@@ -7,9 +7,9 @@
 
 	<!-- type에 지정된 some.package.name.ClassName을 alias에 지정된 이름으로 대체하는 설정 -->
 	<typeAliases>
-		<typeAlias type="com.catwebsite.vo.Question" alias="Question"/>
-		<typeAlias type="com.catwebsite.vo.QuestionFile" alias="QuestionFile"/>	
-		<typeAlias type="com.catwebsite.vo.QuestionComment" alias="QuestionComment" />		
+		<typeAlias type="com.shop.vo.Question" alias="Question"/>
+		<typeAlias type="com.shop.vo.QuestionFile" alias="QuestionFile"/>	
+		<typeAlias type="com.shop.vo.QuestionComment" alias="QuestionComment" />		
 	</typeAliases>
 	
 	<environments default="development">
@@ -17,7 +17,7 @@
 			<transactionManager type="JDBC" />
 			<dataSource type="POOLED">
 				<property name="driver" value="com.mysql.jdbc.Driver" />
-				<property name="url" value="jdbc:mysql://211.197.18.246:3306/demoweb?serverTimezone=UTC" />
+				<property name="url" value="jdbc:mysql://211.197.18.246:3306/house?serverTimezone=UTC" />
 				<property name="username" value="shop" />
 				<property name="password" value="goott" />
 			</dataSource>
@@ -26,7 +26,7 @@
 	
 	<!-- SQL + Object Mapping Configuration -->
 	<mappers>
-		<mapper resource="com/catwebsite/mapper/question-mapper.xml" />
+		<mapper resource="com/shop/mapper/question-mapper.xml" />
 	</mappers>
 	
 </configuration>
