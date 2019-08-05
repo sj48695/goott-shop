@@ -3,22 +3,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>Aroma Shop - Home</title>
-<link rel="icon" href="resources/img/Fevicon.png" type="image/png">
-<link rel="stylesheet" href="resources/vendors/bootstrap/bootstrap.min.css">
-<link rel="stylesheet" href="resources/vendors/fontawesome/css/all.min.css">
-<link rel="stylesheet" href="resources/vendors/themify-icons/themify-icons.css">
-<link rel="stylesheet" href="resources/vendors/nice-select/nice-select.css">
-<link rel="stylesheet" href="resources/vendors/owl-carousel/owl.theme.default.min.css">
-<link rel="stylesheet" href="resources/vendors/owl-carousel/owl.carousel.min.css">
-<link rel="stylesheet" href="/shop/resources/css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Aroma Shop - Home</title>
+  <link rel="icon" href="/shop/resources/img/Fevicon.png" type="image/png">
+  <link rel="stylesheet" href="/shop/resources/vendors/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="/shop/resources/vendors/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="/shop/resources/vendors/themify-icons/themify-icons.css">
+  <link rel="stylesheet" href="/shop/resources/vendors/nice-select/nice-select.css">
+  <link rel="stylesheet" href="/shop/resources/vendors/owl-carousel/owl.theme.default.min.css">
+  <link rel="stylesheet" href="/shop/resources/vendors/owl-carousel/owl.carousel.min.css">
+  <link rel="stylesheet" href="/shop/resources/css/style.css">
 </head>
 <body>
 	<!--================ Start Header Menu Area =================-->
 	<header class="header_area">
+<<<<<<< HEAD
 		<div class="main_menu">
 			<nav class="navbar navbar-expand-lg navbar-light">
 				<div class="container">
@@ -48,28 +49,33 @@
 							</li>
 							<li class="nav-item"><a class="nav-link" href="contact">Contact</a></li>
 						</ul>
-
-						<ul class="nav-shop">
-							<li class="nav-item"><button><i class="ti-search"></i></button></li>
-							<li class="nav-item"><button><i class="ti-shopping-cart"></i><span class="nav-shop__circle">3</span></button></li>
-						<c:choose>
-			            <c:when test="${ empty loginuser }">
-							<li class="nav-item">
-							<a class="button button-header" href="/shop/account/login">Login</a>
-							<a class="button button-header" href="/shop/account/register">Register</a>
-							</li>
-						</c:when>
-						<c:otherwise>
-							<li class="nav-item">
-							<a class="nav-link" href="/shop/mypage/${ loginuser.memberId }" style="text-decoration: none">${ loginuser.memberId }님 환영합니다.</a>
-							<a class="button button-header" href="/shop/account/logout">Logout</a>
-							</li>
-						</c:otherwise>
-						</c:choose>
-						</ul>
-					</div>
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                  aria-expanded="false">Pages</a>
+                <ul class="dropdown-menu">
+                  <li class="nav-item"><a class="nav-link" href="login">Login</a></li>
+                  <li class="nav-item"><a class="nav-link" href="register">Register</a></li>
+                </ul>
+				<ul class="nav-shop">
+					<li class="nav-item"><button><i class="ti-search"></i></button></li>
+					<li class="nav-item"><button><i class="ti-shopping-cart"></i><span class="nav-shop__circle">3</span></button></li>
+					<c:choose>
+		            <c:when test="${ empty loginuser }">
+						<li class="nav-item">
+						<a class="button button-header" href="/shop/account/login">Login</a>
+						<a class="button button-header" href="/shop/account/register">Register</a>
+						</li>
+					</c:when>
+					<c:otherwise>
+						<li class="nav-item">
+						<a class="nav-link" href="/shop/mypage/${ loginuser.memberId }" style="text-decoration: none">${ loginuser.memberId }님 환영합니다.</a>
+						<a class="button button-header" href="/shop/account/logout">Logout</a>
+						</li>
+					</c:otherwise>
+					</c:choose>
+				</ul>
 				</div>
-			</nav>
-		</div>
-	</header>
+			</div>
+		</nav>
+	</div>
+</header>
 	<!--================ End Header Menu Area =================-->
