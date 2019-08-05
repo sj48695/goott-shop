@@ -3,11 +3,7 @@
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/WEB-INF/views/include/header.jsp" />
-<!-- Core Style CSS -->
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
-<meta charset="UTF-8">	
 <!-- ##### Main Content Wrapper Start ##### -->
 <div class="main-content-wrapper d-flex clearfix">
 
@@ -139,9 +135,9 @@
 
 					<br></br>
 					<div style="padding-left: 70%; text-align: center">
-						<input type="button" value="글작성"
+						<input type="button" value="Write"
 							onclick="location.href='qa-write' "
-							class="btn btn-outline-secondary">
+							class="button button-subscribe mr-auto mb-1">
 					</div>
 
 				</div>
@@ -158,15 +154,5 @@
 <br>
 
 
-<script type="text/javascript">
-	$(function() {
-
-		$('#qaselectcategory').on('change', function(event) {
-
-			this.form.submit();
-
-		});
-	});
-</script>
 
 <jsp:include page="../include/footer.jsp" />

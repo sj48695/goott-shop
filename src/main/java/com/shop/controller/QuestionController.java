@@ -1,16 +1,11 @@
 package com.shop.controller;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -25,6 +20,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.shop.common.Util;
 import com.shop.service.QuestionService;
+import com.shop.vo.Member;
 import com.shop.vo.Question;
 import com.shop.vo.QuestionComment;
 import com.shop.vo.QuestionFile;
@@ -65,44 +61,56 @@ public class QuestionController {
 	}
 	
 	@RequestMapping(path="/qa-write", method = RequestMethod.POST)
-	public String write(MultipartHttpServletRequest req, Question question, Model model) {
+	public String write(Question question, Model model, HttpSession session) {
 		
 		System.out.println(question);
 		
-		MultipartFile mf = req.getFile("attach");
-		if(mf != null) {
-			
-			ServletContext application = req.getServletContext();
-			String path = application.getRealPath("/resources/files/question-files");
-			
-			String userFileName = mf.getOriginalFilename();
-			if (userFileName.contains("\\")) {
-				userFileName = userFileName.substring(userFileName.lastIndexOf("\\") + 1);
-			}
-			
-			String savedFileName = Util.makeUniqueFileName(userFileName);
-			
-			try {
-				mf.transferTo(new File(path, savedFileName));
-											
-				QuestionFile questionFile = new QuestionFile();
-				questionFile.setUserFileName(userFileName);
-				questionFile.setSavedFileName(savedFileName);
-				ArrayList<QuestionFile> files = new ArrayList<QuestionFile>();
-				files.add(questionFile);
-				question.setFiles(files);
-				
-				questionService.registerQuestion(question);
-				
-			}catch(Exception ex) {
-				ex.printStackTrace();
-			}
-			
-		}
-		model.addAttribute("question",question);
 		
-		//return "redirect:qa-list";  //상대경로
-		return "redirect:coding.do";
+		Member member = (Member) session.getAttribute("loginuser");
+		if (member != null) {
+			questionService.registerQuestion(question);
+			model.addAttribute("question",question);
+			
+			//return "redirect:qa-list";  //상대경로
+			return "redirect:coding.do";
+		}else {
+			return "redirect:/";
+		}
+		
+		
+//		MultipartFile mf = req.getFile("attach");
+//		
+//		
+//		if(mf != null) {
+//			
+//			ServletContext application = req.getServletContext();
+//			String path = application.getRealPath("/resources/files/question-files");
+//			
+//			String userFileName = mf.getOriginalFilename();
+//			if (userFileName.contains("\\")) {
+//				userFileName = userFileName.substring(userFileName.lastIndexOf("\\") + 1);
+//			}
+//			
+//			String savedFileName = Util.makeUniqueFileName(userFileName);
+//			
+//			try {
+//				mf.transferTo(new File(path, savedFileName));
+//											
+//				QuestionFile questionFile = new QuestionFile();
+//				questionFile.setUserFileName(userFileName);
+//				questionFile.setSavedFileName(savedFileName);
+//				ArrayList<QuestionFile> files = new ArrayList<QuestionFile>();
+//				files.add(questionFile);
+//				question.setFiles(files);
+//				
+//				questionService.registerQuestion(question);	
+//				
+//			}catch(Exception ex) {
+//				ex.printStackTrace();
+//			}
+//			
+//		}
+		
 	}
 	
 	
@@ -205,7 +213,7 @@ public class QuestionController {
 			if(mf != null) {
 				
 				ServletContext application = req.getServletContext();
-				String path = application.getRealPath("/upload-files");
+				String path = application.getRealPath("/resources/files/question-files");
 				
 				String userFileName = mf.getOriginalFilename();
 				if (userFileName.contains("\\")) { 
@@ -317,45 +325,6 @@ public class QuestionController {
 		        return "redirect:/coding.do";
 		    }
 		 
-		// 다중파일업로드
-		    @RequestMapping(value = "/file_uploader_html5.do",
-		                  method = RequestMethod.POST)
-		    @ResponseBody
-		    public String multiplePhotoUpload(HttpServletRequest request) {
-		        // 파일정보
-		        StringBuffer sb = new StringBuffer();
-		        try {
-		            // 파일명을 받는다 - 일반 원본파일명
-		            String oldName = request.getHeader("file-name");
-		            // 파일 기본경로 _ 상세경로
-		            String filePath = "C:/Users/GOOTT-06/git/goott-shop/src/main/resources/photoUpload/";
-		            String saveName = sb.append(new SimpleDateFormat("yyyyMMddHHmmss")
-		                          .format(System.currentTimeMillis()))
-		                          .append(UUID.randomUUID().toString())
-		                          .append(oldName.substring(oldName.lastIndexOf("."))).toString();
-		            InputStream is = request.getInputStream();
-		            OutputStream os = new FileOutputStream(filePath + saveName);
-		            int numRead;
-		            byte b[] = new byte[Integer.parseInt(request.getHeader("file-size"))];
-		            while ((numRead = is.read(b, 0, b.length)) != -1) {
-		                os.write(b, 0, numRead);
-		            }
-		            os.flush();
-		            os.close();
-		            // 정보 출력
-		            sb = new StringBuffer();
-		            sb.append("&bNewLine=true")
-		              .append("&sFileName=").append(oldName)
-		              .append("&sFileURL=").append("http://localhost:8088/shop/resources/photoUpload/")
-		        .append(saveName);
-		        } catch (Exception e) {
-		            e.printStackTrace();
-		        }
-		        return sb.toString();
-		    }
-
-
-		
 		
 	
 }

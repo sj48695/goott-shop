@@ -4,14 +4,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <jsp:include page="/WEB-INF/views/include/header.jsp" />
-<meta charset="UTF-8">	
-<!-- Core Style CSS -->
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
 
 <!-- ##### Main Content Wrapper Start ##### -->
 <div class="main-content-wrapper d-flex clearfix">
+
 	<!-- Product Catagories Area Start -->
 	<div class="products-catagories-area clearfix" style="width: 100%">
 		<div class="amado-pro-catagory clearfix">
@@ -41,23 +37,19 @@
 									<tr>
 										<th colspan="1">작성자</th>
 										<td colspan="2" style="text-align: left"><input
-											type="hidden" name="uploader" value="sj">
-											<%-- ${ loginuser.memberId} --%> <%-- 히든속성이 아님
-							                	<input type="hidden" name="uploader" 
-							                	value="<%= member.getMemberId() %>" readonly="readonly">
-							                	--%></td>
+											type="hidden" name="uploader" value="${ loginuser.memberId}">
+											${ loginuser.memberId} </td>
 									</tr>
-									<tr>
+								<!-- 	<tr>
 										<th colspan="1">첨부자료</th>
 										<td colspan="2" style="text-align: left">
 
 											<div class="custom-file">
-												<input type="file"  id="customFile"
-													name="attach"> 
+												<input type="file"  id="customFile" name="attach"> 
 											</div>
 
 										</td>
-									</tr>
+									</tr> -->
 									<tr>
 										<td colspan="3"><textarea name="content" id="editor"
 												style="width: 100%" rows="20" class="form-control"></textarea>
@@ -82,8 +74,7 @@
 													var btnCancel = document
 															.querySelector('#cancel_button');
 													btnCancel.addEventListener(
-															'click', function(
-																	event) {
+															'click', function(event) {
 																//location.href = "list";//주소창에 list.action을 입력하고 엔터
 																history.back(); //브라우저의 이전 버튼을 클릭
 															});
@@ -103,29 +94,7 @@
 <br>
 <br>
 
-<%-- <%-- 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-<!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
-<script src="<c:url value="/resources/js/jquery/jquery-2.2.4.min.js" />"></script>
-
-
-
-<!-- Popper js -->
-<script src="<c:url value="/resources/js/popper.min.js" />"></script>
-
-<!-- Bootstrap js -->
-<script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
-
-<!-- Plugins js -->
-<script src="<c:url value="/resources/js/plugins.js" />"></script>
-
-<!-- Active js -->
-<script src="<c:url value="/resources/js/active.js" />"></script> --%> --%>
 
 
 <script>
@@ -142,7 +111,7 @@
 <!-- editor -->
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript"
-	src="./resources/editor/js/HuskyEZCreator.js" charset="utf-8"></script>
+	src="/shop/resources/editor/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
 	$(function() {
 		//전역변수
@@ -151,7 +120,7 @@
 		nhn.husky.EZCreator.createInIFrame({
 			oAppRef : obj,
 			elPlaceHolder : "editor",
-			sSkinURI : "./resources/editor/SmartEditor2Skin.html",
+			sSkinURI : "/shop/resources/editor/SmartEditor2Skin.html",
 			htParams : {
 				// 툴바 사용 여부
 				bUseToolbar : true,

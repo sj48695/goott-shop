@@ -25,6 +25,8 @@ public class AuthInterceptor extends HandlerInterceptorAdapter { // class 상속
 			}
 		}
 		
+	
+		
 		return true; // 정상적으로 컨트롤러 호출
 	}
 
