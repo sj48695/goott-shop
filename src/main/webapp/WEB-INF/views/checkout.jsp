@@ -1,4 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:include page="include/header.jsp"/>
@@ -24,68 +26,35 @@
   <!--================Checkout Area =================-->
   <section class="checkout_area section-margin--small">
     <div class="container">
-        <div class="returning_customer">
-            <div class="check_title">
-                <h2>Returning Customer? <a href="#">Click here to login</a></h2>
-            </div>
-            <p>If you have shopped with us before, please enter your details in the boxes below. If you are a new
-                customer, please proceed to the Billing & Shipping section.</p>
-            <form class="row contact_form" action="#" method="post" novalidate="novalidate">
-                <div class="col-md-6 form-group p_star">
-                    <input type="text" class="form-control" placeholder="Username or Email*" onfocus="this.placeholder=''" onblur="this.placeholder = 'Username or Email*'" id="name" name="name">
-                    <!-- <span class="placeholder" data-placeholder="Username or Email"></span> -->
-                </div>
-                <div class="col-md-6 form-group p_star">
-                    <input type="password" class="form-control" placeholder="Password*" onfocus="this.placeholder=''" onblur="this.placeholder = 'Password*'" id="password" name="password">
-                    <!-- <span class="placeholder" data-placeholder="Password"></span> -->
-                </div>
-                <div class="col-md-12 form-group">
-                    <button type="submit" value="submit" class="button button-login">login</button>
-                    <div class="creat_account">
-                        <input type="checkbox" id="f-option" name="selector">
-                        <label for="f-option">Remember me</label>
-                    </div>
-                    <a class="lost_pass" href="#">Lost your password?</a>
-                </div>
-            </form>
-        </div>
-        <div class="cupon_area">
-            <div class="check_title">
-                <h2>Have a coupon? <a href="#">Click here to enter your code</a></h2>
-            </div>
-            <input type="text" placeholder="Enter coupon code">
-            <a class="button button-coupon" href="#">Apply Coupon</a>
-        </div>
         <div class="billing_details">
             <div class="row">
                 <div class="col-lg-8">
                     <h3>Billing Details</h3>
                     <form class="row contact_form" action="#" method="post" novalidate="novalidate">
-                        <div class="col-md-6 form-group p_star">
-                            <input type="text" class="form-control" id="first" name="name">
-                            <span class="placeholder" data-placeholder="First name"></span>
-                        </div>
-                        <div class="col-md-6 form-group p_star">
-                            <input type="text" class="form-control" id="last" name="name">
-                            <span class="placeholder" data-placeholder="Last name"></span>
-                        </div>
-                        <div class="col-md-12 form-group">
-                            <input type="text" class="form-control" id="company" name="company" placeholder="Company name">
-                        </div>
-                        <div class="col-md-6 form-group p_star">
-                            <input type="text" class="form-control" id="number" name="number">
-                            <span class="placeholder" data-placeholder="Phone number"></span>
-                        </div>
-                        <div class="col-md-6 form-group p_star">
-                            <input type="text" class="form-control" id="email" name="compemailany">
-                            <span class="placeholder" data-placeholder="Email Address"></span>
+                      	<div class="col-md-12 form-group p_star">
+                            <input type="text" class="form-control" id="name_from" name="name" placeholder="Name" value="이름" readonly="readonly">
                         </div>
                         <div class="col-md-12 form-group p_star">
-                            <select class="country_select">
-                                <option value="1">Country</option>
-                                <option value="2">Country</option>
-                                <option value="4">Country</option>
-                            </select>
+                            <input type="text" class="form-control" id="phone_from" name="phone" placeholder="Phone number" value="번호" readonly="readonly">
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <input type="text" class="form-control" id="email_from" name="email" placeholder="Email Address" value="이메일@naver.com" readonly="readonly">
+                        </div>
+                    	<div class="col-md-12 form-group">
+                    		<hr>
+                            <div class="creat_account">
+                                <input type="checkbox" id="f-option2" name="selector">
+                                <label for="f-option2">주문자 정보와 동일</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <input type="text" class="form-control" id="name_from" name="name" placeholder="Name">
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <input type="text" class="form-control" id="phone_from" name="phone" placeholder="Phone number">
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <input type="text" class="form-control" id="email_from" name="email" placeholder="Email Address">
                         </div>
                         <div class="col-md-12 form-group p_star">
                             <input type="text" class="form-control" id="add1" name="add1">
@@ -118,8 +87,6 @@
                         <div class="col-md-12 form-group mb-0">
                             <div class="creat_account">
                                 <h3>Shipping Details</h3>
-                                <input type="checkbox" id="f-option3" name="selector">
-                                <label for="f-option3">Ship to a different address?</label>
                             </div>
                             <textarea class="form-control" name="message" id="message" rows="1" placeholder="Order Notes"></textarea>
                         </div>
@@ -130,12 +97,20 @@
                         <h2>Your Order</h2>
                         <ul class="list">
                             <li><a href="#"><h4>Product <span>Total</span></h4></a></li>
-                            <li><a href="#">Fresh Blackberry <span class="middle">x 02</span> <span class="last">$720.00</span></a></li>
-                            <li><a href="#">Fresh Tomatoes <span class="middle">x 02</span> <span class="last">$720.00</span></a></li>
-                            <li><a href="#">Fresh Brocoli <span class="middle">x 02</span> <span class="last">$720.00</span></a></li>
+                         <c:forEach var="product" items="${ products }">
+                            <li>
+                            	<a href="#">${ product.productName }
+	                            	<span class="middle">${ product.count }개</span> 
+	                            	<span class="last">
+	                                  	<fmt:formatNumber pattern="#,###원">${ product.price * product.count }</fmt:formatNumber>
+	                                  	<c:set var="subtotal" value="${ subtotal + (product.price * product.count) }"/>
+									</span>
+	                            </a>
+                            </li>
+                         </c:forEach>
                         </ul>
                         <ul class="list list_2">
-                            <li><a href="#">Subtotal <span>$2160.00</span></a></li>
+                            <li><a href="#">Subtotal <span><fmt:formatNumber pattern="#,###원">${ subtotal }</fmt:formatNumber></span></a></li>
                             <li><a href="#">Shipping <span>Flat rate: $50.00</span></a></li>
                             <li><a href="#">Total <span>$2210.00</span></a></li>
                         </ul>
@@ -152,7 +127,7 @@
                             <div class="radion_btn">
                                 <input type="radio" id="f-option6" name="selector">
                                 <label for="f-option6">Paypal </label>
-                                <img src="img/product/card.jpg" alt="">
+                                <img src="/shop/resources/img/product/card.jpg" alt="">
                                 <div class="check"></div>
                             </div>
                             <p>Pay via PayPal; you can pay with your credit card if you donât have a PayPal

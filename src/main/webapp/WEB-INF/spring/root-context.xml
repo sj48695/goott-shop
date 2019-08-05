@@ -41,9 +41,24 @@
 		<property name="questionMapper" ref="questionMapper" />
 	</bean>
 	
-	
 	<bean id="questionMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="mapperInterface" value="com.shop.mapper.QuestionMapper" />
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />  
+	</bean>
+	
+	<!-- Shop -->
+	<bean id="shopService" class="com.shop.service.ShopServiceImpl">
+		<property name="shopRep" ref="shopRep" />
+	</bean>
+
+	<bean id="shopRep" class="com.shop.repository.ShopRepImpl">
+		<!-- <property name="sessionTemplate" ref="sqlSessionTemplate" /> -->
+		<property name="shopMapper" ref="shopMapper" />
+	</bean>
+	
+	
+	<bean id="shopMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.shop.mapper.ShopMapper" />
 		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />  
 	</bean>
 </beans>
