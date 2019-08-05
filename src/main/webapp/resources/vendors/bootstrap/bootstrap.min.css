@@ -244,8 +244,8 @@ button:focus {
 button, input, optgroup, select, textarea {
 	margin: 0;
 	font-family: Oswald;
-	font-size: inherit;
-	line-height: inherit
+	font-size: Oswald;
+	line-height: Oswald
 }
 
 button, input {
