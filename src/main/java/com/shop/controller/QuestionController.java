@@ -1,10 +1,16 @@
 package com.shop.controller;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -21,7 +27,6 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.shop.common.Util;
 import com.shop.service.QuestionService;
-import com.shop.view.DownloadView;
 import com.shop.vo.Question;
 import com.shop.vo.QuestionComment;
 import com.shop.vo.QuestionFile;
@@ -154,24 +159,24 @@ public class QuestionController {
 		return "question/qa-detail"; 
 	}
 	
-	@RequestMapping(path="/download/{fileNo}", method = RequestMethod.GET)
-	public View download(@PathVariable int fileNo, Model model) {
-    
-		
-	      
-	      QuestionFile file = questionService.findQuestionFileByQuestionFileNo(fileNo);
-	      if (file == null) { 
-	         
-	    	  return new RedirectView("/question/qa-list");
-	      }
-	      
-	      model.addAttribute("file",file); //View 객체로 전달할 데이터 저장(Request에 저장)
-	      
-	      DownloadView v = new DownloadView();
-	      return v;
-	    
-	}
-	
+//	@RequestMapping(path="/download/{fileNo}", method = RequestMethod.GET)
+//	public View download(@PathVariable int fileNo, Model model) {
+//    
+//		
+//	      
+//	      QuestionFile file = questionService.findQuestionFileByQuestionFileNo(fileNo);
+//	      if (file == null) { 
+//	         
+//	    	  return new RedirectView("/question/qa-list");
+//	      }
+//	      
+//	      model.addAttribute("file",file); //View 객체로 전달할 데이터 저장(Request에 저장)
+//	      
+//	      DownloadView v = new DownloadView();
+//	      return v;
+//	    
+//	}
+//	
 	@RequestMapping(path="/delete/{questionNo}", method = RequestMethod.GET)
 	public String delete(@PathVariable int questionNo) {
 	      
@@ -339,6 +344,43 @@ public class QuestionController {
 		    public String insertBoard(String editor) {
 		        System.err.println("저장할 내용 : " + editor);
 		        return "redirect:/coding.do";
+		    }
+		 
+		// 다중파일업로드
+		    @RequestMapping(value = "/file_uploader_html5.do",
+		                  method = RequestMethod.POST)
+		    @ResponseBody
+		    public String multiplePhotoUpload(HttpServletRequest request) {
+		        // 파일정보
+		        StringBuffer sb = new StringBuffer();
+		        try {
+		            // 파일명을 받는다 - 일반 원본파일명
+		            String oldName = request.getHeader("file-name");
+		            // 파일 기본경로 _ 상세경로
+		            String filePath = "C:/Users/GOOTT-06/git/goott-shop/src/main/resources/photoUpload/";
+		            String saveName = sb.append(new SimpleDateFormat("yyyyMMddHHmmss")
+		                          .format(System.currentTimeMillis()))
+		                          .append(UUID.randomUUID().toString())
+		                          .append(oldName.substring(oldName.lastIndexOf("."))).toString();
+		            InputStream is = request.getInputStream();
+		            OutputStream os = new FileOutputStream(filePath + saveName);
+		            int numRead;
+		            byte b[] = new byte[Integer.parseInt(request.getHeader("file-size"))];
+		            while ((numRead = is.read(b, 0, b.length)) != -1) {
+		                os.write(b, 0, numRead);
+		            }
+		            os.flush();
+		            os.close();
+		            // 정보 출력
+		            sb = new StringBuffer();
+		            sb.append("&bNewLine=true")
+		              .append("&sFileName=").append(oldName)
+		              .append("&sFileURL=").append("http://localhost:8088/shop/resources/photoUpload/")
+		        .append(saveName);
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        }
+		        return sb.toString();
 		    }
 
 

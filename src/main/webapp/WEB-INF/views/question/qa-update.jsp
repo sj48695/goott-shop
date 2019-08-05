@@ -24,8 +24,8 @@
 <!-- Core Style CSS -->
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<link rel="stylesheet" href="/catopia/resources/css/core-style.css">
-<link rel="stylesheet" href="/catopia/resources/style.css">
+<link rel="stylesheet" href="/../resources/css/core-style.css">
+<link rel="stylesheet" href="/../resources/style.css">
 
 
 
@@ -56,7 +56,7 @@
 						<div id="inputcontent">
 							<div>
 								<div class="inputsubtitle"></div>
-								<form action="/catopia/qa-upload/qa-update" method="post"
+								<form action="/../qa-upload/qa-update" method="post"
 									enctype="multipart/form-data">
 									<input type="hidden" name="questionNo"
 										value="${ question.questionNo }">
@@ -86,7 +86,7 @@
 											<td colspan="2" style="text-align: left"><c:forEach
 													var="file" items="${question.files }">
 								                         ${ file.userFileName } 
-								                         [<a href="/catopia/qa-upload/delete-file/${ question.questionNo }
+								                         [<a href="/../qa-upload/delete-file/${ question.questionNo }
 								                         /${ file.questionFileNo }">삭제</a>]&nbsp;|&nbsp;
 														</c:forEach>
 
@@ -172,7 +172,7 @@
 	<!-- editor -->
 	<script src="https://code.jquery.com/jquery-latest.js"></script>
 	<script type="text/javascript"
-		src="/catopia/resources/editor/js/HuskyEZCreator.js"
+		src="/../resources/editor/js/HuskyEZCreator.js"
 		charset="utf-8"></script>
 	<script type="text/javascript">
 		$(function() {
@@ -183,7 +183,7 @@
 					.createInIFrame({
 						oAppRef : obj,
 						elPlaceHolder : "editor",
-						sSkinURI : "/catopia/resources/editor/SmartEditor2Skin.html",
+						sSkinURI : "/../resources/editor/SmartEditor2Skin.html",
 						htParams : {
 							// 툴바 사용 여부
 							bUseToolbar : true,

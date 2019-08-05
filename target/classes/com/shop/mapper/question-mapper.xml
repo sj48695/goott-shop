@@ -130,14 +130,14 @@
 		parameterType="int" resultType="QuestionComment">
 		SELECT COMMENTNO, QUESTIONNO, WRITER, REGDATE, CONTENT, GROUPNO, STEP, DEPTH 
 		FROM questioncomment 
-		WHERE QUESTIONNO = #{ questionNo } ORDER BY GROUPNO DESC, STEP ASC 
+		WHERE questionno = #{ questionNo } ORDER BY GROUPNO DESC, STEP ASC 
 	</select>
 	
 	<select id="selectCommentByCommentNo" 
 		parameterType="int" resultType="QuestionComment">
 		SELECT COMMENTNO, QUESTIONNO, WRITER, CONTENT, REGDATE, GROUPNO, STEP, DEPTH 
 		FROM questioncomment
-		WHERE COMMENTNO = #{ questionNo }
+		WHERE commentno = #{ questionNo }
 	</select>
 	
 	<update id="updateCommentStep" parameterType="QuestionComment">

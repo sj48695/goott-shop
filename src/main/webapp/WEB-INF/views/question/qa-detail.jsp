@@ -23,7 +23,7 @@
 <title>shop | List</title>
 
 <!-- Favicon  -->
-<!-- <link rel="icon" href="/catopia/resources/img/core-img/favicon.ico"> -->
+<!-- <link rel="icon" href="/../resources/img/core-img/favicon.ico"> -->
 
 <!-- Core Style CSS -->
 <link rel="stylesheet"
@@ -31,8 +31,8 @@
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
-<!-- <link rel="stylesheet" href="/catopia/resources/css/core-style.css">
-<link rel="stylesheet" href="/catopia/resources/style.css" -->>
+<!-- <link rel="stylesheet" href="/../resources/css/core-style.css">
+<link rel="stylesheet" href="/../resources/style.css" -->>
 
 </head>
 
@@ -45,7 +45,7 @@
 		<div class="mobile-nav">
 				<!-- <!-- Navbar Brand
 				<div class="amado-navbar-brand">
-					<a href="/catopia/home"><img
+					<a href="/../home"><img
 						src="/resources/img/core-img/logo.png" alt=""></a>
 				</div>
 				Navbar Toggler
@@ -100,7 +100,7 @@
 										<td colspan="2" style="text-align: left"><c:forEach
 												var="file" items="${question.files }">
 												<a
-													href="/catopia/qa-upload/download/${ file.questionFileNo }">
+													href="/../qa-upload/download/${ file.questionFileNo }">
 													${ file.userFileName }</a>
 												<br>
 											</c:forEach></td>
@@ -131,7 +131,7 @@
 		        	window.addEventListener('load',function(event){//js의 main 함수 역할
 						var btnCancel =document.querySelector('#cancel_button');
 		        		btnCancel.addEventListener('click', function(event) {
-		        			location.href="/catopia/qa-upload/qa-list";//주소창에 list을 입력하고 엔터
+		        			location.href="/../qa-upload/qa-list";//주소창에 list을 입력하고 엔터
 		        			//history.back(); //브라우저의 이전 버튼을 클릭
 		        		});
 		        		
@@ -140,14 +140,14 @@
 		        			var ok = confirm("${question.questionNo}번 자료를 삭제할까요?");//의사 확인문장
 		        			if(ok){
 		        			//<a 를 통한 요청이므로 주소 뒤에 ?key=value 형식을 써서 데이터 전송
-		        			location.href="/catopia/qa-upload/delete/${ question.questionNo }";
+		        			location.href="/../qa-upload/delete/${ question.questionNo }";
 		        			}
 		        		});
 		        		
 		        		var btnUpdate = document.querySelector('#update_button');
 		        		btnUpdate.addEventListener('click', function(event){
 		        			//<a 를 통한 요청이므로 주소 뒤에 ?key=value 형식을 써서 데이터 전송
-		        			location.href="/catopia/qa-upload/qa-update/${ question.questionNo }";
+		        			location.href="/../qa-upload/qa-update/${ question.questionNo }";
 		        		});
 		        		
 		        	});
@@ -305,12 +305,12 @@
 			// alert(formData)
 			
  			$.ajax({
-				url: "/catopia/qa-upload/write-comment",
+				url: "/../qa-upload/write-comment",
 				method: "POST",
 				data: formData,
 				success: function(data, status, xhr) {
 					 alert(data);
-					$("#comment-list").load('/catopia/qa-upload/comment-list', 
+					$("#comment-list").load('/../qa-upload/comment-list', 
 											{ "questionNo" : ${  question.questionNo } }, 
 											function() {})
 				},
@@ -346,7 +346,7 @@
 		$('#comment-list').on('click', '.deletecomment', function(event) {
 			commentNo = $(this).attr('data-commentno');
 			$.ajax({
-				url: "/catopia/qa-upload/delete-comment",
+				url: "/../qa-upload/delete-comment",
 				method: "GET",
 				data: "commentNo=" + commentNo,
 				success: function(data, status, xhr) {
@@ -371,7 +371,7 @@
 			
 			//ajax 방식으로 데이터 수정
 			$.ajax({
-				"url": "/catopia/qa-upload/update-comment",
+				"url": "/../qa-upload/update-comment",
 				"method": "POST",
 				"data": inputData,
 				"success": function(data, status, xhr) {
@@ -402,7 +402,7 @@
 			var recommentData = $('#recomment-form').serialize();
 			
 			$.ajax({
-				url: "/catopia/qa-upload/write-recomment",
+				url: "/../qa-upload/write-recomment",
 				method: "POST",
 				data: recommentData,
 				success: function(data, status, xhr) {
@@ -411,7 +411,7 @@
 					$('#recomment-form').each(function() {
 						this.reset();
 					});
-					$("#comment-list").load('/catopia/qa-upload/comment-list', 
+					$("#comment-list").load('/../qa-upload/comment-list', 
 							{ "questionNo" : ${ question.questionNo } }, 
 							function() {})
 					
