@@ -18,6 +18,19 @@
         <result javaType="java.lang.Integer" column="colorCnt" property="colorCnt"/>
 	</resultMap>
 	
+	<!-- <resultMap id="cartListMap" type="java.util.HashMap">
+		<result javaType="String" column="title" property="title"/>
+		<result javaType="int" column="cartNo" property="cartNo"/>
+		<result javaType="int" column="productNo" property="productNo"/>
+		<result javaType="int" column="count" property="count"/>
+		<result javaType="int" column="price" property="price"/>
+		<result javaType="String" column="productName" property="productName"/>
+		<result javaType="String" column="color" property="color"/>
+		<result javaType="String" column="size" property="size"/>
+		<result javaType="java.util.Date" column="regDate" property="regDate"/>
+		<result javaType="String" column="memberId" property="memberId"/>
+	</resultMap> -->
+	
 	<!-- Product -->
 	
 	<select id="selectProductByProductNo" resultType="Product">
@@ -39,7 +52,9 @@
 	<!-- Cart -->
 	
 	<select id="selectCarts" resultType="Cart">
-		select cartNo, regDate, <include refid="cartColumns"/> from cart
+		select p.title, cartNo, c.regDate, c.productNo, c.count, c.price, c.productName, c.color, c.size, memberId
+		from product p inner join cart c 
+		on p.productNo = c.productNo
 	</select>
 	
 	<insert id="insertCart" parameterType="Cart" >

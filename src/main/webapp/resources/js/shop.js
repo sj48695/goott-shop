@@ -1,4 +1,21 @@
 $(function() {
+	
+	$('.quantityUp').on('click',function(event) {
+		var result = document.getElementById('sst');
+		var sst = result.value;
+		if (!isNaN(sst))
+			result.value++;
+		return false;
+	});
+
+	$('.quantityDown').on('click',function(event) {
+		var result = document.getElementById('sst');
+		var sst = result.value;
+		if (!isNaN(sst) && sst > 0)
+			result.value--;
+		return false;
+	});
+	
 	$('.addToCart').on('click', function(event) {		
 		var formData = $('#addCartForm').serialize();
 		$.ajax({
@@ -16,6 +33,7 @@ $(function() {
 			}
 		});
 	});
+
 });
 
 /*---------------------cart.jsp----------------------*/
@@ -78,18 +96,20 @@ function reduced(cartNo, price) {
 
 
 function removeCart(cartNo){
-	$.ajax({
-		url:"/shop/cart_remove",
-		methos:"GET",
-		data:{"cartNo" : cartNo},
-		success:function(data, status, xhr){
-			alert("장바구니에서 삭제되었습니다.");
-			$('.cartlist'+cartNo).remove();
-		},
-		error:function(status, xhr, err){
-			alert(err);
-		}
-	});
+	if(confirm('선택된 상품을 삭제할까요?')){
+		$.ajax({
+			url:"/shop/cart_remove",
+			methos:"GET",
+			data:{"cartNo" : cartNo},
+			success:function(data, status, xhr){
+				alert("장바구니에서 삭제되었습니다.");
+				$('.cartlist'+cartNo).remove();
+			},
+			error:function(status, xhr, err){
+				alert(err);
+			}
+		});
+	}
 }
 
 /* 체크박스 전체선택, 전체해제 */
@@ -99,4 +119,18 @@ function checkAll(){
       }else{
         $("input[name=checkRow]").prop("checked", false);
       }
+}
+
+/* 체크박스 선택, 해제 */
+function checkRow(){
+    var checkRows = Array();
+	$('input:checkbox[name="checkRow"]').each(function() {
+	    var checkRow = $(this).val();
+	    if(this.checked){//checked 처리된 항목의 값
+	        checkRows.push(checkRow);
+	    }
+	});
+
+	
+    $("#checkRows").attr("value",checkRows);
 }
