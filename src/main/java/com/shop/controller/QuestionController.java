@@ -22,8 +22,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.View;
-import org.springframework.web.servlet.view.RedirectView;
 
 import com.shop.common.Util;
 import com.shop.service.QuestionService;
@@ -149,7 +147,7 @@ public class QuestionController {
 //	      return v;
 //	    
 //	}
-//	
+	
 	@RequestMapping(path="/delete/{questionNo}", method = RequestMethod.GET)
 	public String delete(@PathVariable int questionNo) {
 	      

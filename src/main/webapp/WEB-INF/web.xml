@@ -20,7 +20,6 @@
     <servlet-name>appServlet</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
-  
   <!-- 모든 요청에 대해 강제로 utf-8 인코딩 설정 -->
 	<filter>
 		<filter-name>characterEncodingFilter</filter-name>
