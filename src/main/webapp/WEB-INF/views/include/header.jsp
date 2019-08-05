@@ -19,7 +19,6 @@
 <body>
 	<!--================ Start Header Menu Area =================-->
 	<header class="header_area">
-<<<<<<< HEAD
 		<div class="main_menu">
 			<nav class="navbar navbar-expand-lg navbar-light">
 				<div class="container">
@@ -47,35 +46,28 @@
 									<li class="nav-item"><a class="nav-link" href="qna">QnA</a></li>
 								</ul>
 							</li>
-							<li class="nav-item"><a class="nav-link" href="contact">Contact</a></li>
 						</ul>
-                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                  aria-expanded="false">Pages</a>
-                <ul class="dropdown-menu">
-                  <li class="nav-item"><a class="nav-link" href="login">Login</a></li>
-                  <li class="nav-item"><a class="nav-link" href="register">Register</a></li>
-                </ul>
-				<ul class="nav-shop">
-					<li class="nav-item"><button><i class="ti-search"></i></button></li>
-					<li class="nav-item"><button><i class="ti-shopping-cart"></i><span class="nav-shop__circle">3</span></button></li>
-					<c:choose>
-		            <c:when test="${ empty loginuser }">
-						<li class="nav-item">
-						<a class="button button-header" href="/shop/account/login">Login</a>
-						<a class="button button-header" href="/shop/account/register">Register</a>
-						</li>
-					</c:when>
-					<c:otherwise>
-						<li class="nav-item">
-						<a class="nav-link" href="/shop/mypage/${ loginuser.memberId }" style="text-decoration: none">${ loginuser.memberId }님 환영합니다.</a>
-						<a class="button button-header" href="/shop/account/logout">Logout</a>
-						</li>
-					</c:otherwise>
-					</c:choose>
-				</ul>
+						<ul class="nav-shop ml-auto mr-auto">
+							<li class="nav-item"><button><i class="ti-search"></i></button></li>
+							<li class="nav-item"><button><i class="ti-shopping-cart"></i><span class="nav-shop__circle">3</span></button></li>
+							<c:choose>
+				            <c:when test="${ empty loginuser }">
+								<li class="nav-item">
+								<a class="button button-header" href="/shop/account/login">Login</a>
+								<a class="button button-header" href="/shop/account/register">Register</a>
+								</li>
+							</c:when>
+							<c:otherwise>
+								<li class="nav-item">
+								<a class="nav-link" href="/shop/mypage/${ loginuser.memberId }" style="text-decoration: none">${ loginuser.memberId }님 환영합니다.</a>
+								<a class="button button-header" href="/shop/account/logout">Logout</a>
+								</li>
+							</c:otherwise>
+							</c:choose>
+						</ul>
+					</div>
 				</div>
-			</div>
-		</nav>
-	</div>
-</header>
+			</nav>
+		</div>
+	</header>
 	<!--================ End Header Menu Area =================-->

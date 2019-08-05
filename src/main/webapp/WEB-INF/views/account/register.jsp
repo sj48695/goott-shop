@@ -45,16 +45,16 @@
 								<input type="text" class="form-control" id="phone" name="phone" placeholder="010-xxxx-xxxx" onfocus="this.placeholder = ''" onblur="this.placeholder = '010-xxxx-xxxx'">
 							</div>
 							<div class="col-md-12 form-group">
-								<input type="text" class="col-md-8" id="postcode" placeholder="우편번호">&nbsp;&nbsp;
+								<input type="text" class="col-md-8" id="postcode" name="postCode" placeholder="우편번호">&nbsp;&nbsp;
 								<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기">
 							</div>
 							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" id="roadAddress" placeholder="도로명주소"><br>
-								<input type="text" class="form-control" id="jibunAddress" placeholder="지번주소">
+								<input type="text" class="form-control" id="roadAddress" name="roadAddr" placeholder="도로명주소"><br>
+								<input type="text" class="form-control" id="jibunAddress" name="jibunAddr" placeholder="지번주소">
 							</div>
 							<div class="col-md-12 form-group">
-								<input type="text" class="col-md-6" id="detailAddress" placeholder="상세주소">&nbsp;&nbsp;&nbsp;&nbsp;
-								<input type="text" class="col-md-5" id="extraAddress" placeholder="참고항목">
+								<input type="text" class="col-md-6" id="detailAddress" name="detailAddr" placeholder="상세주소">&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="text" class="col-md-5" id="extraAddress" name="extraAddr" placeholder="참고항목">
 							</div>
 							
 							<div class="col-md-12 form-group">

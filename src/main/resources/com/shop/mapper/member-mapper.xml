@@ -7,7 +7,7 @@
 
 	<!-- 회원관리 -->
 	<insert id="insertMember" parameterType="Member">	
-		insert into Member (memberId, pwd, name, phone, postCode, roadAddr, jibunAddr, detailAddr, extraAddr, regDate) 
+		insert into member (memberId, pwd, name, phone, postCode, roadAddr, jibunAddr, detailAddr, extraAddr) 
 		values (
 			#{ memberId }
 			, #{ pwd }
@@ -18,13 +18,12 @@
 			, #{ jibunAddr }
 			, #{ detailAddr }
 			, #{ extraAddr }
-			, #{ regDate }
 		)
 	</insert>
 	
  	<select id="selectMemberByIdAndPasswd" parameterType="hashmap" resultType="Member">
 		select * 
-		from Member 
+		from member 
 		where memberId = #{ memberId } and pwd = #{ pwd }
 	</select>
 	

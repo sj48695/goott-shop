@@ -53,6 +53,7 @@ public class AccountController {
 
 	@RequestMapping(path = "/register", method = RequestMethod.POST)
 	public String register(Member member) {
+		System.out.println(member);
 		memberService.insertMember(member);
 		return "redirect:/account/login";
 	}
