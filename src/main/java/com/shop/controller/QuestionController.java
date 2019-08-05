@@ -16,12 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.View;
-import org.springframework.web.servlet.view.RedirectView;
 
 import com.shop.common.Util;
 import com.shop.service.QuestionService;
-import com.shop.view.DownloadView;
 import com.shop.vo.Question;
 import com.shop.vo.QuestionComment;
 import com.shop.vo.QuestionFile;
@@ -154,23 +151,23 @@ public class QuestionController {
 		return "question/qa-detail"; 
 	}
 	
-	@RequestMapping(path="/download/{fileNo}", method = RequestMethod.GET)
-	public View download(@PathVariable int fileNo, Model model) {
-    
-		
-	      
-	      QuestionFile file = questionService.findQuestionFileByQuestionFileNo(fileNo);
-	      if (file == null) { 
-	         
-	    	  return new RedirectView("/question/qa-list");
-	      }
-	      
-	      model.addAttribute("file",file); //View 객체로 전달할 데이터 저장(Request에 저장)
-	      
-	      DownloadView v = new DownloadView();
-	      return v;
-	    
-	}
+//	@RequestMapping(path="/download/{fileNo}", method = RequestMethod.GET)
+//	public View download(@PathVariable int fileNo, Model model) {
+//    
+//		
+//	      
+//	      QuestionFile file = questionService.findQuestionFileByQuestionFileNo(fileNo);
+//	      if (file == null) { 
+//	         
+//	    	  return new RedirectView("/question/qa-list");
+//	      }
+//	      
+//	      model.addAttribute("file",file); //View 객체로 전달할 데이터 저장(Request에 저장)
+//	      
+//	      DownloadView v = new DownloadView();
+//	      return v;
+//	    
+//	}
 	
 	@RequestMapping(path="/delete/{questionNo}", method = RequestMethod.GET)
 	public String delete(@PathVariable int questionNo) {
