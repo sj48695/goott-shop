@@ -46,4 +46,19 @@
 		<property name="mapperInterface" value="com.shop.mapper.QuestionMapper" />
 		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />  
 	</bean>
+	
+	<!-- Member  -->
+	<bean id="memberService" class="com.shop.service.MemberServiceImpl">
+		<property name="memberRepository" ref="memberRepository" />
+	</bean>
+
+	<bean id="memberRepository" class="com.shop.repository.MemberRepositoryImpl">
+		<property name="memberMapper" ref="memberMapper" />
+	</bean>
+	
+	
+	<bean id="memberMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.shop.mapper.MemberMapper" />
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />  
+	</bean>
 </beans>

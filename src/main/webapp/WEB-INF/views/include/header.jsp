@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="resources/vendors/nice-select/nice-select.css">
 <link rel="stylesheet" href="resources/vendors/owl-carousel/owl.theme.default.min.css">
 <link rel="stylesheet" href="resources/vendors/owl-carousel/owl.carousel.min.css">
-<link rel="stylesheet" href="resources/css/style.css">
+<link rel="stylesheet" href="/shop/resources/css/style.css">
 </head>
 <body>
 	<!--================ Start Header Menu Area =================-->
@@ -52,10 +52,20 @@
 						<ul class="nav-shop">
 							<li class="nav-item"><button><i class="ti-search"></i></button></li>
 							<li class="nav-item"><button><i class="ti-shopping-cart"></i><span class="nav-shop__circle">3</span></button></li>
+						<c:choose>
+			            <c:when test="${ empty loginuser }">
 							<li class="nav-item">
-							<a class="button button-header" href="login">Login</a>
-							<a class="button button-header" href="register">Register</a>
+							<a class="button button-header" href="/shop/account/login">Login</a>
+							<a class="button button-header" href="/shop/account/register">Register</a>
 							</li>
+						</c:when>
+						<c:otherwise>
+							<li class="nav-item">
+							<a class="nav-link" href="/shop/mypage/${ loginuser.memberId }" style="text-decoration: none">${ loginuser.memberId }님 환영합니다.</a>
+							<a class="button button-header" href="/shop/account/logout">Logout</a>
+							</li>
+						</c:otherwise>
+						</c:choose>
 						</ul>
 					</div>
 				</div>

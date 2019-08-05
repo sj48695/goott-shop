@@ -7,6 +7,7 @@
 
 	<!-- type에 지정된 some.package.name.ClassName을 alias에 지정된 이름으로 대체하는 설정 -->
 	<typeAliases>
+		<typeAlias type="com.shop.vo.Member" alias="Member"/>
 		<typeAlias type="com.shop.vo.Question" alias="Question"/>
 		<typeAlias type="com.shop.vo.QuestionFile" alias="QuestionFile"/>	
 		<typeAlias type="com.shop.vo.QuestionComment" alias="QuestionComment" />		
@@ -27,6 +28,7 @@
 	<!-- SQL + Object Mapping Configuration -->
 	<mappers>
 		<mapper resource="com/shop/mapper/question-mapper.xml" />
+		<mapper resource="com/shop/mapper/member-mapper.xml" />
 	</mappers>
 	
 </configuration>

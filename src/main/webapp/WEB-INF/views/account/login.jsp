@@ -14,7 +14,7 @@
 	</section>
 	<!-- ================ end banner area ================= -->
   
-  <!--================Login Box Area =================-->
+  	<!--================Login Box Area =================-->
 	<section class="login_box_area section-margin">
 		<div class="container">
 			<div class="row">
@@ -32,10 +32,10 @@
 						<h3>Log in</h3>
 						<form class="row login_form" action="login" id="contactForm" method="post">
 							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" id="" name="name" placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'">
+								<input type="text" class="form-control" id="memberId" name="memberId" placeholder="ID" onfocus="this.placeholder = ''" onblur="this.placeholder = 'ID'">
 							</div>
 							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" id="name" name="name" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'">
+								<input type="password" class="form-control" id="pwd" name="pwd" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'">
 							</div>
 							<div class="col-md-12 form-group">
 								<div class="creat_account">
@@ -44,7 +44,7 @@
 								</div>
 							</div>
 							<div class="col-md-12 form-group">
-								<button type="submit" value="submit" class="button button-login w-100">Log In</button>
+								<button class="button button-login w-100">Log In</button>
 								<a href="#">Forgot Password?</a>
 							</div>
 						</form>
