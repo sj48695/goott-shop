@@ -7,12 +7,12 @@
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
-
+<meta charset="UTF-8">	
 <!-- ##### Main Content Wrapper Start ##### -->
 <div class="main-content-wrapper d-flex clearfix">
 
 
-	
+
   
   
 	<!-- Product Catagories Area Start -->
@@ -27,7 +27,7 @@
 	          <nav aria-label="breadcrumb" class="banner-breadcrumb">
 	            <ol class="breadcrumb">
 	              <li class="breadcrumb-item"><a href="#">Home</a></li>
-	              <li class="breadcrumb-item active" aria-current="page">Blog</li>
+	              <li class="breadcrumb-item active" aria-current="page">QnA</li>
 	            </ol>
 	          </nav>
 	        </div>
@@ -84,16 +84,19 @@
 	    </div>
 	  </section>
   
+  <!-- 시작 -->
 		<div class="amado-pro-catagory clearfix">
 
 			<div>
 				<br />
 				<div class="container" style="padding-top: 50; text-align: center">
 					<table class="table table-hover">
-						<tr style="background-color:; height: 50px">
+						<tr style="background-color:; height: 50px" >
 							<th style="width: 50px; text-align: center">NO</th>
 							<th style="width: 100px; text-align: center">
 								<form id="selectform" action="qacategory" method="POST">
+								
+							
 									<select name="category" id="qaselectcategory">
 										<option value="all">CATEGORY</option>
 										<option value="고양이문의"
@@ -125,7 +128,7 @@
 								<td style="text-align: center">${ question.questionNo }</td>
 								<td style="text-align: center">${ question.category }</td>
 								<td style='text-align: left; padding-left: 10px'><a
-									href="/../qa-upload/qa-detail/${ question.questionNo }">
+									href="/../shop/qa-detail/${ question.questionNo }">
 										${ question.title }</a>&nbsp;&nbsp;[${ question.recnt }]</td>
 								<td style="text-align: center">${ question.uploader }</td>
 								<td style="text-align: center">${ question.regDate }</td>

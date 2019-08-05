@@ -38,11 +38,6 @@ public class QuestionController {
 	@Qualifier("questionService")
 	private QuestionService questionService;
 	
-	@RequestMapping(value="/qna", method = RequestMethod.GET)
-	public String qna(){
-		return "question/qa-list";
-	}
-	
 	@RequestMapping(path = "/qa-list", method = RequestMethod.GET)
 	public String list(Model model) {
 		
@@ -80,7 +75,7 @@ public class QuestionController {
 		if(mf != null) {
 			
 			ServletContext application = req.getServletContext();
-			String path = application.getRealPath("/upload-files");
+			String path = application.getRealPath("/resources/files/question-files");
 			
 			String userFileName = mf.getOriginalFilename();
 			if (userFileName.contains("\\")) {
@@ -112,31 +107,9 @@ public class QuestionController {
 		return "redirect:coding.do";
 	}
 	
-//	@RequestMapping(path="/qa-detail", method = RequestMethod.GET)
-//	public String detail(@RequestParam(name="questionno")int questionNo, Model model) {
-//    
-//	      
-//	      QuestionRep dao = new QuestionRepImpl();
-//	      
-//	      Question question = dao.selectQuestion(questionNo);
-//	      if (question == null) { 
-//
-//	         return "redirect:list";
-//	      }
-//	      
-//	      List<QuestionFile> files = questionService.findQuestionFilesByQuestionNo(questionNo);
-//	      question.setFiles((ArrayList<QuestionFile>)files); 
-//	      
-//	      
-//	      model.addAttribute("question", question);
-//	       
-//		
-//		return "question/qa-detail";
-//	}
-	
 	
 	@RequestMapping(path="/qa-detail/{questionNo}", method = RequestMethod.GET)
-	public String detail2(@PathVariable int questionNo, Model model) {
+	public String detail(@PathVariable int questionNo, Model model) {
 		
 	      
 	      Question question = questionService.findQuestionByQuestionNo(questionNo);
@@ -182,7 +155,7 @@ public class QuestionController {
 	      
 	      questionService.deleteQuestion(questionNo);
 	          
-	      return "redirect:/qa-upload/qa-list"; 
+	      return "redirect:/qa-list"; 
 	    
 	}
 	
@@ -224,7 +197,7 @@ public class QuestionController {
 			questionService.deleteQuestionFile(fileNo);
 
 			
-			return "redirect:/qa-upload/qa-update/" + questionNo;
+			return "redirect:/qa-update/" + questionNo;
 		}
 		
 		@RequestMapping(path = "/qa-update", method = RequestMethod.POST)
@@ -263,7 +236,7 @@ public class QuestionController {
 			}
 
 			
-			return "redirect:/qa-upload/qa-detail/" + question.getQuestionNo();
+			return "redirect:/qa-detail/" + question.getQuestionNo();
 		}
 		
 		/* ================================================================= */

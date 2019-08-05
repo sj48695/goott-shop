@@ -56,7 +56,7 @@
 						<div id="inputcontent">
 							<div>
 								<div class="inputsubtitle"></div>
-								<form action="/../qa-upload/qa-update" method="post"
+								<form action="/../qa-update" method="post"
 									enctype="multipart/form-data">
 									<input type="hidden" name="questionNo"
 										value="${ question.questionNo }">
@@ -86,7 +86,7 @@
 											<td colspan="2" style="text-align: left"><c:forEach
 													var="file" items="${question.files }">
 								                         ${ file.userFileName } 
-								                         [<a href="/../qa-upload/delete-file/${ question.questionNo }
+								                         [<a href="/../delete-file/${ question.questionNo }
 								                         /${ file.questionFileNo }">삭제</a>]&nbsp;|&nbsp;
 														</c:forEach>
 

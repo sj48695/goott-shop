@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <jsp:include page="/WEB-INF/views/include/header.jsp" />
-
+<meta charset="UTF-8">	
 <!-- Core Style CSS -->
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -41,24 +41,23 @@
 									<tr>
 										<th colspan="1">작성자</th>
 										<td colspan="2" style="text-align: left"><input
-											type="hidden" name="uploader" value="${loginuser.memberId}">
-											${ loginuser.memberId} <%-- 히든속성이 아님
+											type="hidden" name="uploader" value="sj">
+											<%-- ${ loginuser.memberId} --%> <%-- 히든속성이 아님
 							                	<input type="hidden" name="uploader" 
 							                	value="<%= member.getMemberId() %>" readonly="readonly">
 							                	--%></td>
 									</tr>
-									<!-- <tr>
+									<tr>
 										<th colspan="1">첨부자료</th>
 										<td colspan="2" style="text-align: left">
 
 											<div class="custom-file">
-												<input type="file" class="custom-file-input" id="customFile"
-													name="attach"> <label class="custom-file-label"
-													for="customFile">Choose file</label>
+												<input type="file"  id="customFile"
+													name="attach"> 
 											</div>
 
 										</td>
-									</tr> -->
+									</tr>
 									<tr>
 										<td colspan="3"><textarea name="content" id="editor"
 												style="width: 100%" rows="20" class="form-control"></textarea>
@@ -104,7 +103,7 @@
 <br>
 <br>
 
-
+<%-- <%-- 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -126,7 +125,7 @@
 <script src="<c:url value="/resources/js/plugins.js" />"></script>
 
 <!-- Active js -->
-<script src="<c:url value="/resources/js/active.js" />"></script>
+<script src="<c:url value="/resources/js/active.js" />"></script> --%> --%>
 
 
 <script>
