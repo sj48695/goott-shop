@@ -21,6 +21,7 @@
 	href="/shop/resources/vendors/owl-carousel/owl.theme.default.min.css">
 <link rel="stylesheet"
 	href="/shop/resources/vendors/owl-carousel/owl.carousel.min.css">
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
 <link rel="stylesheet" href="/shop/resources/css/style.css">
 </head>
 <body>

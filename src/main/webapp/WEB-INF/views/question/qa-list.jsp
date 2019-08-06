@@ -110,15 +110,17 @@
 							<th style="width: 150px; text-align: center;">DATE</th>
 							<th style="width: 125px; text-align: center">ANSWER</th>
 						</tr>
-						<tr style="height: 30px">
-							<td style="text-align: center">*</td>
-							<td style="text-align: center"><strong>공지사항</strong></td>
-							<td style='text-align: left; padding-left: 10px'><strong>고객센터는
-									AM10:00 ~ PM16:30 까지 입니다</strong></td>
-							<td style="text-align: center">manager</td>
-							<td style="text-align: center">2019-06-24</td>
-							<td style="text-align: center"></td>
-						</tr>
+						
+						<c:forEach var="notice" items="${noticelist}">
+							<tr style="height: 30px">
+								<td style="text-align: center">${ notice.questionNo }</td>
+								<td style="text-align: center"><strong>${ notice.title }</strong></td>
+								<td style='text-align: left; padding-left: 10px'><strong>${ notice.content }</strong></td>
+								<td style="text-align: center">${ notice.managerID }</td>
+								<td style="text-align: center">${ notice.regDate }</td>
+								<td style="text-align: center"></td>
+							</tr>
+						</c:forEach>
 						<c:forEach var="question" items="${questions}">
 							<tr style="height: 30px">
 								<td style="text-align: center">${ question.questionNo }</td>

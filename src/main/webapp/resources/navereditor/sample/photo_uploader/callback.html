@@ -8,7 +8,8 @@
     <script type="text/javascript">
         // execute callback script
         var sUrl = document.location.search.substr(1);
-		if (sUrl != "blank") {
+		alert(sUrl);
+        if (sUrl != "blank") {
 	        var oParameter = {}; // query array
 
 	        sUrl.replace(/([^=]+)=([^&]*)(&|$)/g, function(){

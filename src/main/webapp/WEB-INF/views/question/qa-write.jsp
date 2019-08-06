@@ -5,6 +5,7 @@
 
 <jsp:include page="/WEB-INF/views/include/header.jsp" />
 
+
 <!-- ##### Main Content Wrapper Start ##### -->
 <div class="main-content-wrapper d-flex clearfix">
 
@@ -51,11 +52,15 @@
 										</td>
 									</tr> -->
 									<tr>
-										<td colspan="3"><textarea name="content" id="editor"
-												style="width: 100%" rows="20" class="form-control"></textarea>
-										</td>
+										<td colspan="3">
+											<textarea name="content" id="editor"
+											style="width: 750px" rows="20" class="form-control"></textarea>
+										</td>	
 									</tr>
+									
 								</table>
+								
+								
 								<br>
 								<div class="buttons">
 									<input type="submit" value="자료등록" id="insertBoard"
@@ -94,52 +99,48 @@
 <br>
 <br>
 
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script>
+		// Add the following code if you want the name of the file appear on select
+		$(".custom-file-input").on(
+				"change",
+				function() {
+					var fileName = $(this).val().split("\\").pop();
+					$(this).siblings(".custom-file-label").addClass("selected")
+							.html(fileName);
+				});
+	</script>
 
-
-
-<script>
-	// Add the following code if you want the name of the file appear on select
-	$(".custom-file-input").on(
-			"change",
-			function() {
-				var fileName = $(this).val().split("\\").pop();
-				$(this).siblings(".custom-file-label").addClass("selected")
-						.html(fileName);
+	<!-- editor -->
+	<script src="https://code.jquery.com/jquery-latest.js"></script>
+	<script type="text/javascript"
+		src="/shop/resources/navereditor/js/HuskyEZCreator.js" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(function() {
+			//전역변수
+			var obj = [];
+			//스마트에디터 프레임생성
+			nhn.husky.EZCreator.createInIFrame({
+				oAppRef : obj,
+				elPlaceHolder : "editor",
+				sSkinURI : "/shop/resources/navereditor/SmartEditor2Skin.html",
+				htParams : {
+					// 툴바 사용 여부
+					bUseToolbar : true,
+					// 입력창 크기 조절바 사용 여부
+					bUseVerticalResizer : true,
+					// 모드 탭(Editor | HTML | TEXT) 사용 여부
+					bUseModeChanger : true,
+				}
 			});
-</script>
-
-<!-- editor -->
-<script src="https://code.jquery.com/jquery-latest.js"></script>
-<script type="text/javascript"
-	src="/shop/resources/editor/js/HuskyEZCreator.js" charset="utf-8"></script>
-<script type="text/javascript">
-	$(function() {
-		//전역변수
-		var obj = [];
-		//스마트에디터 프레임생성
-		nhn.husky.EZCreator.createInIFrame({
-			oAppRef : obj,
-			elPlaceHolder : "editor",
-			sSkinURI : "/shop/resources/editor/SmartEditor2Skin.html",
-			htParams : {
-				// 툴바 사용 여부
-				bUseToolbar : true,
-				// 입력창 크기 조절바 사용 여부
-				bUseVerticalResizer : true,
-				// 모드 탭(Editor | HTML | TEXT) 사용 여부
-				bUseModeChanger : true,
-			}
+			//전송버튼
+			$("#insertBoard").click(function() {
+				//id가 smarteditor인 textarea에 에디터에서 대입
+				obj.getById["editor"].exec("UPDATE_CONTENTS_FIELD", []);
+				//폼 submit
+				$("#insertBoardFrm").submit();
+			});
 		});
-		//전송버튼
-		$("#insertBoard").click(function() {
-			//id가 smarteditor인 textarea에 에디터에서 대입
-			obj.getById["editor"].exec("UPDATE_CONTENTS_FIELD", []);
-			//폼 submit
-			$("#insertBoardFrm").submit();
-		});
-	});
-</script>
-
-
+	</script>
 
 <jsp:include page="../include/footer.jsp" />

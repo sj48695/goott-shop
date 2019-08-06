@@ -7,3 +7,11 @@ $(function() {
 	});
 });
 
+
+
+$(function(){
+    $("#description").summernote({
+        height : 300,
+        width : 800
+    });
+});
