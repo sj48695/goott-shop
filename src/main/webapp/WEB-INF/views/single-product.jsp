@@ -393,7 +393,7 @@
 	            <form id="reviewform" class="form-inline row">
 	               <h4 class="text-black col-md-12 py-3"><b>후기</b></h4>
 	               <input type="hidden" name="spaceNo" id="spaceNo" value="${ space.spaceNo }"> 
-	               <input type="hidden" name="writer" value="${ loginuser.id }">
+	               <input type="hidden" name="writer" value="${ loginuser.memberId }">
 					<div class="col-md-12">
 						<!-- <div class='starrr' id='star'></div>
 						<br /> 

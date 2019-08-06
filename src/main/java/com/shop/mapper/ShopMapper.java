@@ -16,12 +16,14 @@ public interface ShopMapper {
 
 	List<String> selectColors();
 
-	List<Cart> selectCarts();
+	List<Cart> selectCarts(String memberId);
 
 	void insertCart(Cart cart);
 
-	void deleteCart(int cartNo);
+	void deleteCart(HashMap<String, Object> params);
 
 	void updateCartCntByCartNo(HashMap<String, Object> params);
+
+	List<Cart> selectCheckoutList(HashMap<String, Object> params);
 
 }

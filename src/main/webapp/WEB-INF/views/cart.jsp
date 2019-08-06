@@ -41,7 +41,7 @@
 					</colgroup>
 					<thead>
 						<tr>
-							<th scope="col"><input type="checkbox" id="th_checkAll" onclick="checkAll()"></th>
+							<th scope="col"><input type="checkbox" id="th_checkAll" onclick="checkAll('${rows}')"></th>
 							<th scope="col">Product</th>
 							<th scope="col">Price</th>
 							<th scope="col">Quantity</th>
@@ -79,7 +79,7 @@
                               	  <input hidden="true" id="total_before${ cart.cartNo }" value="${ cart.price * cart.count }">
                                   <h5 class="total${ cart.cartNo }">
                                   	<fmt:formatNumber pattern="#,###원">${ cart.price * cart.count }</fmt:formatNumber>
-                                  	<c:set var="subtotal" value="${ subtotal + (cart.price * cart.count) }"/>
+                                  	<c:set var="total" value="${ total + (cart.price * cart.count) }"/>
                                   </h5>
                               </td>
                               <td><a onclick="javascript:removeCart(${ cart.cartNo })">X</a></td>
@@ -88,12 +88,12 @@
                           <tr>
                           	  <td colspan="3"></td>
                               <td>
-                                  <h5>Subtotal</h5>
+                                  <h5>Total</h5>
                               </td>
                               <td>
-                                  <input hidden="true" id="subtotal_before" value="${ subtotal }">
+                                  <input hidden="true" id="subtotal_before" value="${ total }">
                                   <h5 class="subtotal">
-                                  	<fmt:formatNumber pattern="#,###원">${ subtotal }</fmt:formatNumber>
+                                  	<fmt:formatNumber pattern="#,###원">${ total }</fmt:formatNumber>
                                   </h5>
                               </td>
                               <td></td>
@@ -102,9 +102,9 @@
                               <td colspan="6">
                               	<input hidden="true" id="checkRows" name="checkRows">
                                   <div class="checkout_btn_inner d-flex align-items-center ml-0 row justify-content-end">
-                                      <a class="gray_btn mr-2" onclick="javascript:removeCart(${ cart.cartNo })">선택 삭제</a>
-                                      <button class="gray_btn" onclick="history.go(-1);">쇼핑 계속하기</button>
-                                      <a class="primary-btn ml-2" href="/shop/checkout">구매하기</a>
+                                      <a id="delete" class="gray_btn mr-2" onclick="alert('상품을 선택해주세요')">선택 삭제</a>
+                                      <a id="continue" class="gray_btn" onclick="history.go(-1);">쇼핑 계속하기</a>
+                                      <a id="buy" class="primary-btn ml-2" onclick="alert('상품을 선택해주세요')">구매하기</a>
                                   </div>
                               </td>
                           </tr>

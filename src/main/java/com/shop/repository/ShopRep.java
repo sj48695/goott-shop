@@ -16,12 +16,14 @@ public interface ShopRep {
 
 	List<String> selectColors();
 
-	List<Cart> selectCarts();
+	List<Cart> selectCarts(String memberId);
 
 	void insertCart(Cart cart);
 
-	void deleteCart(int cartNo);
+	void deleteCart(String[] cartNo);
 
 	void updateCartCntByCartNo(int cartNo, int count);
+
+	List<Cart> selectCheckoutList(String memberId, String[] cartNo);
 
 }

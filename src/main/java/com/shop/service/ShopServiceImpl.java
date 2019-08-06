@@ -7,12 +7,12 @@ import com.shop.repository.ShopRep;
 import com.shop.vo.Cart;
 import com.shop.vo.Product;
 
-public class ShopServiceImpl implements ShopService{
+public class ShopServiceImpl implements ShopService {
 
 //	@Autowired
 //	@Qualifier("shopRep")
 	private ShopRep shopRep;
-	
+
 	public ShopRep getShopRep() {
 		return shopRep;
 	}
@@ -46,8 +46,8 @@ public class ShopServiceImpl implements ShopService{
 	}
 
 	@Override
-	public List<Cart> findCartList() {
-		List<Cart> carts = shopRep.selectCarts();
+	public List<Cart> findCartList(String memberId) {
+		List<Cart> carts = shopRep.selectCarts(memberId);
 		return carts;
 	}
 
@@ -57,7 +57,8 @@ public class ShopServiceImpl implements ShopService{
 	}
 
 	@Override
-	public void removeCart(int cartNo) {
+	public void removeCart(String cartNostrs) {
+		String[] cartNo = cartNostrs.split(",");
 		shopRep.deleteCart(cartNo);
 	}
 
@@ -65,5 +66,14 @@ public class ShopServiceImpl implements ShopService{
 	public void updateCartCntByCartNo(int cartNo, int count) {
 		shopRep.updateCartCntByCartNo(cartNo, count);
 	}
-	
+
+	@Override
+	public List<Cart> findCheckoutList(String memberId, String cartNostrs) {
+
+		String[] cartNo = cartNostrs.split(",");
+
+		List<Cart> checkoutList = shopRep.selectCheckoutList(memberId, cartNo);
+		return checkoutList;
+	}
+
 }

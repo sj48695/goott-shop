@@ -1,5 +1,6 @@
 package com.shop.repository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -7,12 +8,12 @@ import com.shop.mapper.ShopMapper;
 import com.shop.vo.Cart;
 import com.shop.vo.Product;
 
-public class ShopRepImpl implements ShopRep{
+public class ShopRepImpl implements ShopRep {
 
 //	@Autowired
 //	@Qualifier("shopMapper")
 	private ShopMapper shopMapper;
-	
+
 	public ShopMapper getShopMapper() {
 		return shopMapper;
 	}
@@ -46,8 +47,8 @@ public class ShopRepImpl implements ShopRep{
 	}
 
 	@Override
-	public List<Cart> selectCarts() {
-		List<Cart> carts = shopMapper.selectCarts();
+	public List<Cart> selectCarts(String memberId) {
+		List<Cart> carts = shopMapper.selectCarts(memberId);
 		return carts;
 	}
 
@@ -57,8 +58,16 @@ public class ShopRepImpl implements ShopRep{
 	}
 
 	@Override
-	public void deleteCart(int cartNo) {
-		shopMapper.deleteCart(cartNo);
+	public void deleteCart(String[] cartNos) {
+		
+		HashMap<String, Object> params = new HashMap<String, Object>();
+
+		List<String> codeList = new ArrayList<String>();
+		for (int i = 0; i < cartNos.length; i++) {
+			codeList.add(cartNos[i]);
+		}
+		params.put("codeList", codeList);
+		shopMapper.deleteCart(params);
 	}
 
 	@Override
@@ -67,6 +76,21 @@ public class ShopRepImpl implements ShopRep{
 		params.put("cartNo", cartNo);
 		params.put("count", count);
 		shopMapper.updateCartCntByCartNo(params);
+	}
+
+	@Override
+	public List<Cart> selectCheckoutList(String memberId, String[] cartNos) {
+
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("memberId", memberId);
+
+		List<String> codeList = new ArrayList<String>();
+		for (int i = 0; i < cartNos.length; i++) {
+			codeList.add(cartNos[i]);
+		}
+		params.put("codeList", codeList);
+		List<Cart> checkoutList = shopMapper.selectCheckoutList(params);
+		return checkoutList;
 	}
 
 }

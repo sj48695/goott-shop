@@ -16,12 +16,14 @@ public interface ShopService {
 
 	List<String> findColors();
 
-	List<Cart> findCartList();
+	List<Cart> findCartList(String memberId);
 
 	void registerCart(Cart cart);
 
-	void removeCart(int cartNo);
+	void removeCart(String cartNostrs);
 
 	void updateCartCntByCartNo(int cartNo, int count);
+
+	List<Cart> findCheckoutList(String memberId, String cartNostrs);
 
 }
