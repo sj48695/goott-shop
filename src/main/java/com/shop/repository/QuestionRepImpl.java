@@ -73,13 +73,26 @@ public class QuestionRepImpl implements QuestionRep {
 	}
 		
 	@Override
-	public ArrayList<Question> selectQuestions() {
-
-		List<Question> question = questionMapper.selectQuestions();
+	public ArrayList<Question> selectQuestions(String category) {
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("category", category);
+		List<Question> question = questionMapper.selectQuestions(params);
+		//params.put("category", category);
+		//List<Question> Questions = QuestionMapper.selectQuestionlist(category);
+		//List<Question> Questions = questionMapper.selectQuestionlist(params);
 
 		return (ArrayList<Question>) question; // 호출한 곳으로 조회한 데이터를 반환
 
 	}
+//	@Override
+//	public ArrayList<Question> selectQuestionlist(String category) {
+//		HashMap<String, Object> params = new HashMap<String, Object>();
+//		params.put("category", category);
+//		//List<Question> Questions = QuestionMapper.selectQuestionlist(category);
+//		List<Question> Questions = questionMapper.selectQuestionlist(params);
+//		
+//		return (ArrayList<Question>) Questions;
+//	}
 	
 	@Override
 	public Question selectQuestion(int questionNo) {
@@ -212,14 +225,11 @@ public ArrayList<QuestionFile> selectQuestionFile(int questionNo) {
 		questionMapper.insertRecomment(comment);
 	}
 	
+
 	@Override
-	public ArrayList<Question> selectQuestionlist(String category) {
-		HashMap<String, Object> params = new HashMap<String, Object>();
-		params.put("category", category);
-		//List<Question> Questions = QuestionMapper.selectQuestionlist(category);
-		List<Question> Questions = questionMapper.selectQuestionlist(params);
-		
-		return (ArrayList<Question>) Questions;
+	public String selectPwdByQuestionNo(int questionNo) {
+		String pwd = questionMapper.selectPwdByQuestionNo(questionNo);
+		return pwd;
 	}
 
 	

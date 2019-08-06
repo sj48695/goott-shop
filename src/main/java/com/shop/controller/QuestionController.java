@@ -40,8 +40,8 @@ public class QuestionController {
 	@RequestMapping(path = "/qa-list", method = RequestMethod.GET)
 	public String list(Model model) {
 		
-		ArrayList<Question> questions = questionService.findQuestions();
-		ArrayList<Question> notice = questionService.findQuestions();
+		ArrayList<Question> questions = questionService.findQuestions("all");
+		ArrayList<Question> notice = questionService.findQuestions("all");
 		
 		for(Question question : questions) {
 			question.setAnswer(false);
@@ -58,6 +58,42 @@ public class QuestionController {
 		
 		return "question/qa-list"; 
 	}
+	
+	@RequestMapping(path = "/qa-list", method = RequestMethod.POST)
+	public String list(String category, Model model) {
+		
+		ArrayList<Question> questions = questionService.findQuestions(category);
+		ArrayList<Question> notice = questionService.findQuestions(category);
+		
+		for(Question question : questions) {
+			question.setAnswer(false);
+			List<QuestionComment> comments = questionService.findCommentListByQuestionNo(question.getQuestionNo());
+			for(QuestionComment comment : comments) {
+				if(comment.getWriter().equals("manager")) {
+					question.setAnswer(true);
+				}
+			}
+		}
+		
+		model.addAttribute("questions", questions);
+		model.addAttribute("notice", notice);
+		
+		return "question/qa-list"; 
+	}
+	
+//	@RequestMapping(path = "/qacategory", method = RequestMethod.POST)
+//	public String category(String category, Model model) {
+//
+//		if(category == null) {
+//			category = "all";
+//		}
+//		
+//		List<Question> questions = questionService.findQuestions(category);
+//		
+//		model.addAttribute("questions", questions);		
+//		return "question/qa-list";
+//	
+//	}
 	
 	@RequestMapping(path="/qa-write", method = RequestMethod.GET)
 	public String writeForm() {
@@ -108,6 +144,30 @@ public class QuestionController {
 		
 		return "question/qa-detail"; 
 	}
+	
+	@RequestMapping(path="/pwCheck/{questionNo}", method = RequestMethod.GET)
+	public String pwCheckForm(@PathVariable int questionNo, Model model) {
+		
+		model.addAttribute(questionNo);
+		
+		return "question/pwCheck"; 
+	}
+	
+	@RequestMapping(path="/pwCheck", method = RequestMethod.POST)
+	public String pwCheck( String pwd, int questionNo, Model model ) {
+		
+		String checkPwd = questionService.findPwdByQuestionNo(questionNo);
+		if(pwd.equals(checkPwd)) {
+			
+			Question question = questionService.findQuestionByQuestionNo(questionNo);
+			model.addAttribute(question);
+			
+			return "redirect:/qa-detail/" + questionNo;
+		}else {
+			return "redirect:/pwCheck/" + questionNo;
+		}
+	}
+
 
 	
 	@RequestMapping(path="/delete/{questionNo}", method = RequestMethod.GET)
@@ -253,19 +313,7 @@ public class QuestionController {
 		
 		/*----------------------------*/
 			
-		@RequestMapping(path = "/qacategory", method = RequestMethod.POST)
-		public String category(String category, Model model) {
-
-			if(category == null) {
-				category = "all";
-			}
-			
-			List<Question> questions = questionService.findQuestionlist(category);
-			
-			model.addAttribute("questions", questions);		
-			return "question/qa-list";
-		
-		}
+	
 		
 		
 		  @RequestMapping(value = "/coding.do")

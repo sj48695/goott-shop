@@ -12,94 +12,74 @@
 	<!-- Product Catagories Area Start -->
 	<div class="products-catagories-area clearfix" style="width: 100%">
 		<div class="amado-pro-catagory clearfix">
-
-			<div>
-				<h3 style="text-align: center; padding-top: 5%">QnA</h3>
-
-				<div style="padding-top: 50; text-align: center">
-					<div id="inputcontent">
-						<div>
-							<div class="inputsubtitle"></div>
-
-							<form action="qa-write" method="post"
-								enctype="multipart/form-data">
-								<table class="table table-bordered"
-									style="width: 50%; margin: auto">
-									<tr>
-										<th>제목</th>
-										<td><select name="category">
-												<option value="고양이문의" selected="selected">고양이문의</option>
-												<option value="용품문의">용품문의</option>
-												<option value="기타문의">기타문의</option>
-										</select></td>
-										<td><input type="text" name="title" style="width: 550px"
-											class="form-control" /></td>
-									</tr>
-									<tr>
-										<th colspan="1">작성자</th>
-										<td colspan="2" style="text-align: left"><input
-											type="hidden" name="uploader" value="${ loginuser.memberId}">
-											${ loginuser.memberId} </td>
-									</tr>
-								<!-- 	<tr>
-										<th colspan="1">첨부자료</th>
-										<td colspan="2" style="text-align: left">
-
-											<div class="custom-file">
-												<input type="file"  id="customFile" name="attach"> 
-											</div>
-
-										</td>
-									</tr> -->
-									<tr>
-										<td colspan="3">
-											<textarea name="content" id="editor"
-											style="width: 750px" rows="20" class="form-control"></textarea>
-										</td>	
-									</tr>
-									
-								</table>
-								
-								
-								<br>
-								<div class="buttons">
-									<input type="submit" value="자료등록" id="insertBoard"
-										class="btn btn-outline-secondary" /> <input
-										id="cancel_button" type="button" value="취소"
-										class="btn btn-outline-secondary" />
-								</div>
-							</form>
-
-							<script type="text/javascript">
-								//브라우저가 html을 모두 읽고 처리할 준비가 되었을 때 호출 할 함수 지정
-								window
-										.addEventListener(
-												'load',
-												function(event) {//js의 main 함수 역할
-													var btnCancel = document
-															.querySelector('#cancel_button');
-													btnCancel.addEventListener(
-															'click', function(event) {
-																//location.href = "list";//주소창에 list.action을 입력하고 엔터
-																history.back(); //브라우저의 이전 버튼을 클릭
-															});
-												});
-							</script>
+			<h3 style="text-align: center; padding-top: 5%">QnA</h3>
+			<div style="padding-top: 50; text-align: center">
+				<div id="inputcontent">
+					<div class="inputsubtitle"></div>
+					<form action="qa-write" method="post" enctype="multipart/form-data">
+						<table class="table" style="width: 50%; margin: auto">
+							<tr>
+								<th>제목</th>
+								<td>
+									<select name="category">
+										<option value="상품문의" selected="selected">상품문의</option>
+										<option value="교환/반품문의">교환/반품문의</option>
+										<option value="기타문의">기타문의</option>
+									</select>
+								</td>
+								<td>
+									<input type="text" name="title" 
+										style="width: 550px" class="form-control" />
+								</td>
+							</tr>
+							<tr>
+								<th colspan="1">작성자</th>
+								<td colspan="2" style="text-align: left">
+								<input type="hidden" name="uploader" value="${ loginuser.memberId}">
+									${ loginuser.memberId}</td>
+							</tr>
+							<tr>
+								<td colspan="3">
+									<textarea name="content" id="editor"
+									style="width: 100%" rows="20" class="form-control"></textarea>
+								</td>	
+							</tr>
+							<tr>
+								<th colspan="1">비밀번호</th>
+								<td colspan="2" style="text-align: left">
+								<input type="password" class="form-control" id="pwd" 
+									name="pwd" style="width:100px">
+								</td>
+							</tr>
+							<tr>
+								<th colspan="1">비밀글 설정
+								<td colspan="2" style="text-align: left">
+									<input name="secure" id="secure1" type="radio" value="false" checked="checked" >
+									<label for="secure1">공개글</label>
+									<input name="secure" id="secure2" type="radio" value="true" >
+									<label for="secure2">비밀글</label>
+								</td>
+							</tr>
+							<tr><th/><td/></tr>
+						</table>
+						<br>
+						<div class="buttons">
+							<input type="submit" value="자료등록" id="insertBoard" class="btn btn-outline-secondary" /> 
+							<input id="cancel_button" type="button" value="취소" class="btn btn-outline-secondary" />
 						</div>
-					</div>
-
+					</form>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- Product Catagories Area End -->
 </div>
+
 <br>
 <br>
 <br>
 <br>
 
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script>
 		// Add the following code if you want the name of the file appear on select
 		$(".custom-file-input").on(

@@ -86,25 +86,25 @@
 			<div>
 				<br />
 				<div class="container" style="padding-top: 50; text-align: center">
-					<table class="table table-hover">
-						<tr style="background-color:; height: 50px" >
-							<th style="width: 50px; text-align: center">NO</th>
-							<th style="width: 100px; text-align: center">
-								<form id="selectform" action="qacategory" method="POST">
+				<form id="selectform" action="/shop/qa-list" method="POST">
 								
 							
 									<select name="category" id="qaselectcategory">
-										<option value="all">CATEGORY</option>
-										<option value="고양이문의"
-											<c:if test="${param.category eq '고양이문의'}">selected</c:if>>고양이문의</option>
-										<option value="용품문의"
-											<c:if test="${param.category eq '용품문의'}">selected</c:if>>용품문의</option>
+										<option value="all">전체</option>
+										<option value="상품문의"
+											<c:if test="${param.category eq '상품문의'}">selected</c:if>>상품문의</option>
+										<option value="교환/반품문의"
+											<c:if test="${param.category eq '교환/반품문의'}">selected</c:if>>교환/반품문의</option>
 										<option value="기타문의"
 											<c:if test="${param.category eq '기타문의'}">selected</c:if>>기타문의</option>
 									</select>
-								</form>
-
-							</th>
+						</form>
+					<table class="table table-hover">
+						
+						<tr style="background-color:; height: 50px" >
+							<th style="width: 50px; text-align: center">NO</th>
+							<th style="width: 50px; text-align: center">PRODUCT</th>
+							<th style="width: 100px; text-align: center">CATEGORY</th>
 							<th style="width: 400px; text-align: center">CONTENTS</th>
 							<th style="width: 125px; text-align: center">NAME</th>
 							<th style="width: 150px; text-align: center;">DATE</th>
@@ -124,10 +124,22 @@
 						<c:forEach var="question" items="${questions}">
 							<tr style="height: 30px">
 								<td style="text-align: center">${ question.questionNo }</td>
+								<td style="text-align: center">${ question.questionNo }</td>
 								<td style="text-align: center">${ question.category }</td>
-								<td style='text-align: left; padding-left: 10px'><a
-									href="/../shop/qa-detail/${ question.questionNo }">
-										${ question.title }</a>&nbsp;&nbsp;[${ question.recnt }]</td>
+								<td style='text-align: left; padding-left: 10px'>
+								<a	href=<c:if test='${ question.secure eq true}'>
+								"/../shop/pwCheck/${ question.questionNo }" 
+								</c:if>
+								<c:if test='${ question.secure eq false}'>
+								 "/../shop/qa-detail/${ question.questionNo }" 
+								</c:if>>
+								${ question.title }</a>
+								<c:if test='${ question.secure eq true }'>
+								<i class="fa fa-lock"></i>
+								</c:if>
+								
+								&nbsp;&nbsp;[${ question.recnt }]
+								</td>
 								<td style="text-align: center">${ question.uploader }</td>
 								<td style="text-align: center">${ question.regDate }</td>
 								<td style="text-align: center">${ question.answer ? "답변완료" : "답변대기" }
@@ -154,7 +166,6 @@
 <br>
 <br>
 <br>
-
 
 
 <jsp:include page="../include/footer.jsp" />
