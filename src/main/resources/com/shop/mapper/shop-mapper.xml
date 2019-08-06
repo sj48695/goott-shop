@@ -18,6 +18,19 @@
         <result javaType="java.lang.Integer" column="colorCnt" property="colorCnt"/>
 	</resultMap>
 	
+	<!-- <resultMap id="cartListMap" type="java.util.HashMap">
+		<result javaType="String" column="title" property="title"/>
+		<result javaType="int" column="cartNo" property="cartNo"/>
+		<result javaType="int" column="productNo" property="productNo"/>
+		<result javaType="int" column="count" property="count"/>
+		<result javaType="int" column="price" property="price"/>
+		<result javaType="String" column="productName" property="productName"/>
+		<result javaType="String" column="color" property="color"/>
+		<result javaType="String" column="size" property="size"/>
+		<result javaType="java.util.Date" column="regDate" property="regDate"/>
+		<result javaType="String" column="memberId" property="memberId"/>
+	</resultMap> -->
+	
 	<!-- Product -->
 	
 	<select id="selectProductByProductNo" resultType="Product">
@@ -39,7 +52,10 @@
 	<!-- Cart -->
 	
 	<select id="selectCarts" resultType="Cart">
-		select cartNo, regDate, <include refid="cartColumns"/> from cart
+		select p.title, cartNo, c.regDate, c.productNo, c.count, c.price, c.productName, c.color, c.size, memberId
+		from product p inner join cart c 
+		on p.productNo = c.productNo
+		where memberId = #{ memberId }
 	</select>
 	
 	<insert id="insertCart" parameterType="Cart" >
@@ -56,13 +72,36 @@
 		)
 	</insert>
 	
-	<delete id="deleteCart">
-		delete from cart where cartNo = #{ cartNo }
+	<delete id="deleteCart" >
+		delete from cart 
+		where 
+		<choose>
+            <when test="codeList.size != 0">
+                cartNos in 
+                <foreach collection="codeList" item="item" index="index" separator="," open="(" close=")">
+                    #{item}
+                </foreach>
+            </when>
+        </choose>
 	</delete>
 	
 	<update id="updateCartCntByCartNo" parameterType="hashmap">
 		update cart set count = #{ count } where cartNo = #{ cartNo }	
 	</update>
 	
+	<!-- CheckOut -->
+	<select id="selectCheckoutList" resultType="Cart">
+		select p.title, cartNo, c.regDate, c.productNo, c.count, c.price, c.productName, c.color, c.size, memberId
+		from product p inner join cart c 
+		on p.productNo = c.productNo
+		where memberId = #{ memberId }
+		<choose>
+            <when test="codeList.size != 0">
+                and cartNo in 
+                <foreach collection="codeList" item="item" index="index" separator="," open="(" close=")">
+                    #{item}
+                </foreach>
+            </when>
+        </choose>
+	</select>
 </mapper>
-	

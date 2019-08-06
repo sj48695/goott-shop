@@ -76,4 +76,18 @@
 		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />  
 	</bean>
 	
+	<!-- Manager -->
+	<bean id="managerService" class="com.shop.service.ManagerServiceImpl">
+		<property name="managerRep" ref="managerRep"/>
+	</bean>
+	
+	<bean id="managerRep" class="com.shop.repository.ManagerRepImpl">
+		<property name="managerMapper" ref="managerMapper"/>
+	</bean>
+	
+	<bean id="managerMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.shop.mapper.ManagerMapper"></property>
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"></property>
+	</bean> 
+	
 </beans>

@@ -1,12 +1,12 @@
 package com.shop.vo;
 
-import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Date;
 
 import lombok.Data;
 
 @Data
 public class Product {
-
 	private int productNo;
 	private String title;
 	private int price;
@@ -19,4 +19,7 @@ public class Product {
 	private Date regDate;
 	private String managerId;
 	
+	private ProductFile file;
+	private ArrayList<ProductFile> files;
 }
+

@@ -31,59 +31,75 @@
                 <div class="col-lg-8">
                     <h3>Billing Details</h3>
                     <form class="row contact_form" action="#" method="post" novalidate="novalidate">
-                      	<div class="col-md-12 form-group p_star">
-                            <input type="text" class="form-control" id="name_from" name="name" placeholder="Name" value="이름" readonly="readonly">
+                      	<div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" id="name_from"
+                            	placeholder="이름" value="${ loginuser.name }" readonly>
                         </div>
-                        <div class="col-md-12 form-group p_star">
-                            <input type="text" class="form-control" id="phone_from" name="phone" placeholder="Phone number" value="번호" readonly="readonly">
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" id="phone_from"
+                            	placeholder="핸드폰 번호" value="${ loginuser.phone }" readonly>
                         </div>
-                        <div class="col-md-12 form-group p_star">
-                            <input type="text" class="form-control" id="email_from" name="email" placeholder="Email Address" value="이메일@naver.com" readonly="readonly">
+                        <!-- <div class="col-md-12 form-group p_star">
+                            <input type="text" class="form-control" id="email_from"
+                            	placeholder="Email Address" value="이메일@naver.com" readonly="readonly">
+                        </div> -->
+                        <div class="col-md-4 form-group p_star">
+                            <input type="text" class="form-control" id="postCode_from" readonly
+                            	placeholder="우편번호" value="${ loginuser.postCode}">
+                        </div>
+                        <div class="col-md-8 form-group p_star">
+                            <input type="text" class="form-control" id="roadAddr_from" readonly
+                            	placeholder="도로명주소" value="${ loginuser.roadAddr}">
+                        </div>
+                        <div class="col-md-4 form-group p_star"></div>
+                        <div class="col-md-8 form-group p_star">
+                            <input type="text" class="form-control" id="jibunAddr_from" readonly
+                            	placeholder="지번주소" value="${ loginuser.jibunAddr }">
+                        </div>
+                        <div class="col-md-4 form-group p_star"></div>
+                        <div class="col-md-8 form-group p_star">
+                            <input type="text" class="form-control" id="detailAddr_from" readonly
+                            	placeholder="상세주소" value="${ loginuser.detailAddr }">
+                        </div>
+                        <div class="col-md-4 form-group p_star"></div>
+                        <div class="col-md-8 form-group p_star">
+                            <input type="text" class="form-control" id="extraAddr_from" readonly
+                            	placeholder="Address line 01" value="${ loginuser.extraAddr }">
                         </div>
                     	<div class="col-md-12 form-group">
                     		<hr>
                             <div class="creat_account">
-                                <input type="checkbox" id="f-option2" name="selector">
+                                <input type="checkbox" id="f-option2" name="selector" onclick="checkBuy(this)">
                                 <label for="f-option2">주문자 정보와 동일</label>
                             </div>
                         </div>
-                        <div class="col-md-12 form-group p_star">
-                            <input type="text" class="form-control" id="name_from" name="name" placeholder="Name">
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" id="name_to" name="name" placeholder="Name">
                         </div>
-                        <div class="col-md-12 form-group p_star">
-                            <input type="text" class="form-control" id="phone_from" name="phone" placeholder="Phone number">
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" id="phone_to" name="phone" placeholder="Phone number">
                         </div>
-                        <div class="col-md-12 form-group p_star">
-                            <input type="text" class="form-control" id="email_from" name="email" placeholder="Email Address">
-                        </div>
-                        <div class="col-md-12 form-group p_star">
-                            <input type="text" class="form-control" id="add1" name="add1">
-                            <span class="placeholder" data-placeholder="Address line 01"></span>
-                        </div>
-                        <div class="col-md-12 form-group p_star">
-                            <input type="text" class="form-control" id="add2" name="add2">
-                            <span class="placeholder" data-placeholder="Address line 02"></span>
-                        </div>
-                        <div class="col-md-12 form-group p_star">
-                            <input type="text" class="form-control" id="city" name="city">
-                            <span class="placeholder" data-placeholder="Town/City"></span>
-                        </div>
-                        <div class="col-md-12 form-group p_star">
-                            <select class="country_select">
-                                <option value="1">District</option>
-                                <option value="2">District</option>
-                                <option value="4">District</option>
-                            </select>
-                        </div>
-                        <div class="col-md-12 form-group">
-                            <input type="text" class="form-control" id="zip" name="zip" placeholder="Postcode/ZIP">
-                        </div>
-                        <div class="col-md-12 form-group">
-                            <div class="creat_account">
-                                <input type="checkbox" id="f-option2" name="selector">
-                                <label for="f-option2">Create an account?</label>
-                            </div>
-                        </div>
+                        <!-- <div class="col-md-12 form-group p_star">
+                            <input type="text" class="form-control" id="email_to" name="email" placeholder="Email Address">
+                        </div> -->
+                        <div class="col-md-4 form-group">
+							<input type="text" class="form-control" id="postcode" name="postCode" placeholder="우편번호">
+						</div>
+						<div class="col-md-8 form-group">
+							<input type="text" class="form-control" id="roadAddress" name="roadAddr" placeholder="도로명주소"><br>
+						</div>
+						<div class="col-md-4 form-group">
+							<input type="button" class="button addrBtn col py-2 text-white" value="우편번호 찾기">
+						</div>
+						<div class="col-md-8 form-group">
+							<input type="text" class="form-control" id="jibunAddress" name="jibunAddr" placeholder="지번주소">
+						</div>
+						
+                        <div class="col-md-4 form-group p_star"></div>
+						<div class="col-md-8 form-group">
+							<input type="text" class="form-control col-md-6" id="detailAddress" name="detailAddr" placeholder="상세주소">&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="text" class="form-control col-md-5" id="extraAddress" name="extraAddr" placeholder="참고항목">
+						</div>
                         <div class="col-md-12 form-group mb-0">
                             <div class="creat_account">
                                 <h3>Shipping Details</h3>
@@ -103,16 +119,14 @@
 	                            	<span class="middle">${ product.count }개</span> 
 	                            	<span class="last">
 	                                  	<fmt:formatNumber pattern="#,###원">${ product.price * product.count }</fmt:formatNumber>
-	                                  	<c:set var="subtotal" value="${ subtotal + (product.price * product.count) }"/>
+	                                  	<c:set var="total" value="${ total + (product.price * product.count) }"/>
 									</span>
 	                            </a>
                             </li>
                          </c:forEach>
                         </ul>
                         <ul class="list list_2">
-                            <li><a href="#">Subtotal <span><fmt:formatNumber pattern="#,###원">${ subtotal }</fmt:formatNumber></span></a></li>
-                            <li><a href="#">Shipping <span>Flat rate: $50.00</span></a></li>
-                            <li><a href="#">Total <span>$2210.00</span></a></li>
+                            <li><a href="#">Total <span><fmt:formatNumber pattern="#,###원">${ total }</fmt:formatNumber></span></a></li>
                         </ul>
                         <div class="payment_item">
                             <div class="radion_btn">

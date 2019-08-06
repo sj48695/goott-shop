@@ -17,4 +17,7 @@ public class Cart {
 	private Date regDate;
 	private String memberId;
 	
+	
+	private String title;
+	
 }

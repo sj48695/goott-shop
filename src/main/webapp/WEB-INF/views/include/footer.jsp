@@ -91,8 +91,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	</footer>
 	<!--================ End footer Area  =================-->
 
-
-
   <script src="/shop/resources/vendors/jquery/jquery-3.2.1.min.js"></script>
   <script src="/shop/resources/vendors/bootstrap/bootstrap.bundle.min.js"></script>
   <script src="/shop/resources/vendors/skrollr.min.js"></script>
@@ -100,9 +98,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
   <script src="/shop/resources/vendors/nice-select/jquery.nice-select.min.js"></script>
   <script src="/shop/resources/vendors/jquery.ajaxchimp.min.js"></script>
   <script src="/shop/resources/vendors/mail-script.js"></script>
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
-  <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
+  <!--autoload=false 파라미터를 이용하여 자동으로 로딩되는 것을 막습니다.-->
+  <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
   <script src="/shop/resources/js/qna.js"></script>
   <script src="/shop/resources/js/shop.js"></script>
   <script src="/shop/resources/js/main.js"></script>
