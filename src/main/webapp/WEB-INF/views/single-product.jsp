@@ -47,7 +47,7 @@
 				</div>
 				<div class="col-lg-5 offset-lg-1">			
 					<div class="s_product_text">
-						<form id="addCartForm" action="/shop/cart" method="post">
+						<form id="addCartForm" action="/shop/checkout/buynow" method="post">
 							<input hidden="true" name="productNo" value="${ product.productNo }">
 							<input hidden="true" name="price" value="${ product.price }">
 							<input hidden="true" id="result" name="result" value="0">
@@ -106,8 +106,8 @@
 								</div>
 								</c:if>
 								<div class="row text-center">
-									<a class="button primary-btn addToCart col-5 m-3" href="#">Add to Cart</a>  
-									<a class="button button-header col-5 m-3" href="#">Buy Now</a>
+									<input class="button primary-btn addToCart col-5 m-3 pr-0 text-center" value="Add to Cart">  
+									<input type="submit" class="button button-header col-5 m-3 pr-0 text-center" value="Buy Now">
 								</div>
 							</div>
 							<div class="card_area d-flex align-items-center">

@@ -1,6 +1,7 @@
 package com.shop.controller;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shop.service.ShopService;
+import com.shop.vo.Buy;
 import com.shop.vo.Cart;
 import com.shop.vo.Member;
 import com.shop.vo.Product;
@@ -89,14 +91,50 @@ public class ShopController {
 		return result;
 	}
 	
-	@RequestMapping(value = "/checkout/{cartNostrs}", method = RequestMethod.GET)
+	@RequestMapping(value = "/checkout/cart/{cartNostrs}", method = RequestMethod.GET)
 	public String checkout(Model model, HttpSession session, @PathVariable String cartNostrs) {
 		Member loginuser = (Member) session.getAttribute("loginuser");
+
+//		String buylist = "";
 		if (loginuser != null) {
-			List<Cart> products = shopService.findCheckoutList(loginuser.getMemberId(), cartNostrs);
+			List<Cart> carts = shopService.findCheckoutList(loginuser.getMemberId(), cartNostrs);
+//
+//			for (Cart cart : carts) {
+//				buylist = buylist + cart.getCartNo() + ',';
+//			}
+			
 			model.addAttribute("loginuser", loginuser);
-			model.addAttribute("products", products);
+			model.addAttribute("products", carts);
+			model.addAttribute("cartNostrs", cartNostrs);
 			return "checkout";
+		} else {
+			return "redirect:/";
+		}
+	}
+	
+	@RequestMapping(value = "/checkout/buynow", method = RequestMethod.POST)
+	public String buyNowCheckout(Model model, HttpSession session,Cart cart
+			, int productNo, String color
+			, String productName, String size) {
+		Member loginuser = (Member) session.getAttribute("loginuser");
+		if (loginuser != null) {
+//			Product product = shopService.findProductByProductNo(productNo);
+//			List<Product> products = new ArrayList<Product>();
+//			products.add(product);
+//			product.setColor(color);
+//			product.setCount(1);
+//			product.setProductName(productName);
+//			product.setSize(size);
+//			System.out.println(product);
+			
+			cart.setMemberId(loginuser.getMemberId());
+			shopService.registerCart(cart);
+//			
+//			
+//			model.addAttribute("loginuser", loginuser);
+//			model.addAttribute("products", products);
+//			model.addAttribute("buylist", productNo);
+			return "/checkout/cart/"+cart.getProductNo();
 		} else {
 			return "redirect:/";
 		}
@@ -112,5 +150,36 @@ public class ShopController {
 		Product product = shopService.findProductByProductNo(productNo);
 		model.addAttribute("product", product);
 		return "single-product";
+	}
+	
+	@RequestMapping(value="/buy/{cartNostrs}", method = RequestMethod.POST)
+	public String buy(Buy buy,Member member, @PathVariable String cartNostrs, HttpSession session){
+		Member loginuser = (Member) session.getAttribute("loginuser");
+		if (loginuser != null) {
+
+			buy.setMemberId(loginuser.getMemberId());
+			
+			String address = "("+member.getPostCode()+") "+member.getRoadAddr() 
+							+ " " + member.getDetailAddr() + " " + member.getExtraAddr();
+			buy.setAddress(address);
+			shopService.buy(buy, cartNostrs);
+
+		}
+		
+		return "redirect:/account/mypage";
+	}
+	
+	@RequestMapping(value="/buy/buynow/{buylist}", method = RequestMethod.POST)
+	public String buyNow(Buy buy, @PathVariable String buylist, HttpSession session){
+		Member loginuser = (Member) session.getAttribute("loginuser");
+		if (loginuser != null) {
+
+			buy.setMemberId(loginuser.getMemberId());
+			System.out.println(buy);
+			shopService.buy(buy, buylist);
+			
+		}
+		
+		return "redirect:/account/mypage";
 	}
 }

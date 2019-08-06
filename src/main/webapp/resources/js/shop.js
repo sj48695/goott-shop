@@ -186,7 +186,7 @@ function checkAll(rows){
         $("input[name=checkRow]").prop("checked", true);
         //$("#checkRows").attr("value",rows);
         $('#delete').attr('onclick','javascript:removeCart(' + rows + ')');
-        $('#buy').attr('href','/shop/checkout/' + rows);
+        $('#buy').attr('href','/shop/checkout/cart/' + rows);
       }else{
         $("input[name=checkRow]").prop("checked", false);
         //$("#checkRows").attr("value",'');
@@ -209,7 +209,7 @@ function checkRow() {
 		if (checkRows != null) {
 			$('#delete').attr('onclick', 'javascript:removeCart(' + checkRows + ')');
 			$('#buy').attr('onclick', '');
-			$('#buy').attr('href', '/shop/checkout/' + checkRows);
+			$('#buy').attr('href', '/shop/checkout/cart/' + checkRows);
 			
 			if($("#checkRows").attr("value") == ''){
 				$('#delete').attr('onclick', 'alert("상품을 선택해주세요")');
@@ -228,9 +228,19 @@ function checkBuy(my) {
 	if (my.checked) {
 		$('#name_to').attr('value', $('#name_from').attr('value'));
 		$('#phone_to').attr('value', $('#phone_from').attr('value'));
+		$('#postcode').attr('value', $('#postCode_from').attr('value'));
+		$('#roadAddress').attr('value', $('#roadAddr_from').attr('value'));
+		$('#jibunAddress').attr('value', $('#jibunAddr_from').attr('value'));
+		$('#detailAddress').attr('value', $('#detailAddr_from').attr('value'));
+		$('#extraAddress').attr('value', $('#extraAddr_from').attr('value'));
 	}else{
 		$('#name_to').attr('value', '');
 		$('#phone_to').attr('value', '');
+		$('#postcode').attr('value', '');
+		$('#roadAddress').attr('value', '');
+		$('#jibunAddress').attr('value', '');
+		$('#detailAddress').attr('value', '');
+		$('#extraAddress').attr('value', '');
 	}
 }
 

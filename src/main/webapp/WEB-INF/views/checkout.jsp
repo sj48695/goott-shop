@@ -4,33 +4,34 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:include page="include/header.jsp"/>
-	<!-- ================ start banner area ================= -->	
-	<section class="blog-banner-area" id="category">
-		<div class="container h-100">
-			<div class="blog-banner">
-				<div class="text-center">
-					<h1>Product Checkout</h1>
-					<nav aria-label="breadcrumb" class="banner-breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Checkout</li>
-            </ol>
-          </nav>
-				</div>
+<!-- ================ start banner area ================= -->	
+<section class="blog-banner-area" id="category">
+	<div class="container h-100">
+		<div class="blog-banner">
+			<div class="text-center">
+				<h1>Product Checkout</h1>
+				<nav aria-label="breadcrumb" class="banner-breadcrumb">
+           <ol class="breadcrumb">
+             <li class="breadcrumb-item"><a href="#">Home</a></li>
+             <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+           </ol>
+         </nav>
 			</div>
-    </div>
-	</section>
+		</div>
+   </div>
+</section>
 	<!-- ================ end banner area ================= -->
   
   
   <!--================Checkout Area =================-->
-  <section class="checkout_area section-margin--small">
+<section class="checkout_area section-margin--small">
     <div class="container">
         <div class="billing_details">
-            <div class="row">
+			<form class="row contact_form" action="/shop/buy/${ cartNostrs }" method="post" novalidate="novalidate">
+                <input hidden="true" name="products" value="${ products }">
                 <div class="col-lg-8">
                     <h3>Billing Details</h3>
-                    <form class="row contact_form" action="#" method="post" novalidate="novalidate">
+                    <div class="row">
                       	<div class="col-md-6 form-group p_star">
                             <input type="text" class="form-control" id="name_from"
                             	placeholder="이름" value="${ loginuser.name }" readonly>
@@ -104,16 +105,19 @@
                             <div class="creat_account">
                                 <h3>Shipping Details</h3>
                             </div>
-                            <textarea class="form-control" name="message" id="message" rows="1" placeholder="Order Notes"></textarea>
+                            <textarea class="form-control" name="orderMsg" id="message" rows="1" placeholder="기사분께 전달할 내용을 입력해주세요"></textarea>
                         </div>
-                    </form>
+                    </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="order_box">
                         <h2>Your Order</h2>
                         <ul class="list">
                             <li><a href="#"><h4>Product <span>Total</span></h4></a></li>
-                         <c:forEach var="product" items="${ products }">
+                         <c:forEach var="product" items="${ products }"><!-- 
+                         <input type="hidden" name="productNo" value="">
+                         <input type="hidden" name="count" value="">
+                         <input type="hidden" name="price" value=""> -->
                             <li>
                             	<a href="#">${ product.productName }
 	                            	<span class="middle">${ product.count }개</span> 
@@ -131,35 +135,30 @@
                         <div class="payment_item">
                             <div class="radion_btn">
                                 <input type="radio" id="f-option5" name="selector">
-                                <label for="f-option5">Check payments</label>
+                                <label for="f-option5">무통장입금</label>
                                 <div class="check"></div>
                             </div>
-                            <p>Please send a check to Store Name, Store Street, Store Town, Store State / County,
-                                Store Postcode.</p>
                         </div>
                         <div class="payment_item active">
                             <div class="radion_btn">
                                 <input type="radio" id="f-option6" name="selector">
-                                <label for="f-option6">Paypal </label>
+                                <label for="f-option6">신용카드</label>
                                 <img src="/shop/resources/img/product/card.jpg" alt="">
                                 <div class="check"></div>
                             </div>
-                            <p>Pay via PayPal; you can pay with your credit card if you donât have a PayPal
-                                account.</p>
                         </div>
                         <div class="creat_account">
-                            <input type="checkbox" id="f-option4" name="selector">
-                            <label for="f-option4">Iâve read and accept the </label>
-                            <a href="#">terms & conditions*</a>
+                            <input type="checkbox" id="f-option4" name="selector" required>
+                            <label for="f-option4"><a href="#">결제조건 확인 및 개인정보 제공</a>에 동의합니다.</label>
                         </div>
                         <div class="text-center">
-                          <a class="button button-paypal" href="#">Proceed to Paypal</a>
+                          <input type="submit" class="button button-paypal" value="결제하기">
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
-  </section>
+</section>
   <!--================End Checkout Area =================-->
 <jsp:include page="include/footer.jsp"/>
