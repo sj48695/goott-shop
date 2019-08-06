@@ -5,33 +5,50 @@
 
 <mapper namespace="com.shop.mapper.QuestionMapper">
 	
-	<select id="selectQuestions" resultType="com.shop.vo.Question">
-		SELECT questionNo, category, title, uploader, regDate,
+	<select id="selectQuestions" parameterType="hashmap" resultType="Question">
+		SELECT questionNo, category, title, uploader, regDate, secure,
 		(select count(*) from questioncomment where questionNo=question.questionno) recnt
 		FROM question
 		WHERE deleted = '0' 
+		<if test='category != "all"'>
+    		AND  category = #{category}
+  		</if>
 		ORDER BY questionNo DESC
 	</select>
 	
+	<!-- <select id="selectQuestionlist" parameterType="hashmap" resultType="com.shop.vo.Question">
+		SELECT questionNo, category, title, uploader, regDate , secure
+		FROM question
+		WHERE deleted = '0'		
+		
+		ORDER BY questionNo DESC
+	</select> -->
+	
 	<select id="selectQuestionByQuestionNo" 
-		parameterType="int" resultType="com.shop.vo.Question">
+		parameterType="int" resultType="Question">
 		SELECT questionNo, category, title, uploader, regDate, readCount, content
 		FROM question
 		WHERE questionNo = #{ questionNo } AND DELETED = '0'
 	</select>
 	
 	<select id="selectQuestionFilesByQuestionNo"
-		parameterType="int" resultType="com.shop.vo.QuestionFile">
+		parameterType="int" resultType="QuestionFile">
 		SELECT questionFileNo, questionNo, savedFileName, userFileName, downloadCount 
 		FROM questionfile
 		WHERE questionNo = #{ questionNo }
 	</select>
 	
 	<select id="selectQuestionFileByQuestionFileNo"
-		parameterType="int" resultType="com.shop.vo.QuestionFile">
+		parameterType="int" resultType="QuestionFile">
 		SELECT questionFileNo, questionNo, savedFileName, userFileName, downloadCount 
 		FROM questionfile
 		WHERE questionFILENO = #{ resumeFileNo }
+	</select>
+	
+	
+	<select id="selectPwdByQuestionNo" resultType="String">
+		select pwd from house.question
+		where  QUESTIONNO = #{ questionNo }
 	</select>
 	
 	
@@ -39,20 +56,12 @@
 	<!-- **************************************************** -->
 	
 	<!-- insert가 완료된 후 keyColumn(resumeNo)의 값을 vo의 keyProperty(resumeNo)에 저장 -->
-	<insert id="insertQuestion" parameterType="com.shop.vo.Question"
+	<insert id="insertQuestion" parameterType="Question"
 			useGeneratedKeys="true" keyColumn="questionNo" keyProperty="questionNo">
-		INSERT INTO question (category, title, uploader, content)
-		VALUES (#{ category }, #{ title }, #{ uploader }, #{ content })
+		INSERT INTO question (category, title, uploader, content, pwd, secure)
+		VALUES (#{ category }, #{ title }, #{ uploader }, #{ content }, #{ pwd }, #{ secure })
 	</insert>
 	
-	<!-- insert가 완료된 후 selectKey의 SQL을 실행해서 vo의 resumeNo에 값을 저장 -->
-	<insert id="insertQuestion2" parameterType="com.shop.vo.Question">
-		<selectKey keyProperty="questionNo" order="AFTER" resultType="int">
-			SELECT RESUME_SEQUENCE.CURRVAL FROM DUAL
-		</selectKey>
-		INSERT INTO question (category, title, uploader, content)
-		VALUES (#{ category }, #{ title }, #{ uploader }, #{ content })
-	</insert>
 	
 	<insert id="insertQuestionFile" parameterType="com.shop.vo.QuestionFile">
 		INSERT INTO questionfile (
@@ -130,14 +139,14 @@
 		parameterType="int" resultType="QuestionComment">
 		SELECT COMMENTNO, QUESTIONNO, WRITER, REGDATE, CONTENT, GROUPNO, STEP, DEPTH 
 		FROM questioncomment 
-		WHERE QUESTIONNO = #{ questionNo } ORDER BY GROUPNO DESC, STEP ASC 
+		WHERE questionno = #{ questionNo } ORDER BY GROUPNO DESC, STEP ASC 
 	</select>
 	
 	<select id="selectCommentByCommentNo" 
 		parameterType="int" resultType="QuestionComment">
 		SELECT COMMENTNO, QUESTIONNO, WRITER, CONTENT, REGDATE, GROUPNO, STEP, DEPTH 
 		FROM questioncomment
-		WHERE COMMENTNO = #{ questionNo }
+		WHERE commentno = #{ questionNo }
 	</select>
 	
 	<update id="updateCommentStep" parameterType="QuestionComment">
@@ -167,15 +176,7 @@
 		)	
 	</insert>
 	
-	<select id="selectQuestionlist" parameterType="hashmap" resultType="com.shop.vo.Question">
-		SELECT questionNo, category, title, uploader, regDate
-		FROM question
-		WHERE deleted = '0'		
-		<if test='category != "all"'>
-    		AND  category = #{category}
-  		</if>
-		ORDER BY questionNo DESC
-	</select>
+
 	
 	
 	

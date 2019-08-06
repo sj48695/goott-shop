@@ -12,7 +12,8 @@ import com.shop.vo.QuestionComment;
 public interface QuestionMapper {
 	
 	Question selectQuestion(int questionNo);
-	List<Question> selectQuestions();
+	
+	List<Question> selectQuestions(HashMap<String, Object> params);
 	
 	Question selectQuestionByQuestionNo(int questionNo);
 	
@@ -50,6 +51,8 @@ public interface QuestionMapper {
 	QuestionComment selectCommentByCommentNo(int commentNo);	
 	
 	List<Question> selectQuestionlist(HashMap<String, Object> params);
+	
+	String selectPwdByQuestionNo(int questionNo);
 
 }
 	

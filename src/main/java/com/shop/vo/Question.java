@@ -19,6 +19,8 @@ public class Question {
 		private Date regDate;    
 		private boolean deleted;
 		private boolean answer;
+		private boolean secure;
+		private String pwd;
 		private int recnt;
 		
 		

@@ -1,171 +1,85 @@
-
 <%@ page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-
-<!DOCTYPE html>
-
-<html>
-<head>
-
-<meta charset="UTF-8">
-<title>자료업로드</title>
-
-<!-- Favicon  -->
-<link rel="icon" href="/catopia/resources/img/core-img/favicon.ico">
-
-<!-- Core Style CSS -->
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<link rel="stylesheet" href="/catopia/resources/css/core-style.css">
-<link rel="stylesheet" href="/catopia/resources/style.css">
+<jsp:include page="/WEB-INF/views/include/header.jsp" />
 
 
+<!-- ##### Main Content Wrapper Start ##### -->
+<div class="main-content-wrapper d-flex clearfix">
 
-</head>
-
-
-<body>
-
-	<!-- ##### Main Content Wrapper Start ##### -->
-	<div class="main-content-wrapper d-flex clearfix">
-
-		<!-- Mobile Nav (max width 767px)-->
-		
-
-		<!--header start  -->
-		<jsp:include page="/WEB-INF/views/include/header.jsp" />
-		<!--header end  -->
-
-
-
-		<!-- Product Catagories Area Start -->
-		<div class="products-catagories-area clearfix">
-			<div class="amado-pro-catagory clearfix">
-
-				<div id="pageContainer">
-
-
-					<h3 style="text-align: center; padding-top: 5%">QnA</h3>
-
-					<div style="padding-top: 50; text-align: center">
-						<div id="inputcontent">
-							<div>
-								<div class="inputsubtitle"></div>
-								
-						
-								
-								<form action="qa-write" method="post"
-									enctype="multipart/form-data">
-									<table class="table table-bordered" style="width:50%;margin: auto">
-										<tr>
-											<th>제목</th>
-											<td><select name="category">
-													<option value="고양이문의" selected="selected">고양이문의</option>
-													<option value="용품문의">용품문의</option>
-													<option value="기타문의">기타문의</option>
-											</select></td>
-											<td><input type="text" name="title" style="width: 550px"
-												class="form-control" /></td>
-										</tr>
-										<tr>
-											<th colspan="1">작성자</th>
-											<td colspan="2" style="text-align: left"><input
-												type="hidden" name="uploader" value="${loginuser.memberId}">
-												${ loginuser.memberId} <%-- 히든속성이 아님
-		                	<input type="hidden" name="uploader" 
-		                	value="<%= member.getMemberId() %>" readonly="readonly">
-		                	--%></td>
-										</tr>
-										<tr>
-											<th colspan="1">첨부자료</th>
-											<td colspan="2" style="text-align: left">
-
-												<div class="custom-file">
-													<input type="file" class="custom-file-input"
-														id="customFile" name="attach"> <label
-														class="custom-file-label" for="customFile">Choose
-														file</label>
-												</div>
-
-											</td>
-										</tr>
-
-										<tr>
-											<td colspan="3">
-											<textarea name="content" id="editor" style="width: 750px" rows="20" class="form-control"></textarea>
-											</td>
-										</tr>
-
-
-
-
-									</table>
-									<div class="buttons">
-										<input type="submit" value="자료등록" id="insertBoard"
-											class="btn btn-outline-secondary" /> <input
-											id="cancel_button" type="button" value="취소"
-											class="btn btn-outline-secondary" />
-									</div>
-								</form>
-
-								<script type="text/javascript">
-									//브라우저가 html을 모두 읽고 처리할 준비가 되었을 때 호출 할 함수 지정
-									window.addEventListener(
-													'load',
-													function(event) {//js의 main 함수 역할
-														var btnCancel = document
-																.querySelector('#cancel_button');
-														btnCancel
-																.addEventListener(
-																		'click',
-																		function(
-																				event) {
-																			//location.href = "list";//주소창에 list.action을 입력하고 엔터
-																			history.back(); //브라우저의 이전 버튼을 클릭
-																		});
-													});
-								</script>
-							</div>
+	<!-- Product Catagories Area Start -->
+	<div class="products-catagories-area clearfix" style="width: 100%">
+		<div class="amado-pro-catagory clearfix">
+			<h3 style="text-align: center; padding-top: 5%">QnA</h3>
+			<div style="padding-top: 50; text-align: center">
+				<div id="inputcontent">
+					<div class="inputsubtitle"></div>
+					<form action="qa-write" method="post" enctype="multipart/form-data">
+						<table class="table" style="width: 50%; margin: auto">
+							<tr>
+								<th>제목</th>
+								<td>
+									<select name="category">
+										<option value="상품문의" selected="selected">상품문의</option>
+										<option value="교환/반품문의">교환/반품문의</option>
+										<option value="기타문의">기타문의</option>
+									</select>
+								</td>
+								<td>
+									<input type="text" name="title" 
+										style="width: 550px" class="form-control" />
+								</td>
+							</tr>
+							<tr>
+								<th colspan="1">작성자</th>
+								<td colspan="2" style="text-align: left">
+								<input type="hidden" name="uploader" value="${ loginuser.memberId}">
+									${ loginuser.memberId}</td>
+							</tr>
+							<tr>
+								<td colspan="3">
+									<textarea name="content" id="editor"
+									style="width: 100%" rows="20" class="form-control"></textarea>
+								</td>	
+							</tr>
+							<tr>
+								<th colspan="1">비밀번호</th>
+								<td colspan="2" style="text-align: left">
+								<input type="password" class="form-control" id="pwd" 
+									name="pwd" style="width:100px">
+								</td>
+							</tr>
+							<tr>
+								<th colspan="1">비밀글 설정
+								<td colspan="2" style="text-align: left">
+									<input name="secure" id="secure1" type="radio" value="false" checked="checked" >
+									<label for="secure1">공개글</label>
+									<input name="secure" id="secure2" type="radio" value="true" >
+									<label for="secure2">비밀글</label>
+								</td>
+							</tr>
+							<tr><th/><td/></tr>
+						</table>
+						<br>
+						<div class="buttons">
+							<input type="submit" value="자료등록" id="insertBoard" class="btn btn-outline-secondary" /> 
+							<input id="cancel_button" type="button" value="취소" class="btn btn-outline-secondary" />
 						</div>
-
-					</div>
+					</form>
 				</div>
 			</div>
 		</div>
-		<!-- Product Catagories Area End -->
 	</div>
-	
+</div>
 
+<br>
+<br>
+<br>
+<br>
 
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-	<!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
-	<script
-		src="<c:url value="/resources/js/jquery/jquery-2.2.4.min.js" />"></script>
-
-
-
-	<!-- Popper js -->
-	<script src="<c:url value="/resources/js/popper.min.js" />"></script>
-
-	<!-- Bootstrap js -->
-	<script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
-
-	<!-- Plugins js -->
-	<script src="<c:url value="/resources/js/plugins.js" />"></script>
-
-	<!-- Active js -->
-	<script src="<c:url value="/resources/js/active.js" />"></script>
-
-
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script>
 		// Add the following code if you want the name of the file appear on select
 		$(".custom-file-input").on(
@@ -180,7 +94,7 @@
 	<!-- editor -->
 	<script src="https://code.jquery.com/jquery-latest.js"></script>
 	<script type="text/javascript"
-		src="/catopia/resources/editor/js/HuskyEZCreator.js" charset="utf-8"></script>
+		src="/shop/resources/navereditor/js/HuskyEZCreator.js" charset="utf-8"></script>
 	<script type="text/javascript">
 		$(function() {
 			//전역변수
@@ -189,7 +103,7 @@
 			nhn.husky.EZCreator.createInIFrame({
 				oAppRef : obj,
 				elPlaceHolder : "editor",
-				sSkinURI : "/catopia/resources/editor/SmartEditor2Skin.html",
+				sSkinURI : "/shop/resources/navereditor/SmartEditor2Skin.html",
 				htParams : {
 					// 툴바 사용 여부
 					bUseToolbar : true,
@@ -209,15 +123,4 @@
 		});
 	</script>
 
-
-
-
-
-
-
-
-
-
-
-</body>
-</html>
+<jsp:include page="../include/footer.jsp" />

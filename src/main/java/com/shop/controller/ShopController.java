@@ -26,7 +26,7 @@ public class ShopController {
 	@Autowired
 	@Qualifier("shopService")
 	private ShopService shopService;
-
+	
 	@RequestMapping(value="/category", method = RequestMethod.GET)
 	public String category(Model model){
 		List<Product> products = shopService.findProducts();
@@ -39,25 +39,41 @@ public class ShopController {
 	}
 	
 	@RequestMapping(value="/cart", method = RequestMethod.GET)
-	public String cart(Model model){
-		List<Cart> carts = shopService.findCartList();
-		model.addAttribute("carts", carts);
-		return "cart";
+	public String cart(Model model, HttpSession session){
+		Member loginuser = (Member) session.getAttribute("loginuser");
+		model.addAttribute("loginuser", loginuser);
+		if(loginuser != null) {
+			List<Cart> carts = shopService.findCartList(loginuser.getMemberId());
+			String rows = "";
+			for(Cart cart : carts) {
+				rows = rows + cart.getCartNo() + ",";
+			}
+			model.addAttribute("rows", rows);
+			model.addAttribute("carts", carts);
+			return "cart";
+		} else {
+			return "redirect:/";
+		}
 	}
 	
 	@RequestMapping(value="/cart_register", method = RequestMethod.GET)
 	@ResponseBody
-	public String addToCart(Cart cart){
-		cart.setMemberId("sj");
-		shopService.registerCart(cart);
-		return "success";
+	public String addToCart(Cart cart, HttpSession session){
+		Member loginuser = (Member) session.getAttribute("loginuser");
+		if(loginuser != null) {
+			cart.setMemberId(loginuser.getMemberId());
+			shopService.registerCart(cart);
+			return "success";
+		} else {
+			return "redirect:/";
+		}
 	}
 	
 	@RequestMapping(value="/cart_remove", method = RequestMethod.GET
 			, produces = "text/plain;charset=utf-8")
 	@ResponseBody
-	public String removeCart(int cartNo){
-		shopService.removeCart(cartNo);
+	public String removeCart(String cartNoList){
+		shopService.removeCart(cartNoList);
 		return "success";
 	}
 	
@@ -73,11 +89,17 @@ public class ShopController {
 		return result;
 	}
 	
-	@RequestMapping(value="/checkout", method = RequestMethod.GET)
-	public String checkout(Model model){
-		List<Cart> products = shopService.findCartList();
-		model.addAttribute("products", products);
-		return "checkout";
+	@RequestMapping(value = "/checkout/{cartNostrs}", method = RequestMethod.GET)
+	public String checkout(Model model, HttpSession session, @PathVariable String cartNostrs) {
+		Member loginuser = (Member) session.getAttribute("loginuser");
+		if (loginuser != null) {
+			List<Cart> products = shopService.findCheckoutList(loginuser.getMemberId(), cartNostrs);
+			model.addAttribute("loginuser", loginuser);
+			model.addAttribute("products", products);
+			return "checkout";
+		} else {
+			return "redirect:/";
+		}
 	}
 	
 	@RequestMapping(value="/confirmation", method = RequestMethod.GET)
