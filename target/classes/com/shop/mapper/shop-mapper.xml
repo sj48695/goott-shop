@@ -20,6 +20,7 @@
 	
 	<!-- Product -->
 	
+	
 	<select id="selectProductByProductNo" resultType="Product">
 		select productNo, regDate, <include refid="productColumns"/> from product where productNo = #{ productNo }  
 	</select>
@@ -63,6 +64,14 @@
 	<update id="updateCartCntByCartNo" parameterType="hashmap">
 		update cart set count = #{ count } where cartNo = #{ cartNo }	
 	</update>
+	
+	<!-- member cart -->
+	
+	<select id="findMyCartList" resultType="Cart" parameterType="String">
+		select cartNo, regDate, productNo, count, price, productName, color, size 
+		from cart
+		where memberId = #{ memberId }
+	</select>
 	
 </mapper>
 	

@@ -4,6 +4,8 @@ import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shop.service.ShopService;
 import com.shop.vo.Cart;
+import com.shop.vo.Member;
 import com.shop.vo.Product;
 
 @Controller
@@ -87,5 +90,21 @@ public class ShopController {
 		Product product = shopService.findProductByProductNo(productNo);
 		model.addAttribute("product", product);
 		return "single-product";
+	}
+	
+//	회원 장바구니
+	@RequestMapping(value="/account/myCartList", method = RequestMethod.GET)
+	public String MyCartList(Model model, HttpSession session){
+		
+		Member loginuser = (Member) session.getAttribute("loginuser");
+		String memberId = loginuser.getMemberId();
+		
+		List<Cart> carts = shopService.findMyCartList(memberId);
+		
+		model.addAttribute("carts", carts);
+		model.addAttribute("loginuser", loginuser);
+		
+		return "account/myCartList";
+		
 	}
 }

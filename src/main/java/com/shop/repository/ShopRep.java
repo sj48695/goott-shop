@@ -24,4 +24,6 @@ public interface ShopRep {
 
 	void updateCartCntByCartNo(int cartNo, int count);
 
+	List<Cart> findMyCartList(String memberId);
+
 }

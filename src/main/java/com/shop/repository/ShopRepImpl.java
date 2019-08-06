@@ -69,4 +69,10 @@ public class ShopRepImpl implements ShopRep{
 		shopMapper.updateCartCntByCartNo(params);
 	}
 
+	@Override
+	public List<Cart> findMyCartList(String memberId) {
+		List<Cart> carts = shopMapper.findMyCartList(memberId);
+		return carts;
+	}
+
 }

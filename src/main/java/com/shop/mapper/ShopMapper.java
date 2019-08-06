@@ -24,4 +24,6 @@ public interface ShopMapper {
 
 	void updateCartCntByCartNo(HashMap<String, Object> params);
 
+	List<Cart> findMyCartList(String memberId);
+
 }

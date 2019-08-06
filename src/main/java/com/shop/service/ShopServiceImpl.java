@@ -65,5 +65,11 @@ public class ShopServiceImpl implements ShopService{
 	public void updateCartCntByCartNo(int cartNo, int count) {
 		shopRep.updateCartCntByCartNo(cartNo, count);
 	}
+
+	@Override
+	public List<Cart> findMyCartList(String memberId) {
+		List<Cart> carts = shopRep.findMyCartList(memberId);
+		return carts;
+	}
 	
 }
