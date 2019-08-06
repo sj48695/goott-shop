@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd
+						http://www.springframework.org/schema/tx https://www.springframework.org/schema/tx/spring-tx.xsd
+						http://www.springframework.org/schema/jee https://www.springframework.org/schema/jee/spring-jee.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-		<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	<context:component-scan base-package="com.shop.repository" />
+	<context:component-scan base-package="com.shop.service" />
+	
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location" value="classpath:env.mariadb.properties" />
 	</bean>
 	
@@ -20,6 +31,8 @@
 		<property name="maxWaitMillis" value="-1" />
 	</bean>	
 	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+	
 	<bean id="sqlSessionFactory"
 		  class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
@@ -31,6 +44,19 @@
 		<constructor-arg ref="sqlSessionFactory" />
 	</bean>
 	
+	<!-- Product -->
+	<bean id="shopRepository" class="com.shop.repository.ShopRepositoryImpl">
+		<property name="shopMapper" ref="shopMapper"/>
+	</bean>
+	
+	<bean id="shopService" class="com.shop.service.ShopServiceImpl">
+		<property name="shopRepository" ref="shopRepository"/>
+	</bean>
+	
+	<bean id="shopMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.shop.mapper.ShopMapper"></property>
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"></property>
+	</bean> 
 	<!-- Question -->
 	<bean id="questionService" class="com.shop.service.QuestionServiceImpl">
 		<property name="questionRep" ref="questionRep" />

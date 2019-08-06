@@ -101,5 +101,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
   <script src="resources/vendors/jquery.ajaxchimp.min.js"></script>
   <script src="resources/vendors/mail-script.js"></script>
   <script src="resources/js/main.js"></script>
+  <script src="resources/js/shop.js"></script>
 </body>
 </html>
