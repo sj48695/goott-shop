@@ -1,56 +1,70 @@
 package com.shop.service;
 
+import java.util.HashMap;
 import java.util.List;
 
-import com.shop.repository.ShopRepository;
+import com.shop.repository.ShopRep;
+import com.shop.vo.Cart;
 import com.shop.vo.Product;
-import com.shop.vo.ProductFile;
 
 public class ShopServiceImpl implements ShopService{
 
-	private ShopRepository shopRepository;
-	public ShopRepository getShopRepository() {
-		return shopRepository;
+//	@Autowired
+//	@Qualifier("shopRep")
+	private ShopRep shopRep;
+	
+	public ShopRep getShopRep() {
+		return shopRep;
 	}
 
-	public void setShopRepository(ShopRepository shopRepository) {
-		this.shopRepository = shopRepository;
+	public void setShopRep(ShopRep shopRep) {
+		this.shopRep = shopRep;
+	}
+
+	
+	@Override
+	public Product findProductByProductNo(int productNo) {
+		Product product = shopRep.selectProductByProductNo(productNo);
+		return product;
 	}
 
 	@Override
-	public Integer registerProductTx(Product product) {
-		System.out.println(product);
-		int newProductNo = shopRepository.insertProduct(product);
-		System.out.println(product);
-		
-		for (ProductFile file : product.getFiles()) {
-			file.setProductNo(newProductNo);
-			System.out.println(file);
-			shopRepository.insertProductFile(file);
-			System.out.println(file);
-		}
-			return newProductNo;
-	}
-
-	@Override
-	public void insertProductFile(ProductFile file) {
-		
-		shopRepository.insertProductFile(file);
-		
-	}
-
-	@Override
-	public List<Product> findProductList() {
-		List<Product> products = shopRepository.selectProduct();
-		
+	public List<Product> findProducts() {
+		List<Product> products = shopRep.selectProducts();
 		return products;
 	}
 
 	@Override
-	public ProductFile findUploadFile(int productNo) {
-		ProductFile file = shopRepository.selectProductFile(productNo);
-		
-		return file;
+	public List<HashMap<String, Object>> findCategories() {
+		List<HashMap<String, Object>> categorys = shopRep.selectCategories();
+		return categorys;
+	}
+
+	@Override
+	public List<String> findColors() {
+		List<String> colors = shopRep.selectColors();
+		return colors;
+	}
+
+	@Override
+	public List<Cart> findCartList() {
+		List<Cart> carts = shopRep.selectCarts();
+		return carts;
+	}
+
+	@Override
+	public void registerCart(Cart cart) {
+		shopRep.insertCart(cart);
+	}
+
+	@Override
+	public void removeCart(int cartNo) {
+		shopRep.deleteCart(cartNo);
+	}
+
+	@Override
+	public void updateCartCntByCartNo(int cartNo, int count) {
+		shopRep.updateCartCntByCartNo(cartNo, count);
 	}
 
 }

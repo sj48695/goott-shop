@@ -1,16 +1,27 @@
 package com.shop.service;
 
+import java.util.HashMap;
 import java.util.List;
 
+import com.shop.vo.Cart;
 import com.shop.vo.Product;
-import com.shop.vo.ProductFile;
 
 public interface ShopService {
-	Integer registerProductTx(Product product);
-	
-	void insertProductFile(ProductFile file);
 
-	List<Product> findProductList();
+	Product findProductByProductNo(int productNo);
 
-	ProductFile findUploadFile(int productNo);
+	List<Product> findProducts();
+
+	List<HashMap<String, Object>> findCategories();
+
+	List<String> findColors();
+
+	List<Cart> findCartList();
+
+	void registerCart(Cart cart);
+
+	void removeCart(int cartNo);
+
+	void updateCartCntByCartNo(int cartNo, int count);
+
 }

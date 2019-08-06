@@ -1,48 +1,67 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE mapper
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.shop.mapper.ShopMapper">
 	
-	<!-- insert가 완료된 후 keyColumn(resumeNo)의 값을 vo의 keyProperty(resumeNo)에 저장 -->
-	<insert id="insertProduct" parameterType="Product"
-			useGeneratedKeys="true" keyColumn="productNo" keyProperty="productNo">
-		INSERT INTO product (title, price, count, content, category, productName, color, size)
-		VALUES (#{ title }, #{ price }, #{ count }, #{ content }, #{ category }, #{ productName }, #{ color }, #{ size })
-	</insert>
+	<sql id="productColumns">title, price, count, content, category, productName, color, size, managerId</sql>
+	<sql id="cartColumns">productNo, count, price, productName, color, size, memberId</sql>
+
+	<resultMap id="categoryMap" type="java.util.HashMap">
+        <result javaType="java.lang.String" column="category" property="categoryName"/>
+        <result javaType="java.lang.Integer" column="categoryCnt" property="categoryCnt"/>
+	</resultMap>
 	
-	<!-- insert가 완료된 후 selectKey의 SQL을 실행해서 vo의 resumeNo에 값을 저장 -->
-	<insert id="insertProduct2" parameterType="Product">
-		<selectKey keyProperty="productNo" order="AFTER" resultType="int">
-			SELECT RESUME_SEQUENCE.CURRVAL FROM DUAL
-		</selectKey>
-		INSERT INTO product (title, price, count, content, category, productName, color, size)
-		VALUES (#{ title }, #{ price }, #{ count }, #{ content }, #{ category }, #{ productName }, #{ color }, #{ size })
-	</insert>
+	<resultMap id="colorMap" type="java.util.HashMap">
+        <result javaType="java.lang.String" column="color" property="colorName"/>
+        <result javaType="java.lang.Integer" column="colorCnt" property="colorCnt"/>
+	</resultMap>
 	
-	<insert id="insertProductFile" parameterType="ProductFile">
-		INSERT INTO productfile (
-			fileName,
-			productNo
-		)
-		VALUES (
-	          #{ fileName }
-			, #{ productNo }
-		)
-	</insert>
+	<!-- Product -->
 	
-	<select id="selectProduct" resultType="Product">
-		select * 
-		from product
-		order by productNo desc
+	<select id="selectProductByProductNo" resultType="Product">
+		select productNo, regDate, <include refid="productColumns"/> from product where productNo = #{ productNo }  
 	</select>
 	
-	<select id="selectProductFile" parameterType="int" resultType="ProductFile">
-		select fileName
-		from productfile
-		where productNo = #{ productNo }
-		limit 1
+	<select id="selectProducts" resultType="Product">
+		select productNo, regDate, <include refid="productColumns"/> from product
 	</select>
+	
+	<select id="selectCategories" resultMap="categoryMap">
+		select category, count(category) categoryCnt from product group by category
+	</select>
+	
+	<select id="selectColors" resultMap="colorMap">
+		select color, count(color) colorCnt from product group by color
+	</select>
+	
+	<!-- Cart -->
+	
+	<select id="selectCarts" resultType="Cart">
+		select cartNo, regDate, <include refid="cartColumns"/> from cart
+	</select>
+	
+	<insert id="insertCart" parameterType="Cart" >
+		insert into cart(
+			<include refid="cartColumns"/>
+		) values(
+			#{ productNo },
+			#{ count },
+			#{ price },
+			#{ productName }, 
+			#{ color },
+			#{ size },
+			#{ memberId }
+		)
+	</insert>
+	
+	<delete id="deleteCart">
+		delete from cart where cartNo = #{ cartNo }
+	</delete>
+	
+	<update id="updateCartCntByCartNo" parameterType="hashmap">
+		update cart set count = #{ count } where cartNo = #{ cartNo }	
+	</update>
 	
 </mapper>

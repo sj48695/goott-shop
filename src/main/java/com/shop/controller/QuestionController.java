@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,12 +17,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.View;
-import org.springframework.web.servlet.view.RedirectView;
 
 import com.shop.common.Util;
 import com.shop.service.QuestionService;
-import com.shop.view.DownloadView;
+import com.shop.vo.Member;
 import com.shop.vo.Question;
 import com.shop.vo.QuestionComment;
 import com.shop.vo.QuestionFile;
@@ -32,11 +31,6 @@ public class QuestionController {
 	@Autowired
 	@Qualifier("questionService")
 	private QuestionService questionService;
-	
-	@RequestMapping(value="/qna", method = RequestMethod.GET)
-	public String qna(){
-		return "question/qa-list";
-	}
 	
 	@RequestMapping(path = "/qa-list", method = RequestMethod.GET)
 	public String list(Model model) {
@@ -67,71 +61,61 @@ public class QuestionController {
 	}
 	
 	@RequestMapping(path="/qa-write", method = RequestMethod.POST)
-	public String write(MultipartHttpServletRequest req, Question question, Model model) {
+	public String write(Question question, Model model, HttpSession session) {
 		
 		System.out.println(question);
 		
-		MultipartFile mf = req.getFile("attach");
-		if(mf != null) {
-			
-			ServletContext application = req.getServletContext();
-			String path = application.getRealPath("/upload-files");
-			
-			String userFileName = mf.getOriginalFilename();
-			if (userFileName.contains("\\")) {
-				userFileName = userFileName.substring(userFileName.lastIndexOf("\\") + 1);
-			}
-			
-			String savedFileName = Util.makeUniqueFileName(userFileName);
-			
-			try {
-				mf.transferTo(new File(path, savedFileName));
-											
-				QuestionFile questionFile = new QuestionFile();
-				questionFile.setUserFileName(userFileName);
-				questionFile.setSavedFileName(savedFileName);
-				ArrayList<QuestionFile> files = new ArrayList<QuestionFile>();
-				files.add(questionFile);
-				question.setFiles(files);
-				
-				questionService.registerQuestion(question);
-				
-			}catch(Exception ex) {
-				ex.printStackTrace();
-			}
-			
-		}
-		model.addAttribute("question",question);
 		
-		//return "redirect:qa-list";  //상대경로
-		return "redirect:coding.do";
-	}
-	
-//	@RequestMapping(path="/qa-detail", method = RequestMethod.GET)
-//	public String detail(@RequestParam(name="questionno")int questionNo, Model model) {
-//    
-//	      
-//	      QuestionRep dao = new QuestionRepImpl();
-//	      
-//	      Question question = dao.selectQuestion(questionNo);
-//	      if (question == null) { 
-//
-//	         return "redirect:list";
-//	      }
-//	      
-//	      List<QuestionFile> files = questionService.findQuestionFilesByQuestionNo(questionNo);
-//	      question.setFiles((ArrayList<QuestionFile>)files); 
-//	      
-//	      
-//	      model.addAttribute("question", question);
-//	       
+		Member member = (Member) session.getAttribute("loginuser");
+		if (member != null) {
+			questionService.registerQuestion(question);
+			model.addAttribute("question",question);
+			
+			//return "redirect:qa-list";  //상대경로
+			return "redirect:coding.do";
+		}else {
+			return "redirect:/";
+		}
+		
+		
+//		MultipartFile mf = req.getFile("attach");
 //		
-//		return "question/qa-detail";
-//	}
+//		
+//		if(mf != null) {
+//			
+//			ServletContext application = req.getServletContext();
+//			String path = application.getRealPath("/resources/files/question-files");
+//			
+//			String userFileName = mf.getOriginalFilename();
+//			if (userFileName.contains("\\")) {
+//				userFileName = userFileName.substring(userFileName.lastIndexOf("\\") + 1);
+//			}
+//			
+//			String savedFileName = Util.makeUniqueFileName(userFileName);
+//			
+//			try {
+//				mf.transferTo(new File(path, savedFileName));
+//											
+//				QuestionFile questionFile = new QuestionFile();
+//				questionFile.setUserFileName(userFileName);
+//				questionFile.setSavedFileName(savedFileName);
+//				ArrayList<QuestionFile> files = new ArrayList<QuestionFile>();
+//				files.add(questionFile);
+//				question.setFiles(files);
+//				
+//				questionService.registerQuestion(question);	
+//				
+//			}catch(Exception ex) {
+//				ex.printStackTrace();
+//			}
+//			
+//		}
+		
+	}
 	
 	
 	@RequestMapping(path="/qa-detail/{questionNo}", method = RequestMethod.GET)
-	public String detail2(@PathVariable int questionNo, Model model) {
+	public String detail(@PathVariable int questionNo, Model model) {
 		
 	      
 	      Question question = questionService.findQuestionByQuestionNo(questionNo);
@@ -154,30 +138,30 @@ public class QuestionController {
 		return "question/qa-detail"; 
 	}
 	
-	@RequestMapping(path="/download/{fileNo}", method = RequestMethod.GET)
-	public View download(@PathVariable int fileNo, Model model) {
-    
-		
-	      
-	      QuestionFile file = questionService.findQuestionFileByQuestionFileNo(fileNo);
-	      if (file == null) { 
-	         
-	    	  return new RedirectView("/question/qa-list");
-	      }
-	      
-	      model.addAttribute("file",file); //View 객체로 전달할 데이터 저장(Request에 저장)
-	      
-	      DownloadView v = new DownloadView();
-	      return v;
-	    
-	}
+//	@RequestMapping(path="/download/{fileNo}", method = RequestMethod.GET)
+//	public View download(@PathVariable int fileNo, Model model) {
+//    
+//		
+//	      
+//	      QuestionFile file = questionService.findQuestionFileByQuestionFileNo(fileNo);
+//	      if (file == null) { 
+//	         
+//	    	  return new RedirectView("/question/qa-list");
+//	      }
+//	      
+//	      model.addAttribute("file",file); //View 객체로 전달할 데이터 저장(Request에 저장)
+//	      
+//	      DownloadView v = new DownloadView();
+//	      return v;
+//	    
+//	}
 	
 	@RequestMapping(path="/delete/{questionNo}", method = RequestMethod.GET)
 	public String delete(@PathVariable int questionNo) {
 	      
 	      questionService.deleteQuestion(questionNo);
 	          
-	      return "redirect:/qa-upload/qa-list"; 
+	      return "redirect:/qa-list"; 
 	    
 	}
 	
@@ -219,7 +203,7 @@ public class QuestionController {
 			questionService.deleteQuestionFile(fileNo);
 
 			
-			return "redirect:/qa-upload/qa-update/" + questionNo;
+			return "redirect:/qa-update/" + questionNo;
 		}
 		
 		@RequestMapping(path = "/qa-update", method = RequestMethod.POST)
@@ -229,7 +213,7 @@ public class QuestionController {
 			if(mf != null) {
 				
 				ServletContext application = req.getServletContext();
-				String path = application.getRealPath("/upload-files");
+				String path = application.getRealPath("/resources/files/question-files");
 				
 				String userFileName = mf.getOriginalFilename();
 				if (userFileName.contains("\\")) { 
@@ -258,7 +242,7 @@ public class QuestionController {
 			}
 
 			
-			return "redirect:/qa-upload/qa-detail/" + question.getQuestionNo();
+			return "redirect:/qa-detail/" + question.getQuestionNo();
 		}
 		
 		/* ================================================================= */
@@ -340,9 +324,7 @@ public class QuestionController {
 		        System.err.println("저장할 내용 : " + editor);
 		        return "redirect:/coding.do";
 		    }
-
-
-		
+		 
 		
 	
 }

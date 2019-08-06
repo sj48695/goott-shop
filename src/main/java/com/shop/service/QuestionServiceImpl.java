@@ -32,11 +32,11 @@ public class QuestionServiceImpl implements QuestionService {
 	@Override
 	public int registerQuestion(Question question) {
 		int newQuestionNo = questionRep.insertQuestion(question);
-		for(QuestionFile file : question.getFiles()) {
-			file.setQuestionNo(newQuestionNo);
-			questionRep.insertQuestionFile(file);
-			System.out.println(file);System.out.println(newQuestionNo);
-		}
+//		for(QuestionFile file : question.getFiles()) {
+//			file.setQuestionNo(newQuestionNo);
+//			questionRep.insertQuestionFile(file);
+//			System.out.println(file);System.out.println(newQuestionNo);
+//		}
 		return newQuestionNo;
 	}
 
