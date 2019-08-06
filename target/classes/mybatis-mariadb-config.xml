@@ -11,7 +11,8 @@
 		<typeAlias type="com.shop.vo.Question" alias="Question"/>
 		<typeAlias type="com.shop.vo.QuestionFile" alias="QuestionFile"/>	
 		<typeAlias type="com.shop.vo.QuestionComment" alias="QuestionComment" />	
-		<typeAlias type="com.shop.vo.Product" alias="Product"/>	
+		<typeAlias type="com.shop.vo.Product" alias="Product"/>
+		<typeAlias type="com.shop.vo.ProductFile" alias="ProductFile"/>		
 		<typeAlias type="com.shop.vo.Cart" alias="Cart"/>	
 	</typeAliases>
 	
@@ -32,6 +33,7 @@
 		<mapper resource="com/shop/mapper/question-mapper.xml" />
 		<mapper resource="com/shop/mapper/member-mapper.xml" />
 		<mapper resource="com/shop/mapper/shop-mapper.xml" />
+		<mapper resource="com/shop/mapper/manager-mapper.xml" />
 	</mappers>
 	
 </configuration>

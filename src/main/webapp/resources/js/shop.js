@@ -1,3 +1,67 @@
+/* ----------- Img preview ---------- */
+function readURL(input,target) {
+	if (input.files && input.files[0]) {
+		var imgfiles = [];
+		var files = input.files;
+		var filesArr = Array.prototype.slice.call(files);
+		
+		var index = 0;
+		filesArr.forEach(function(f){
+			if(!f.type.match("image.*")){
+				alert("확장자는 이미지 확장자만 가능합니다.");
+				return;
+			}
+			
+			imgfiles.push(f);
+			
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				var result = "<img width='200' height='200' src='" + e.target.result + "'>";
+				target.append(result);
+				console.log(result);
+				index++;
+			}
+			reader.readAsDataURL(f);
+			
+		});
+		
+	}
+}
+
+/* ----------- product (write, update) ---------- */
+$(function () {
+
+	/* ----------- Img preview ---------- */
+	$("#writeForm").on("change", "#imgFile", function (event) {
+		$('.inner_imgs').empty();
+		readURL(this, $(".inner_imgs"));
+	});
+
+	$("#updateForm").on("change", "#imgFile", function (event) {
+	    readURL(this, $(".inner_imgs"));
+	});
+
+	//이미지 삭제
+	$('.img-wrap .close').on('click', function() {
+		var spaceFileNo = $(this).attr('data-fileNo');
+		var deleteBtn = $(this).parent().parent();
+		$.ajax({
+			url: "/spacerental/space/delete-file",
+			method: "GET",
+			data: {"spaceFileNo" : spaceFileNo },
+			success: function(data, status, xhr){
+				deleteBtn.remove();
+			},
+			error: function(xhr, status, err){
+				alert('삭제 실패');
+			}
+		});
+	   
+	});
+});
+
+
+
 $(function() {
 	
 	$('.quantityUp').on('click',function(event) {

@@ -7,6 +7,7 @@ import java.util.List;
 import com.shop.mapper.ShopMapper;
 import com.shop.vo.Cart;
 import com.shop.vo.Product;
+import com.shop.vo.ProductFile;
 
 public class ShopRepImpl implements ShopRep {
 
@@ -21,6 +22,7 @@ public class ShopRepImpl implements ShopRep {
 	public void setShopMapper(ShopMapper shopMapper) {
 		this.shopMapper = shopMapper;
 	}
+
 
 	@Override
 	public Product selectProductByProductNo(int productNo) {

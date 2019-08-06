@@ -21,6 +21,7 @@ public class ShopServiceImpl implements ShopService {
 		this.shopRep = shopRep;
 	}
 
+	
 	@Override
 	public Product findProductByProductNo(int productNo) {
 		Product product = shopRep.selectProductByProductNo(productNo);
@@ -66,7 +67,7 @@ public class ShopServiceImpl implements ShopService {
 	public void updateCartCntByCartNo(int cartNo, int count) {
 		shopRep.updateCartCntByCartNo(cartNo, count);
 	}
-
+	
 	@Override
 	public List<Cart> findCheckoutList(String memberId, String cartNostrs) {
 

@@ -46,13 +46,13 @@
 	</insert>
 	
 	<!-- insert가 완료된 후 selectKey의 SQL을 실행해서 vo의 resumeNo에 값을 저장 -->
-	<insert id="insertQuestion2" parameterType="com.shop.vo.Question">
+	<!-- <insert id="insertQuestion2" parameterType="com.shop.vo.Question">
 		<selectKey keyProperty="questionNo" order="AFTER" resultType="int">
-			SELECT RESUME_SEQUENCE.CURRVAL FROM DUAL
+	
 		</selectKey>
 		INSERT INTO question (category, title, uploader, content)
 		VALUES (#{ category }, #{ title }, #{ uploader }, #{ content })
-	</insert>
+	</insert> -->
 	
 	<insert id="insertQuestionFile" parameterType="com.shop.vo.QuestionFile">
 		INSERT INTO questionfile (
@@ -130,14 +130,14 @@
 		parameterType="int" resultType="QuestionComment">
 		SELECT COMMENTNO, QUESTIONNO, WRITER, REGDATE, CONTENT, GROUPNO, STEP, DEPTH 
 		FROM questioncomment 
-		WHERE QUESTIONNO = #{ questionNo } ORDER BY GROUPNO DESC, STEP ASC 
+		WHERE questionno = #{ questionNo } ORDER BY GROUPNO DESC, STEP ASC 
 	</select>
 	
 	<select id="selectCommentByCommentNo" 
 		parameterType="int" resultType="QuestionComment">
 		SELECT COMMENTNO, QUESTIONNO, WRITER, CONTENT, REGDATE, GROUPNO, STEP, DEPTH 
 		FROM questioncomment
-		WHERE COMMENTNO = #{ questionNo }
+		WHERE commentno = #{ questionNo }
 	</select>
 	
 	<update id="updateCommentStep" parameterType="QuestionComment">

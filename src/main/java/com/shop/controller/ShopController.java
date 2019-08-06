@@ -26,7 +26,7 @@ public class ShopController {
 	@Autowired
 	@Qualifier("shopService")
 	private ShopService shopService;
-
+	
 	@RequestMapping(value="/category", method = RequestMethod.GET)
 	public String category(Model model){
 		List<Product> products = shopService.findProducts();

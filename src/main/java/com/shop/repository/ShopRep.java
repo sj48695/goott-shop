@@ -5,9 +5,9 @@ import java.util.List;
 
 import com.shop.vo.Cart;
 import com.shop.vo.Product;
+import com.shop.vo.ProductFile;
 
 public interface ShopRep {
-
 	Product selectProductByProductNo(int productNo);
 
 	List<Product> selectProducts();

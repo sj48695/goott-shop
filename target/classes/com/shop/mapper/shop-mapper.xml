@@ -89,7 +89,6 @@
 		update cart set count = #{ count } where cartNo = #{ cartNo }	
 	</update>
 	
-	
 	<!-- CheckOut -->
 	<select id="selectCheckoutList" resultType="Cart">
 		select p.title, cartNo, c.regDate, c.productNo, c.count, c.price, c.productName, c.color, c.size, memberId
@@ -106,4 +105,3 @@
         </choose>
 	</select>
 </mapper>
-	
