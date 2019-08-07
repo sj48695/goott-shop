@@ -12,7 +12,7 @@ public interface QuestionService  {
 
 	int registerQuestion(Question question);
 	void registerQuestionFile(QuestionFile questionFile);
-	ArrayList<Question> findQuestions();
+	ArrayList<Question> findQuestions(String category);
 	Question findQuestionByQuestionNo(int questionNo);
 	List<QuestionFile> findQuestionFilesByQuestionNo(int questionNo);
 	QuestionFile findQuestionFileByQuestionFileNo(int questionFileNo);
@@ -35,7 +35,11 @@ public interface QuestionService  {
 	
 	void writeRecomment(QuestionComment comment);
 	
-	List<Question> findQuestionlist(String category);
+	//List<Question> findQuestionlist(String category);
+	
+	String findPwdByQuestionNo(int questionNo);
+	
+	List<Question> findMyQuestionList(String memberId);
 
 	
 	

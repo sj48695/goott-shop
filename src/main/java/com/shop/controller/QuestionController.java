@@ -1,10 +1,15 @@
 package com.shop.controller;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +40,8 @@ public class QuestionController {
 	@RequestMapping(path = "/qa-list", method = RequestMethod.GET)
 	public String list(Model model) {
 		
-		ArrayList<Question> questions = questionService.findQuestions();
-		ArrayList<Question> notice = questionService.findQuestions();
+		ArrayList<Question> questions = questionService.findQuestions("all");
+		ArrayList<Question> notice = questionService.findQuestions("all");
 		
 		for(Question question : questions) {
 			question.setAnswer(false);
@@ -53,6 +58,42 @@ public class QuestionController {
 		
 		return "question/qa-list"; 
 	}
+	
+	@RequestMapping(path = "/qa-list", method = RequestMethod.POST)
+	public String list(String category, Model model) {
+		
+		ArrayList<Question> questions = questionService.findQuestions(category);
+		ArrayList<Question> notice = questionService.findQuestions(category);
+		
+		for(Question question : questions) {
+			question.setAnswer(false);
+			List<QuestionComment> comments = questionService.findCommentListByQuestionNo(question.getQuestionNo());
+			for(QuestionComment comment : comments) {
+				if(comment.getWriter().equals("manager")) {
+					question.setAnswer(true);
+				}
+			}
+		}
+		
+		model.addAttribute("questions", questions);
+		model.addAttribute("notice", notice);
+		
+		return "question/qa-list"; 
+	}
+	
+//	@RequestMapping(path = "/qacategory", method = RequestMethod.POST)
+//	public String category(String category, Model model) {
+//
+//		if(category == null) {
+//			category = "all";
+//		}
+//		
+//		List<Question> questions = questionService.findQuestions(category);
+//		
+//		model.addAttribute("questions", questions);		
+//		return "question/qa-list";
+//	
+//	}
 	
 	@RequestMapping(path="/qa-write", method = RequestMethod.GET)
 	public String writeForm() {
@@ -76,40 +117,6 @@ public class QuestionController {
 		}else {
 			return "redirect:/";
 		}
-		
-		
-//		MultipartFile mf = req.getFile("attach");
-//		
-//		
-//		if(mf != null) {
-//			
-//			ServletContext application = req.getServletContext();
-//			String path = application.getRealPath("/resources/files/question-files");
-//			
-//			String userFileName = mf.getOriginalFilename();
-//			if (userFileName.contains("\\")) {
-//				userFileName = userFileName.substring(userFileName.lastIndexOf("\\") + 1);
-//			}
-//			
-//			String savedFileName = Util.makeUniqueFileName(userFileName);
-//			
-//			try {
-//				mf.transferTo(new File(path, savedFileName));
-//											
-//				QuestionFile questionFile = new QuestionFile();
-//				questionFile.setUserFileName(userFileName);
-//				questionFile.setSavedFileName(savedFileName);
-//				ArrayList<QuestionFile> files = new ArrayList<QuestionFile>();
-//				files.add(questionFile);
-//				question.setFiles(files);
-//				
-//				questionService.registerQuestion(question);	
-//				
-//			}catch(Exception ex) {
-//				ex.printStackTrace();
-//			}
-//			
-//		}
 		
 	}
 	
@@ -138,23 +145,30 @@ public class QuestionController {
 		return "question/qa-detail"; 
 	}
 	
-//	@RequestMapping(path="/download/{fileNo}", method = RequestMethod.GET)
-//	public View download(@PathVariable int fileNo, Model model) {
-//    
-//		
-//	      
-//	      QuestionFile file = questionService.findQuestionFileByQuestionFileNo(fileNo);
-//	      if (file == null) { 
-//	         
-//	    	  return new RedirectView("/question/qa-list");
-//	      }
-//	      
-//	      model.addAttribute("file",file); //View 객체로 전달할 데이터 저장(Request에 저장)
-//	      
-//	      DownloadView v = new DownloadView();
-//	      return v;
-//	    
-//	}
+	@RequestMapping(path="/pwCheck/{questionNo}", method = RequestMethod.GET)
+	public String pwCheckForm(@PathVariable int questionNo, Model model) {
+		
+		model.addAttribute(questionNo);
+		
+		return "question/pwCheck"; 
+	}
+	
+	@RequestMapping(path="/pwCheck", method = RequestMethod.POST)
+	public String pwCheck( String pwd, int questionNo, Model model ) {
+		
+		String checkPwd = questionService.findPwdByQuestionNo(questionNo);
+		if(pwd.equals(checkPwd)) {
+			
+			Question question = questionService.findQuestionByQuestionNo(questionNo);
+			model.addAttribute(question);
+			
+			return "redirect:/qa-detail/" + questionNo;
+		}else {
+			return "redirect:/pwCheck/" + questionNo;
+		}
+	}
+
+
 	
 	@RequestMapping(path="/delete/{questionNo}", method = RequestMethod.GET)
 	public String delete(@PathVariable int questionNo) {
@@ -221,7 +235,7 @@ public class QuestionController {
 				}
 				
 				String savedFileName = Util.makeUniqueFileName(userFileName);
-				//원본 파일과 저장하는 파일이 달라야 함
+				
 				
 				try {
 					mf.transferTo(new File(path, savedFileName));
@@ -232,7 +246,7 @@ public class QuestionController {
 					questionFile.setQuestionNo(question.getQuestionNo());
 					questionService.registerQuestionFile(questionFile);
 					
-					//데이터 저장
+					
 					questionService.updateQuestion(question);
 					
 				}catch(Exception ex) {
@@ -249,25 +263,25 @@ public class QuestionController {
 		
 		@RequestMapping(path = "/write-comment", 
 						method = RequestMethod.POST, 
-						produces = "text/plain;charset=utf-8") //응답 컨텐츠의 종류 지정
-		@ResponseBody //반환 값은 뷰이름이 아니고 응답컨텐츠입니다
+						produces = "text/plain;charset=utf-8") 
+		@ResponseBody 
 		public String writeComment(QuestionComment comment) {
 			
 			questionService.writeComment(comment);
 			
 			
-			return "success"; // WEB-INF/views/success.jsp
+			return "success"; 
 		}
 		
 		@RequestMapping(path = "/write-recomment", 
 				method = RequestMethod.POST, 
-				produces = "text/plain;charset=utf-8") //응답 컨텐츠의 종류 지정
-		@ResponseBody //반환 값은 뷰이름이 아니고 응답컨텐츠입니다
+				produces = "text/plain;charset=utf-8") 
+		@ResponseBody 
 		public String writeRecomment(QuestionComment comment) {
 		
 			questionService.writeRecomment(comment);
 			
-			return "success"; // WEB-INF/views/success.jsp
+			return "success"; 
 		}
 		
 		@RequestMapping(value = "/comment-list", method = RequestMethod.POST)
@@ -276,7 +290,7 @@ public class QuestionController {
 			List<QuestionComment> comments = questionService.findCommentListByQuestionNo(questionNo);
 			model.addAttribute("comments", comments);
 			
-			return "question/comments"; // -> /WEB-INF/views/question/comments.jsp를 응답에 사용
+			return "question/comments"; 
 		}
 		
 		@RequestMapping(value = "/delete-comment", method = RequestMethod.GET)
@@ -299,19 +313,7 @@ public class QuestionController {
 		
 		/*----------------------------*/
 			
-		@RequestMapping(path = "/qacategory", method = RequestMethod.POST)
-		public String category(String category, Model model) {
-
-			if(category == null) {
-				category = "all";
-			}
-			
-			List<Question> questions = questionService.findQuestionlist(category);
-			
-			model.addAttribute("questions", questions);		
-			return "question/qa-list";
-		
-		}
+	
 		
 		
 		  @RequestMapping(value = "/coding.do")
@@ -325,6 +327,73 @@ public class QuestionController {
 		        return "redirect:/coding.do";
 		    }
 		 
+		 @RequestMapping(value = { "/question/editor-image-upload" }, method = RequestMethod.POST, produces = "text/plain;charset=utf-8")
+			@ResponseBody
+			public String editorImageUpload(HttpServletRequest req) {
+				
+				try {
+					String sFileInfo = "";
+					//파일명 - 싱글파일업로드와 다르게 멀티파일업로드는 HEADER로 넘어옴 
+					String name = req.getHeader("file-name");
+					String ext = name.substring(name.lastIndexOf(".") + 1);
+					//파일 기본경로
+					String defaultPath = req.getServletContext().getRealPath("/resources/files/question-files/");
+					//파일 기본경로 _ 상세경로
+					String path = defaultPath + File.separator;
+					File file = new File(path);
+					if(!file.exists()) {
+					    file.mkdirs();
+					}
+					String realname = UUID.randomUUID().toString() + "." + ext;
+					InputStream is = req.getInputStream();
+					OutputStream os=new FileOutputStream(path + realname);
+					int numRead;
+					// 파일쓰기
+					byte b[] = new byte[Integer.parseInt(req.getHeader("file-size"))];
+					while((numRead = is.read(b,0,b.length)) != -1){
+					    os.write(b,0,numRead);
+					}
+					if(is != null) {
+					    is.close();
+					}
+					os.flush();
+					os.close();
+					sFileInfo += "&bNewLine=true&sFileName="+ name+"&sFileURL="+"/shop/resources/files/question-files/"+realname;
+					
+					return sFileInfo;
+				} catch (Exception ex) {
+					return "error upload file";
+				}
+			} 
 		
-	
+		 
+		 /*----------------notice---------------*/
+		 
+		 
+	/*----------------mypage---------------*/
+		 
+	@RequestMapping(path = "/account/myQuestionList", method = RequestMethod.GET)
+	public String MyQuestionList(Model model, HttpSession session) {
+		
+		Member loginuser = (Member) session.getAttribute("loginuser");
+		String memberId = loginuser.getMemberId();
+
+		List<Question> questions = questionService.findMyQuestionList(memberId);
+			
+		for(Question question : questions) {
+			question.setAnswer(false);
+			List<QuestionComment> comments = questionService.findCommentListByQuestionNo(question.getQuestionNo());
+			for(QuestionComment comment : comments) {
+				if(comment.getWriter().equals("manager")) {
+					question.setAnswer(true);
+				}
+			}
+		}
+		
+		model.addAttribute("questions", questions);
+		model.addAttribute("loginuser", loginuser);
+		
+		return "account/myQuestionList"; 
+	}
+		 
 }

@@ -8,4 +8,6 @@ public interface MemberRepository {
 
 	Member selectMemberByIdAndPasswd(String memberId, String pwd);
 
+	void updateMember(Member member);
+
 }

@@ -23,11 +23,18 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 
 	@Override
-	public ArrayList<Question> findQuestions(){
+	public ArrayList<Question> findQuestions(String category){
 		
-		List<Question> questions = questionRep.selectQuestions();
+		List<Question> questions = questionRep.selectQuestions(category);
 		return (ArrayList<Question>)questions;
 	}
+	
+//
+//	@Override
+//	public List<Question> findQuestionlist(String category) {
+//		List<Question> questions = questionRep.selectQuestionlist(category);
+//		return questions;
+//	}
 
 	@Override
 	public int registerQuestion(Question question) {
@@ -133,9 +140,19 @@ public class QuestionServiceImpl implements QuestionService {
 		questionRep.insertRecomment(comment);
 	}
 	
+
+
 	@Override
-	public List<Question> findQuestionlist(String category) {
-		List<Question> questions = questionRep.selectQuestionlist(category);
+	public String findPwdByQuestionNo(int questionNo) {
+		
+		String pwd = questionRep.selectPwdByQuestionNo(questionNo);
+		return pwd;
+	}
+
+
+	@Override
+	public List<Question> findMyQuestionList(String memberId) {
+		List<Question> questions = questionRep.findMyQuestionList(memberId);
 		return questions;
 	}
 	

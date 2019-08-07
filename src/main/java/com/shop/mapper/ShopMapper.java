@@ -3,6 +3,7 @@ package com.shop.mapper;
 import java.util.HashMap;
 import java.util.List;
 
+import com.shop.vo.Buy;
 import com.shop.vo.Cart;
 import com.shop.vo.Product;
 import com.shop.vo.ProductFile;
@@ -24,12 +25,24 @@ public interface ShopMapper {
 
 	List<String> selectColors();
 
-	List<Cart> selectCarts();
+	List<Cart> selectCarts(String memberId);
 
 	void insertCart(Cart cart);
 
-	void deleteCart(int cartNo);
+	void deleteCart(HashMap<String, Object> params);
 
 	void updateCartCntByCartNo(HashMap<String, Object> params);
+
+	List<Cart> findMyCartList(String memberId);
+	
+	List<Cart> selectCheckoutList(HashMap<String, Object> params);
+
+	void insertBuy(Buy buy);
+
+	void updateProductCountByBuy(HashMap<String, Integer> params);
+
+	Cart selectCartByCartNo(int cartNo);
+
+	List<Buy> selectLatelyBuyList(HashMap<String, Object> params);
 
 }

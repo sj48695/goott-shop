@@ -4,6 +4,7 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.shop.mapper.ManagerMapper">
+<<<<<<< HEAD
 	<sql id="productBasicColumns">
 		title, price, count, content, category, productName, color, size, regDate
 	</sql>
@@ -93,5 +94,38 @@
 		delete from product
 		where productNo = #{ productNo }
 	</delete>
+=======
+	
+	<!-- insert가 완료된 후 keyColumn(resumeNo)의 값을 vo의 keyProperty(resumeNo)에 저장 -->
+	<insert id="insertProduct" parameterType="Product"
+			useGeneratedKeys="true" keyColumn="productNo" keyProperty="productNo">
+		INSERT INTO product (title, price, count, content, category, productName, color, size)
+		VALUES (#{ title }, #{ price }, #{ count }, #{ content }, #{ category }, #{ productName }, #{ color }, #{ size })
+	</insert>
+	
+	<insert id="insertProductFile" parameterType="ProductFile">
+		INSERT INTO productfile (
+			fileName,
+			productNo
+		)
+		VALUES (
+	          #{ fileName }
+			, #{ productNo }
+		)
+	</insert>
+	
+	<select id="selectProduct" resultType="Product">
+		select * 
+		from product
+		order by productNo desc
+	</select>
+
+	<select id="selectProductFile" parameterType="int" resultType="ProductFile">
+		select fileName
+		from productfile
+		where productNo = #{ productNo }
+		limit 1
+	</select>
+>>>>>>> branch 'master' of https://github.com/sj48695/goott-shop
 	
 </mapper>

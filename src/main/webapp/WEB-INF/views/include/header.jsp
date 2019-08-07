@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="/shop/resources/vendors/owl-carousel/owl.carousel.min.css">
   <link rel="stylesheet" href="/shop/resources/css/style.css">
 </head>
+
 <body>
    <!--================ Start Header Menu Area =================-->
    <header class="header_area">
@@ -59,13 +60,13 @@
                         </li>
                      </c:when>
                      <c:otherwise>
-                  <li class="nav-item">
-                     <a class="nav-link" href="/shop/account/mypage" style="text-decoration: none">${ loginuser.memberId }님 환영합니다.</a>
-                  </li>
-                  <li class="nav-item">
-                     <a class="button button-header" href="/shop/account/logout">Logout</a>
-                  </li>
-               </c:otherwise>
+						<li class="nav-item">
+							<a class="nav-link" href="/shop/account/mypage" style="text-decoration: none">${ loginuser.memberId }님 환영합니다.</a>
+						</li>
+						<li class="nav-item">
+							<a class="button button-header" href="/shop/account/logout">Logout</a>
+						</li>
+					</c:otherwise>
                      </c:choose>
                   </ul>
                </div>

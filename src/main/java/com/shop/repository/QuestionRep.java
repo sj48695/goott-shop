@@ -13,7 +13,7 @@ public interface QuestionRep {
 	
 	void insertQuestionFile(QuestionFile file);
 
-	List<Question> selectQuestions();
+	List<Question> selectQuestions(String category);
 
 	Question selectQuestion(int questionNo);
 
@@ -51,7 +51,14 @@ public interface QuestionRep {
 	
 	void insertRecomment(QuestionComment comment);
 	
-	List<Question> selectQuestionlist(String category);
+	//List<Question> selectQuestionlist(String category);
 
+	String selectPwdByQuestionNo(int questionNo);
+
+	List<Question> findMyQuestionList(String memberId);
+
+	/*--------------------------*/
+	
+	
 
 }

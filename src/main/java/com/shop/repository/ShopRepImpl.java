@@ -1,19 +1,20 @@
 package com.shop.repository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import com.shop.mapper.ShopMapper;
+import com.shop.vo.Buy;
 import com.shop.vo.Cart;
 import com.shop.vo.Product;
-import com.shop.vo.ProductFile;
 
-public class ShopRepImpl implements ShopRep{
+public class ShopRepImpl implements ShopRep {
 
 //	@Autowired
 //	@Qualifier("shopMapper")
 	private ShopMapper shopMapper;
-	
+
 	public ShopMapper getShopMapper() {
 		return shopMapper;
 	}
@@ -48,8 +49,8 @@ public class ShopRepImpl implements ShopRep{
 	}
 
 	@Override
-	public List<Cart> selectCarts() {
-		List<Cart> carts = shopMapper.selectCarts();
+	public List<Cart> selectCarts(String memberId) {
+		List<Cart> carts = shopMapper.selectCarts(memberId);
 		return carts;
 	}
 
@@ -59,8 +60,16 @@ public class ShopRepImpl implements ShopRep{
 	}
 
 	@Override
-	public void deleteCart(int cartNo) {
-		shopMapper.deleteCart(cartNo);
+	public void deleteCart(String[] cartNos) {
+		
+		HashMap<String, Object> params = new HashMap<String, Object>();
+
+		List<String> codeList = new ArrayList<String>();
+		for (int i = 0; i < cartNos.length; i++) {
+			codeList.add(cartNos[i]);
+		}
+		params.put("codeList", codeList);
+		shopMapper.deleteCart(params);
 	}
 
 	@Override
@@ -69,6 +78,55 @@ public class ShopRepImpl implements ShopRep{
 		params.put("cartNo", cartNo);
 		params.put("count", count);
 		shopMapper.updateCartCntByCartNo(params);
+	}
+
+	@Override
+	public List<Cart> findMyCartList(String memberId) {
+		List<Cart> carts = shopMapper.findMyCartList(memberId);
+		return carts;
+	}
+	
+	public List<Cart> selectCheckoutList(String memberId, String[] cartNos) {
+
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("memberId", memberId);
+
+		List<String> codeList = new ArrayList<String>();
+		for (int i = 0; i < cartNos.length; i++) {
+			codeList.add(cartNos[i]);
+		}
+		params.put("codeList", codeList);
+		List<Cart> checkoutList = shopMapper.selectCheckoutList(params);
+		return checkoutList;
+
+	}
+
+	@Override
+	public void insertBuy(Buy buy) {
+		shopMapper.insertBuy(buy);
+	}
+
+	@Override
+	public Cart selectCartByCartNo(int cartNo) {
+		Cart cart = shopMapper.selectCartByCartNo(cartNo);
+		return cart;
+	}
+
+	@Override
+	public void updateProductCountByBuy(int productNo, int count) {
+		HashMap<String, Integer> params = new HashMap<String, Integer>();
+		params.put("productNo", productNo);
+		params.put("count", count);
+		shopMapper.updateProductCountByBuy(params);
+	}
+
+	@Override
+	public List<Buy> selectLatelyBuyList(String memberId, int rows) {
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("memberId", memberId);
+		params.put("rows", rows);
+		List<Buy> buyList = shopMapper.selectLatelyBuyList(params);
+		return buyList;
 	}
 
 }

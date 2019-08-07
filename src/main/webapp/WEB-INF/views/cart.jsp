@@ -41,27 +41,30 @@
 					</colgroup>
 					<thead>
 						<tr>
-							<th scope="col"><input type="checkbox" id="th_checkAll" onclick="checkAll()"></th>
+							<th scope="col"><input type="checkbox" id="th_checkAll" onclick="checkAll('${rows}')"></th>
 							<th scope="col">Product</th>
 							<th scope="col">Price</th>
 							<th scope="col">Quantity</th>
-							<th scope="col">Total</th>
+							<th scope="col">SubTotal</th>
 							<th scope="col">delete</th>
 						</tr>
 					</thead>
 					<tbody>
                       <c:forEach var="cart" items="${ carts }">
                           <tr class="cartlist${ cart.cartNo }">
-                          	  <td><input type="checkbox" name="checkRow"></td>
+                          	  <td><input type="checkbox" name="checkRow" value="${ cart.cartNo }" onclick="checkRow()"></td>
                               <td>
+                              	<a href="/shop/single-product/${ cart.productNo }">
                                   <div class="media">
                                       <div class="d-flex">
                                           <img src="/shop/resources/img/cart/cart1.png" alt="">
                                       </div>
                                       <div class="media-body">
-                                          <p>${ cart.productName }</p>
+                                          <p>${ cart.title }</p>
+                                          <p> - ${ cart.productName }(${ cart.color }/${ cart.size })</p>
                                       </div>
                                   </div>
+                                  </a>
                               </td>
                               <td>
                                   <h5><fmt:formatNumber pattern="#,###원">${ cart.price }</fmt:formatNumber></h5>
@@ -78,43 +81,32 @@
                               	  <input hidden="true" id="total_before${ cart.cartNo }" value="${ cart.price * cart.count }">
                                   <h5 class="total${ cart.cartNo }">
                                   	<fmt:formatNumber pattern="#,###원">${ cart.price * cart.count }</fmt:formatNumber>
-                                  	<c:set var="subtotal" value="${ subtotal + (cart.price * cart.count) }"/>
+                                  	<c:set var="total" value="${ total + (cart.price * cart.count) }"/>
                                   </h5>
                               </td>
                               <td><a onclick="javascript:removeCart(${ cart.cartNo })">X</a></td>
                           </tr>
-                        </c:forEach>
-                          <tr class="bottom_button">
-                              <td colspan="2">
-                                  <a class="button" href="#">Update Cart</a>
-                              </td>
-                              <td colspan="3"></td>
-                              <td>
-                                  <div class="cupon_text d-flex align-items-center">
-                                      <input type="text" placeholder="Coupon Code">
-                                      <a class="primary-btn" href="#">Apply</a>
-                                      <a class="button" href="#">Have a Coupon?</a>
-                                  </div>
-                              </td>
-                          </tr>
+                        </c:forEach><%-- 
                           <tr>
                           	  <td colspan="3"></td>
                               <td>
-                                  <h5>Subtotal</h5>
+                                  <h5>Total</h5>
                               </td>
                               <td>
-                                  <input hidden="true" id="subtotal_before" value="${ subtotal }">
+                                  <input hidden="true" id="subtotal_before" value="${ total }">
                                   <h5 class="subtotal">
-                                  	<fmt:formatNumber pattern="#,###원">${ subtotal }</fmt:formatNumber>
+                                  	<fmt:formatNumber pattern="#,###원">${ total }</fmt:formatNumber>
                                   </h5>
                               </td>
                               <td></td>
-                          </tr>
+                          </tr> --%>
                           <tr class="out_button_area">
-                              <td colspan="5">
+                              <td colspan="6">
+                              	<input hidden="true" id="checkRows" name="checkRows">
                                   <div class="checkout_btn_inner d-flex align-items-center ml-0 row justify-content-end">
-                                      <button class="gray_btn" onclick="history.go(-1);">Continue Shopping</button>
-                                      <a class="primary-btn ml-2" href="/shop/checkout">Proceed to checkout</a>
+                                      <a id="delete" class="gray_btn mr-2" onclick="alert('상품을 선택해주세요')">선택 삭제</a>
+                                      <a id="continue" class="gray_btn" onclick="history.go(-1);">쇼핑 계속하기</a>
+                                      <a id="buy" class="primary-btn ml-2" onclick="alert('상품을 선택해주세요')">구매하기</a>
                                   </div>
                               </td>
                           </tr>
