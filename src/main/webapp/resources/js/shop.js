@@ -235,7 +235,7 @@ function checkAll(rows){
       if( $("#th_checkAll").is(':checked') ){
         $("input[name=checkRow]").prop("checked", true);
         //$("#checkRows").attr("value",rows);
-        $('#delete').attr('onclick','javascript:removeCart(' + rows + ')');
+        $('#delete').attr('onclick','javascript:removeCart("' + rows + '")');
         $('#buy').attr('href','/shop/checkout/cart/' + rows);
       }else{
         $("input[name=checkRow]").prop("checked", false);
@@ -257,7 +257,7 @@ function checkRow() {
 		}
 		$("#checkRows").attr("value", checkRows);
 		if (checkRows != null) {
-			$('#delete').attr('onclick', 'javascript:removeCart(' + checkRows + ')');
+			$('#delete').attr('onclick', 'javascript:removeCart("' + checkRows + '")');
 			$('#buy').attr('onclick', '');
 			$('#buy').attr('href', '/shop/checkout/cart/' + checkRows);
 			
