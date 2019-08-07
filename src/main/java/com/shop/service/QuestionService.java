@@ -38,6 +38,8 @@ public interface QuestionService  {
 	//List<Question> findQuestionlist(String category);
 	
 	String findPwdByQuestionNo(int questionNo);
+	
+	List<Question> findMyQuestionList(String memberId);
 
 	
 	

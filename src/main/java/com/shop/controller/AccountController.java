@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.shop.service.MemberService;
+import com.shop.service.QuestionService;
 import com.shop.service.ShopService;
 import com.shop.vo.Cart;
 import com.shop.vo.Member;
+import com.shop.vo.Question;
 
 @Controller
 @RequestMapping(value = "/account")
@@ -28,6 +30,11 @@ public class AccountController {
 	@Autowired
 	@Qualifier("shopService")
 	private ShopService shopService;
+	
+	@Autowired
+	@Qualifier("questionService")
+	private QuestionService questionService;
+	
 
 	@RequestMapping(path = "/login", method = RequestMethod.GET)
 	public String showLoginForm() {
@@ -76,9 +83,12 @@ public class AccountController {
 		String memberId = member.getMemberId();
 		
 		List<Cart> carts = shopService.findMyCartList(memberId);
+		List<Question> questions = questionService.findMyQuestionList(memberId);
 
 		model.addAttribute("member", member);
 		model.addAttribute("carts", carts);
+		model.addAttribute("questions", questions);
+		
 		return "account/mypage";
 
 	}

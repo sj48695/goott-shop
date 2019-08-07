@@ -148,6 +148,13 @@ public class QuestionServiceImpl implements QuestionService {
 		String pwd = questionRep.selectPwdByQuestionNo(questionNo);
 		return pwd;
 	}
+
+
+	@Override
+	public List<Question> findMyQuestionList(String memberId) {
+		List<Question> questions = questionRep.findMyQuestionList(memberId);
+		return questions;
+	}
 	
 	
 

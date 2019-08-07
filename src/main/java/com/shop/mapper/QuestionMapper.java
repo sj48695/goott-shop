@@ -54,5 +54,7 @@ public interface QuestionMapper {
 	
 	String selectPwdByQuestionNo(int questionNo);
 
+	List<Question> findMyQuestionList(String memberId);
+
 }
 	

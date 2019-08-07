@@ -39,7 +39,7 @@
 			
 				<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 					<div class="col-lg-12">
-						<h4><strong>내 정보</strong></h4>
+						<h4><strong>내 정보</strong></h4><br>
 						<form class="form-contact form-review mt-3">
 							<table class="table">
 								<tr>
@@ -91,7 +91,7 @@
 				</div>
 				
 				<div class="tab-pane fade" id="cart" role="tabpanel" aria-labelledby="cart-tab">
-					<h4><strong>장바구니</strong></h4>
+					<h4><strong>장바구니</strong></h4><br>
 					<c:if test="${ empty carts }">
 					<div class="jumbotron">
 						<h5 style="text-align: center">현재 장바구니에 담긴 상품이 존재하지 않습니다.</h5>
@@ -99,6 +99,7 @@
 					</c:if>
 					
 					<c:if test="${ not empty carts }">
+					<section class="cart_area">
 			        	<div class="cart_inner">
 			          		<div class="table-responsive">
 			                  <table class="table">
@@ -112,7 +113,7 @@
 								</colgroup>
 								<thead>
 									<tr>
-										<th scope="col"><input type="checkbox" id="th_checkAll" onclick="checkAll()"></th>
+										<th scope="col"><input type="checkbox" id="th_checkAll" onclick="checkAll('${rows}')"></th>
 										<th scope="col">Product</th>
 										<th scope="col">Price</th>
 										<th scope="col">Quantity</th>
@@ -121,16 +122,17 @@
 									</tr>
 								</thead>
 								<tbody>
-			                      <c:forEach var="cart" items="${ carts }">
+			                       <c:forEach var="cart" items="${ carts }">
 			                          <tr class="cartlist${ cart.cartNo }">
-			                          	  <td><input type="checkbox" name="checkRow"></td>
+			                          	  <td><input type="checkbox" name="checkRow" value="${ cart.cartNo }" onclick="checkRow()"></td>
 			                              <td>
 			                                  <div class="media">
 			                                      <div class="d-flex">
 			                                          <img src="/shop/resources/img/cart/cart1.png" alt="">
 			                                      </div>
 			                                      <div class="media-body">
-			                                          <p>${ cart.productName }</p>
+			                                          <p>${ cart.title }</p>
+			                                          <p> - ${ cart.productName }(${ cart.color }/${ cart.size })</p>
 			                                      </div>
 			                                  </div>
 			                              </td>
@@ -149,7 +151,7 @@
 			                              	  <input hidden="true" id="total_before${ cart.cartNo }" value="${ cart.price * cart.count }">
 			                                  <h5 class="total${ cart.cartNo }">
 			                                  	<fmt:formatNumber pattern="#,###원">${ cart.price * cart.count }</fmt:formatNumber>
-			                                  	<c:set var="subtotal" value="${ subtotal + (cart.price * cart.count) }"/>
+			                                  	<c:set var="total" value="${ total + (cart.price * cart.count) }"/>
 			                                  </h5>
 			                              </td>
 			                              <td><a onclick="javascript:removeCart(${ cart.cartNo })">X</a></td>
@@ -158,21 +160,23 @@
 			                          <tr>
 			                          	  <td colspan="3"></td>
 			                              <td>
-			                                  <h4>Subtotal</h4>
+			                                  <h5>Total</h5>
 			                              </td>
 			                              <td>
-			                                  <input hidden="true" id="subtotal_before" value="${ subtotal }">
+			                                  <input hidden="true" id="subtotal_before" value="${ total }">
 			                                  <h5 class="subtotal">
-			                                  	<fmt:formatNumber pattern="#,###원">${ subtotal }</fmt:formatNumber>
+			                                  	<fmt:formatNumber pattern="#,###원">${ total }</fmt:formatNumber>
 			                                  </h5>
 			                              </td>
 			                              <td></td>
 			                          </tr>
 			                          <tr class="out_button_area">
 			                              <td colspan="6">
+			                              	<input hidden="true" id="checkRows" name="checkRows">
 			                                  <div class="checkout_btn_inner d-flex align-items-center ml-0 row justify-content-end">
-			                                      <button class="gray_btn" onclick="history.go(-1);">Continue Shopping</button>
-			                                      <a class="primary-btn ml-2" href="/shop/checkout">Proceed to checkout</a>
+			                                      <a id="delete" class="gray_btn mr-2" onclick="alert('상품을 선택해주세요')">선택 삭제</a>
+			                                      <a id="continue" class="gray_btn" onclick="history.go(-1);">쇼핑 계속하기</a>
+			                                      <a id="buy" class="primary-btn ml-2" onclick="alert('상품을 선택해주세요')">구매하기</a>
 			                                  </div>
 			                              </td>
 			                          </tr>
@@ -180,6 +184,7 @@
 			                  </table>
 			            	</div>
 			        	</div>
+			        	</section>
 			      	</c:if>
 				</div>
 				
@@ -187,41 +192,39 @@
 				</div>
 				
 				<div class="tab-pane fade" id="qna" role="tabpanel" aria-labelledby="qna-tab">
-					<h4><strong>QnA</strong></h4>
+					<h4><strong>QnA</strong></h4><br>
 					<c:if test="${ empty questions }">
 					<div class="jumbotron">
 						<h5 style="text-align: center">현재 작성된 QnA가 존재하지 않습니다.</h5>
 					</div>
 					</c:if>
 					<c:if test="${ not empty questions }">
-						<table class="table">
+						<table class="table table-hover">						
 							<tr>
-								<th>NO</th>
-								<th>
-									<form id="selectform" action="qacategory" method="POST">
-										<select name="category" id="qaselectcategory">
-											<option value="all">CATEGORY</option>
-											<option value="고양이문의"
-												<c:if test="${param.category eq '고양이문의'}">selected</c:if>>고양이문의</option>
-											<option value="용품문의"
-												<c:if test="${param.category eq '용품문의'}">selected</c:if>>용품문의</option>
-											<option value="기타문의"
-												<c:if test="${param.category eq '기타문의'}">selected</c:if>>기타문의</option>
-										</select>
-									</form>
-								</th>
-								<th style="width: 400px; text-align: center">CONTENTS</th>
-								<th style="width: 125px; text-align: center">NAME</th>
-								<th style="width: 150px; text-align: center;">DATE</th>
+								<th style="width: 50px; text-align: center">NO</th>
+								<th style="width: 150px; text-align: center">CATEGORY</th>
+								<th style="width: 300px; text-align: center">CONTENTS</th>
+								<th style="width: 150px; text-align: center">DATE</th>
 								<th style="width: 125px; text-align: center">ANSWER</th>
-							</tr>
+							</tr>						
 							<c:forEach var="question" items="${questions}">
 								<tr>
 									<td style="text-align: center">${ question.questionNo }</td>
 									<td style="text-align: center">${ question.category }</td>
 									<td style='text-align: left; padding-left: 10px'>
-									<a href="/catopia/qa-upload/qa-detail/${ question.questionNo }"> ${ question.title }</a>&nbsp;&nbsp;[${ question.recnt }]</td>
-									<td style="text-align: center">${ question.uploader }</td>
+									<a	href=<c:if test='${ question.secure eq true}'>
+									"/../shop/pwCheck/${ question.questionNo }" 
+									</c:if>
+									<c:if test='${ question.secure eq false}'>
+									 "/../shop/qa-detail/${ question.questionNo }" 
+									</c:if>>
+									${ question.title }</a>
+									<c:if test='${ question.secure eq true }'>
+									<i class="fa fa-lock"></i>
+									</c:if>
+									
+									&nbsp;&nbsp;[${ question.recnt }]
+									</td>
 									<td style="text-align: center">${ question.regDate }</td>
 									<td style="text-align: center">${ question.answer ? "답변완료" : "답변대기" }
 								</tr>
@@ -230,7 +233,7 @@
 					</c:if>
 				</div>
 				
-			</div>
+			</div><!-- tab-content -->
 	
 		</div>
 	</section>

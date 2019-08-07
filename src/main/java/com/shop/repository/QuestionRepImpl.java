@@ -232,6 +232,12 @@ public ArrayList<QuestionFile> selectQuestionFile(int questionNo) {
 		return pwd;
 	}
 
+	@Override
+	public List<Question> findMyQuestionList(String memberId) {
+		List<Question> questions = questionMapper.findMyQuestionList(memberId);
+		return questions;
+	}
+
 	
 	
 

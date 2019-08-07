@@ -55,6 +55,8 @@ public interface QuestionRep {
 
 	String selectPwdByQuestionNo(int questionNo);
 
+	List<Question> findMyQuestionList(String memberId);
+
 	/*--------------------------*/
 	
 	
