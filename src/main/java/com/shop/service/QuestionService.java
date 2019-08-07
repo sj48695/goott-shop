@@ -1,12 +1,12 @@
 package com.shop.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.shop.vo.Question;
-import com.shop.vo.QuestionFile;
-import com.shop.vo.Question;
 import com.shop.vo.QuestionComment;
+import com.shop.vo.QuestionFile;
 
 public interface QuestionService  {
 
@@ -40,6 +40,13 @@ public interface QuestionService  {
 	String findPwdByQuestionNo(int questionNo);
 	
 	List<Question> findMyQuestionList(String memberId);
+	
+	
+	/**/
+	
+	List<QuestionComment> findCommentListByQuestionNoWithPaging(HashMap<String, Object> params);
+	
+	int findCommentsCountByQuestionNo(int questionNo);
 
 	
 	

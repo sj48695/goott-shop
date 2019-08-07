@@ -196,9 +196,30 @@
 									</tr>
 
 								</c:forEach>
+								
 							</c:if>
+							
 						</table>
-
+						<br>
+							 <div id="pager">
+						        <c:set var="pagerSize" value="3" />
+					       		[<a id="first" data-pageno="-1" href="javascript:">처음</a>]
+					       		&nbsp;
+					       		[<a id="prev" data-pageno="-1" href="javascript:">이전</a>]
+						        
+						        &nbsp;
+						        <c:forEach var="idx" begin="1" end="${ pagerSize }">
+						        	<a class='pageno' data-pageno="${ idx }" href='javascript:'>${ idx }</a>
+						        	<c:if test="${ idx < pagerSize }">
+						        	&nbsp;
+						        	</c:if>
+						        </c:forEach>
+					
+								&nbsp;
+					       		[<a id="next" data-pageno="-1" href="javascript:">다음</a>]
+					       		&nbsp;
+					       		[<a id="last" data-pageno="-1" href="javascript:">마지막</a>]
+						    </div>
 					</div>
 				</div>
 
@@ -350,6 +371,8 @@ $(function() {
 
 });
 	</script>
+	
+
 
 <!-- The Modal 댓글-->
 
@@ -388,5 +411,23 @@ $(function() {
 </div>
 
 
+<script type="text/javascript">
 
+$(function() {
+	
+	$('a[id^=pageno]').on('click', function(event) {
+		var id = $(this).attr('id');
+		var pageNo = id.split('-')[1];
+		var uploadNo = $(this).attr("dat")
+		
+		$("#comment-list").load('/shop/question/comment-list', 
+								{ "questionNo" : 1, "pageNo": pageNo }, 
+								function() {});
+	});
+	
+	
+	
+});
+
+</script>
 <jsp:include page="../include/footer.jsp" />

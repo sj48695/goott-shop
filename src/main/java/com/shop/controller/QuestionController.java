@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,7 +26,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.shop.common.Util;
 import com.shop.service.QuestionService;
+import com.shop.service.ShopService;
 import com.shop.vo.Member;
+import com.shop.vo.Product;
 import com.shop.vo.Question;
 import com.shop.vo.QuestionComment;
 import com.shop.vo.QuestionFile;
@@ -36,6 +39,10 @@ public class QuestionController {
 	@Autowired
 	@Qualifier("questionService")
 	private QuestionService questionService;
+	
+	@Autowired
+	@Qualifier("shopService")
+	private ShopService shopService;
 	
 	@RequestMapping(path = "/qa-list", method = RequestMethod.GET)
 	public String list(Model model) {
@@ -134,16 +141,55 @@ public class QuestionController {
 	      List<QuestionFile> files = questionService.findQuestionFilesByQuestionNo(questionNo);
 	      question.setFiles((ArrayList<QuestionFile>)files); 
 	      
-	      List<QuestionComment> comments = questionService.findCommentListByQuestionNo(questionNo);
+	      
+	      int pageSize = 2;
+		  int currentPage = 1;
+		
+		  int from = (currentPage - 1) * pageSize + 1;
+		  int to = from + pageSize;
+		
+		  HashMap<String, Object> params = new HashMap<String, Object>();
+		  params.put("questionNo", questionNo);
+		  params.put("from", from);
+		  params.put("to", to);
+		  
+	      List<QuestionComment> comments = 
+	    		  //questionService.findCommentListByQuestionNo(questionNo);
+	    		  questionService.findCommentListByQuestionNoWithPaging(params);
 	      question.setComments(comments);
 	      
 	      questionService.readCount(questionNo);
 	      
-	    
-	      model.addAttribute("question", question);
+	     model.addAttribute("question", question);
+	      
+	      int commentsCount = 
+					questionService.findCommentsCountByQuestionNo(questionNo);
+			
+	      model.addAttribute("commentsCount", commentsCount);
 		
 		return "question/qa-detail"; 
 	}
+	
+	@RequestMapping(path="/productSelect", method = RequestMethod.GET)
+	public String productSelectForm(Model model ) {
+		
+		
+		List<Product> products = shopService.findProducts();
+		
+		model.addAttribute("products", products);
+		
+		return "question/productSelect"; 
+	}
+	
+//	@RequestMapping(path="/productSelect", method = RequestMethod.POST)
+//	public String productSelect(Model model ) {
+//		
+//		Products products = shopService.findProducts();
+//		
+//		model.addAttribute("products", products);
+//		return null;
+//	}
+//	
 	
 	@RequestMapping(path="/pwCheck/{questionNo}", method = RequestMethod.GET)
 	public String pwCheckForm(@PathVariable int questionNo, Model model) {
@@ -367,7 +413,6 @@ public class QuestionController {
 			} 
 		
 		 
-		 /*----------------notice---------------*/
 		 
 		 
 	/*----------------mypage---------------*/

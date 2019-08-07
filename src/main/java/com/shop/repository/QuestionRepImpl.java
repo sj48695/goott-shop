@@ -1,25 +1,16 @@
 package com.shop.repository;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.xml.stream.events.Namespace;
-
-import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.shop.mapper.QuestionMapper;
 import com.shop.vo.Question;
-import com.shop.vo.QuestionFile;
-import com.shop.vo.Question;
 import com.shop.vo.QuestionComment;
+import com.shop.vo.QuestionFile;
 
 
 public class QuestionRepImpl implements QuestionRep {
@@ -239,7 +230,19 @@ public ArrayList<QuestionFile> selectQuestionFile(int questionNo) {
 	}
 
 	
-	
+	/**/
+	@Override
+	public List<QuestionComment> selectQuestionByQuestionNoWithPaging(HashMap<String, Object> params) {
+
+		List<QuestionComment> comments = 
+				questionMapper.selectCommentsByQuestionNoWithPaging(params);
+		
+		return comments;
+	}
+	@Override
+	public int selectCommentsCountByQuestionNo(int questionNo) {
+		return questionMapper.selectCommentsCountByQuestionNo(questionNo);
+	}
 
 	
 }

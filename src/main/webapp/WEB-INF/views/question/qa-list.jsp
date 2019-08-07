@@ -108,20 +108,20 @@
 							<th style="width: 125px; text-align: center">ANSWER</th>
 						</tr>
 						
-						<c:forEach var="notice" items="${noticelist}">
+						
 							<tr style="height: 30px">
-								<td style="text-align: center">${ notice.questionNo }</td>
-								<td style="text-align: center"><strong>${ notice.title }</strong></td>
-								<td style='text-align: left; padding-left: 10px'><strong>${ notice.content }</strong></td>
-								<td style="text-align: center">${ notice.managerID }</td>
-								<td style="text-align: center">${ notice.regDate }</td>
+								<td style="text-align: center">*</td>
+								<td style="text-align: center">*</td>
+								<td style="text-align: center"><strong>공지사항</strong></td>
+								<td style='text-align: left; padding-left: 10px'><strong>+[공지] 교환/반품 절차</strong></td>
+								<td style="text-align: center">manager</td>
+								<td style="text-align: center">2019-08-07</td>
 								<td style="text-align: center"></td>
 							</tr>
-						</c:forEach>
 						<c:forEach var="question" items="${questions}">
 							<tr style="height: 30px">
 								<td style="text-align: center">${ question.questionNo }</td>
-								<td style="text-align: center">${ question.questionNo }</td>
+								<td style="text-align: center"></td>
 								<td style="text-align: center">${ question.category }</td>
 								<td style='text-align: left; padding-left: 10px'>
 								<a	href=<c:if test='${ question.secure eq true}'>

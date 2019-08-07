@@ -17,7 +17,15 @@
 				<div id="inputcontent">
 					<div class="inputsubtitle"></div>
 					<form action="qa-write" method="post" enctype="multipart/form-data">
+						
 						<table class="table" style="width: 50%; margin: auto">
+							<tr>
+								<th colspan="1"><img src="/shop/resources/files/product-files/${ product.file.fileName }" 
+									style="width: 60px; padding-right:10px"></th>
+								<td colspan="2" style="text-align: left">
+								${ product.title }<input type='button' onclick='javascript()' value='상품정보선택'/>
+								</td>
+							</tr>
 							<tr>
 								<th>제목</th>
 								<td>
@@ -96,6 +104,21 @@
 	<script type="text/javascript"
 		src="/shop/resources/navereditor/js/HuskyEZCreator.js" charset="utf-8"></script>
 	<script type="text/javascript">
+	
+	function javascript(){
+		 
+	    //팝업창출력
+	    //width : 300px크기
+	    //height : 300px크기
+	    //top : 100px 위의 화면과 100px 차이해서 위치
+	    //left : 100px 왼쪽화면과 100px 차이해서 위치
+	    //툴바 X, 메뉴바 X, 스크롤바 X , 크기조절 X
+	    window.open('/shop/productSelect/','popName',
+	                'width=450,height=300,top=100,left=100,toolbar=no,menubar=no,scrollbars=no,resizable=no,status=no');
+	}
+
+
+	출처: https://jdkblog.tistory.com/59 [JDK's blog]
 		$(function() {
 			//전역변수
 			var obj = [];
