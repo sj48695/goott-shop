@@ -357,6 +357,7 @@
 						</div>
 						<div>
 						<div>
+						
 				<!-- 후기 -->
 				<%-- <c:if test="${ space.reviewCheck }"> --%>
 	            <form id="reviewform" class="form-inline row">
