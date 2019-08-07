@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.shop.repository.ShopRep;
+import com.shop.vo.Buy;
 import com.shop.vo.Cart;
 import com.shop.vo.Product;
 
@@ -81,6 +82,33 @@ public class ShopServiceImpl implements ShopService {
 
 		List<Cart> checkoutList = shopRep.selectCheckoutList(memberId, cartNo);
 		return checkoutList;
+	}
+	
+	@Override
+	public void buy(Buy buy, String cartNoliststr) {
+		String[] cartNoList = cartNoliststr.split(",");
+		for(int i=0;i<cartNoList.length;i++) {
+			Cart cart = shopRep.selectCartByCartNo(Integer.parseInt(cartNoList[i]));
+			
+			
+			buy.setProductNo(cart.getProductNo());
+			buy.setPrice(cart.getPrice());
+			buy.setTitle(cart.getTitle());
+			buy.setColor(cart.getColor());
+			buy.setCount(cart.getCount());
+			buy.setProductName(cart.getProductName());
+			buy.setSize(cart.getSize());
+			System.out.println(buy);
+			shopRep.insertBuy(buy);
+			shopRep.updateProductCountByBuy(cart.getProductNo(), cart.getCount());
+		}
+		shopRep.deleteCart(cartNoList);
+	}
+
+	@Override
+	public List<Buy> findLatelyBuyList(String memberId, int rows) {
+		List<Buy> buyList = shopRep.selectLatelyBuyList(memberId, rows);
+		return buyList;
 	}
 
 }

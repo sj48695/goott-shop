@@ -1,6 +1,7 @@
 package com.shop.controller;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shop.service.ShopService;
+import com.shop.vo.Buy;
 import com.shop.vo.Cart;
 import com.shop.vo.Member;
 import com.shop.vo.Product;
@@ -89,21 +91,42 @@ public class ShopController {
 		return result;
 	}
 	
-	@RequestMapping(value = "/checkout/{cartNostrs}", method = RequestMethod.GET)
+	@RequestMapping(value = "/checkout/cart/{cartNostrs}", method = RequestMethod.GET)
 	public String checkout(Model model, HttpSession session, @PathVariable String cartNostrs) {
 		Member loginuser = (Member) session.getAttribute("loginuser");
+
 		if (loginuser != null) {
-			List<Cart> products = shopService.findCheckoutList(loginuser.getMemberId(), cartNostrs);
+			List<Cart> carts = shopService.findCheckoutList(loginuser.getMemberId(), cartNostrs);
+			
 			model.addAttribute("loginuser", loginuser);
-			model.addAttribute("products", products);
+			model.addAttribute("products", carts);
+			model.addAttribute("cartNostrs", cartNostrs);
 			return "checkout";
 		} else {
 			return "redirect:/";
 		}
 	}
 	
-	@RequestMapping(value="/confirmation", method = RequestMethod.GET)
-	public String confirmaion(){
+	@RequestMapping(value = "/checkout/buynow", method = RequestMethod.POST)
+	public String buyNowCheckout(Model model, HttpSession session, Cart cart) {
+		Member loginuser = (Member) session.getAttribute("loginuser");
+		if (loginuser != null) {
+
+			cart.setMemberId(loginuser.getMemberId());
+			shopService.registerCart(cart);
+
+			return "/checkout/cart/" + cart.getProductNo();
+		} else {
+			return "redirect:/";
+		}
+	}
+	
+	@RequestMapping(value="/confirmation/{rows}", method = RequestMethod.GET)
+	public String confirmaion(@PathVariable int rows, Model model, HttpSession session){
+		Member loginuser = (Member) session.getAttribute("loginuser");
+		List<Buy> buyList = shopService.findLatelyBuyList(loginuser.getMemberId(),rows);
+		System.out.println(buyList);
+		model.addAttribute(buyList);
 		return "confirmation";
 	}
 	
@@ -112,6 +135,24 @@ public class ShopController {
 		Product product = shopService.findProductByProductNo(productNo);
 		model.addAttribute("product", product);
 		return "single-product";
+	}
+	
+	@RequestMapping(value = "/buy/{cartNostrs}", method = RequestMethod.POST)
+	public String buy(Buy buy, Member member, @PathVariable String cartNostrs, HttpSession session) {
+		Member loginuser = (Member) session.getAttribute("loginuser");
+		if (loginuser != null) {
+
+			buy.setMemberId(loginuser.getMemberId());
+
+			String address = "(" + member.getPostCode() + ") " + member.getRoadAddr() + " " 
+							+ member.getDetailAddr() + " " + member.getExtraAddr();
+			buy.setAddress(address);
+			shopService.buy(buy, cartNostrs);
+
+		}
+		String[] cartNostr = cartNostrs.split(",");
+
+		return "redirect:/confirmation/"+cartNostr.length;
 	}
 	
 //	회원 장바구니

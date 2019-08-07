@@ -3,9 +3,9 @@ package com.shop.repository;
 import java.util.HashMap;
 import java.util.List;
 
+import com.shop.vo.Buy;
 import com.shop.vo.Cart;
 import com.shop.vo.Product;
-import com.shop.vo.ProductFile;
 
 public interface ShopRep {
 	Product selectProductByProductNo(int productNo);
@@ -27,5 +27,13 @@ public interface ShopRep {
 	List<Cart> findMyCartList(String memberId);
 
 	List<Cart> selectCheckoutList(String memberId, String[] cartNo);
+
+	void insertBuy(Buy buy);
+
+	Cart selectCartByCartNo(int cartNo);
+
+	void updateProductCountByBuy(int productNo, int count);
+
+	List<Buy> selectLatelyBuyList(String memberId, int rows);
 
 }

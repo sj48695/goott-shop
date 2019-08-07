@@ -13,7 +13,8 @@
 		<typeAlias type="com.shop.vo.QuestionComment" alias="QuestionComment" />	
 		<typeAlias type="com.shop.vo.Product" alias="Product"/>
 		<typeAlias type="com.shop.vo.ProductFile" alias="ProductFile"/>		
-		<typeAlias type="com.shop.vo.Cart" alias="Cart"/>	
+		<typeAlias type="com.shop.vo.Cart" alias="Cart"/>		
+		<typeAlias type="com.shop.vo.Buy" alias="Buy"/>	
 	</typeAliases>
 	
 	<environments default="development">

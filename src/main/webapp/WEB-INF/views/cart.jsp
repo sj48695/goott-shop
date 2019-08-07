@@ -45,7 +45,7 @@
 							<th scope="col">Product</th>
 							<th scope="col">Price</th>
 							<th scope="col">Quantity</th>
-							<th scope="col">Total</th>
+							<th scope="col">SubTotal</th>
 							<th scope="col">delete</th>
 						</tr>
 					</thead>
@@ -54,6 +54,7 @@
                           <tr class="cartlist${ cart.cartNo }">
                           	  <td><input type="checkbox" name="checkRow" value="${ cart.cartNo }" onclick="checkRow()"></td>
                               <td>
+                              	<a href="/shop/single-product/${ cart.productNo }">
                                   <div class="media">
                                       <div class="d-flex">
                                           <img src="/shop/resources/img/cart/cart1.png" alt="">
@@ -63,6 +64,7 @@
                                           <p> - ${ cart.productName }(${ cart.color }/${ cart.size })</p>
                                       </div>
                                   </div>
+                                  </a>
                               </td>
                               <td>
                                   <h5><fmt:formatNumber pattern="#,###원">${ cart.price }</fmt:formatNumber></h5>
@@ -84,7 +86,7 @@
                               </td>
                               <td><a onclick="javascript:removeCart(${ cart.cartNo })">X</a></td>
                           </tr>
-                        </c:forEach>
+                        </c:forEach><%-- 
                           <tr>
                           	  <td colspan="3"></td>
                               <td>
@@ -97,7 +99,7 @@
                                   </h5>
                               </td>
                               <td></td>
-                          </tr>
+                          </tr> --%>
                           <tr class="out_button_area">
                               <td colspan="6">
                               	<input hidden="true" id="checkRows" name="checkRows">
