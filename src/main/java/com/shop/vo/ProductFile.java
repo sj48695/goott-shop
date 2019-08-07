@@ -6,5 +6,6 @@ import lombok.Data;
 public class ProductFile {
 	private int productFileNo;
 	private String fileName;
+	private boolean flag;
 	private int productNo;
 }

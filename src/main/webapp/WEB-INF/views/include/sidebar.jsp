@@ -12,17 +12,17 @@
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">상품</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <li>
-                            <a href="write-product">상품등록</a>
+                            <a href="/shop/manager/write-product">상품등록</a>
                         </li>
                         <li>
-                            <a href="list-product">상품목록</a>
+                            <a href="/shop/manager/list-product">상품목록</a>
                         </li>
                         <li>
                             <a href="#">Home 3</a>
                         </li>
                     </ul>
                 </li>
-                <li>
+               <!--  <li>
                     <a href="#"></a>
                 </li>
                 <li>
@@ -45,7 +45,7 @@
                 <li>
                     <a href="#">Contact</a>
                 </li>
-            </ul>
+            </ul> -->
 
           
         </nav>

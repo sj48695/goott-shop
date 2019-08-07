@@ -44,7 +44,9 @@
                            <li class="nav-item"><a class="nav-link" href="/shop/qa-list">QnA</a></li>
                         </ul>
                      </li>
-                     <li class="nav-item"><a class="nav-link" href="/shop/manager/write-product">Manager</a></li>
+                     <c:if test="${ loginuser.memberId eq 'manager' }">
+                     	<li class="nav-item"><a class="nav-link" href="/shop/manager/write-product">Manager</a></li>
+                     </c:if>
                   </ul>
                   <ul class="nav-shop ml-auto mr-auto">
                          <li class="nav-item"><button><i class="ti-search"></i></button></li>
