@@ -22,10 +22,13 @@ public interface ManagerMapper {
 	List<ProductFile> selectProductFilesByProductNo(int productNo);
 
 	void updateProduct(Product product);
+	
+	void updateProductFile(ProductFile productFile);
 
 	void deleteProduct(int productNo);
 
 	ProductFile selectProductFileByProductFileNo(int productFileNo);
 
 	void deleteProductFile(int productFileNo);
+
 }

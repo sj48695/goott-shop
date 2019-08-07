@@ -116,7 +116,7 @@
                 <div class="card text-center card-product">
                   <div class="card-product__img">
                     <a href="/shop/single-product/${ product.productNo }">
-	                    <img class="card-img" src="/shop/resources/img/product/product1.png" alt="">
+	                    <img class="card-img" src="/shop/resources/files/product-files/${ product.file.fileName }" alt="">
 					</a>
                     <%-- <ul class="card-product__imgOverlay">
                       <li><button onclick="location.href='/shop/single-product/${ product.productNo }'"><i class="ti-search"></i></button></li><!-- 

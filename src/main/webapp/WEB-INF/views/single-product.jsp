@@ -35,7 +35,9 @@
 				<div class="col-lg-6">
 					<div class="owl-carousel owl-theme s_Product_carousel">
 						<div class="single-prd-item">
-							<img class="img-fluid" src="/shop/resources/img/category/s-p1.jpg" alt="">
+							<c:forEach var="file" items="${ product.files }">
+								<img class="img-fluid" src="/shop/resources/files/product-files/${ file.fileName }" alt="">
+							</c:forEach>
 						</div>
 						<!-- <div class="single-prd-item">
 							<img class="img-fluid" src="/shop/resources/img/category/s-p1.jpg" alt="">

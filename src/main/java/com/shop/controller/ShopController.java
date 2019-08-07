@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.shop.service.ManagerService;
 import com.shop.service.ShopService;
 import com.shop.vo.Buy;
 import com.shop.vo.Cart;
 import com.shop.vo.Member;
 import com.shop.vo.Product;
+import com.shop.vo.ProductFile;
 
 @Controller
 public class ShopController {
@@ -29,11 +31,20 @@ public class ShopController {
 	@Qualifier("shopService")
 	private ShopService shopService;
 	
+	@Autowired
+	@Qualifier("managerService")
+	private ManagerService managerService;
+	
 	@RequestMapping(value="/category", method = RequestMethod.GET)
 	public String category(Model model){
 		List<Product> products = shopService.findProducts();
 		List<HashMap<String, Object>> categories = shopService.findCategories();
 		List<String> colors = shopService.findColors();
+		
+		for(Product product : products) {
+			product.setFile(managerService.findUploadFile(product.getProductNo()));
+		}
+		
 		model.addAttribute("colors", colors);
 		model.addAttribute("categories", categories);
 		model.addAttribute("products", products);
@@ -49,7 +60,10 @@ public class ShopController {
 			String rows = "";
 			for(Cart cart : carts) {
 				rows = rows + cart.getCartNo() + ",";
+				cart.setFile(managerService.findUploadFile(cart.getProductNo()));
 			}
+			
+			
 			model.addAttribute("rows", rows);
 			model.addAttribute("carts", carts);
 			return "cart";
@@ -133,6 +147,12 @@ public class ShopController {
 	@RequestMapping(value="/single-product/{productNo}", method = RequestMethod.GET)
 	public String detail(@PathVariable int productNo, Model model){
 		Product product = shopService.findProductByProductNo(productNo);
+		
+		// 이미지
+		List<ProductFile> files = managerService.findProductFilesByProductNo(productNo);
+		
+		product.setFiles((ArrayList<ProductFile>)files);
+		
 		model.addAttribute("product", product);
 		return "single-product";
 	}

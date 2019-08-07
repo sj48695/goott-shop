@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.shop.service.ManagerService;
 import com.shop.service.MemberService;
 import com.shop.service.QuestionService;
 import com.shop.service.ShopService;
 import com.shop.vo.Cart;
 import com.shop.vo.Member;
+import com.shop.vo.Product;
 import com.shop.vo.Question;
 
 @Controller
@@ -35,6 +37,9 @@ public class AccountController {
 	@Qualifier("questionService")
 	private QuestionService questionService;
 	
+	@Autowired
+	@Qualifier("managerService")
+	private ManagerService managerService;
 
 	@RequestMapping(path = "/login", method = RequestMethod.GET)
 	public String showLoginForm() {
@@ -84,6 +89,10 @@ public class AccountController {
 		
 		List<Cart> carts = shopService.findMyCartList(memberId);
 		List<Question> questions = questionService.findMyQuestionList(memberId);
+		
+		for(Cart cart : carts) {
+			cart.setFile(managerService.findUploadFile(cart.getProductNo()));
+		}
 
 		model.addAttribute("member", member);
 		model.addAttribute("carts", carts);

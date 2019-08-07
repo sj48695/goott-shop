@@ -11,7 +11,7 @@ public interface ManagerRep {
 
 	void insertProductFile(ProductFile file);
 
-	List<Product> selectProduct(String category);
+	List<Product> selectProduct(String category, String keyword);
 
 	ProductFile selectProductFile(int productNo);
 
@@ -20,6 +20,8 @@ public interface ManagerRep {
 	List<ProductFile> selectProductFilesByProductNo(int productNo);
 
 	void updateProduct(Product product);
+	
+	void updateProductFile(ProductFile productFile);
 
 	void deleteProduct(int productNo);
 

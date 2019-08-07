@@ -19,5 +19,5 @@ public class Cart {
 	
 	
 	private String title;
-	
+	private ProductFile file;
 }

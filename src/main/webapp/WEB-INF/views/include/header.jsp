@@ -46,7 +46,7 @@
                         </ul>
                      </li>
                      <c:if test="${ loginuser.memberId eq 'manager' }">
-                     	<li class="nav-item"><a class="nav-link" href="/shop/manager/write-product">Manager</a></li>
+                     	<li class="nav-item"><a class="nav-link" href="/shop/manager/list-product">Manager</a></li>
                      </c:if>
                   </ul>
                   <ul class="nav-shop ml-auto mr-auto">

@@ -10,7 +10,7 @@ public interface ManagerService {
 	
 	void insertProductFile(ProductFile file);
 
-	List<Product> findProductList(String category);
+	List<Product> findProductList(String category, String keyword);
 
 	ProductFile findUploadFile(int productNo);
 
@@ -21,6 +21,8 @@ public interface ManagerService {
 	ProductFile findProductFile(int productNo);
 
 	void updateProduct(Product product);
+	
+	void updateProductFile(ProductFile productFile);
 
 	void insertProductFiles(Product product, int productNo);
 
@@ -30,5 +32,4 @@ public interface ManagerService {
 
 	void deleteProductFile(int productFileNo);
 
-	void updateProductFile(ProductFile productFile);
 }

@@ -128,7 +128,7 @@
 			                              <td>
 			                                  <div class="media">
 			                                      <div class="d-flex">
-			                                          <img src="/shop/resources/img/cart/cart1.png" alt="">
+			                                          <img src="/shop/resources/files/product-files/${ cart.file.fileName }" width="100" alt="">
 			                                      </div>
 			                                      <div class="media-body">
 			                                          <p>${ cart.title }</p>

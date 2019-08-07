@@ -33,6 +33,9 @@
 	<select id="selectProduct" resultType="Product" parameterType="hashmap">
 		select <include refid="productBasicColumns"/>, productNo, managerId
 		from product
+			<if test="keyword != ''">
+				where title like concat('%', #{ keyword }, '%')
+			</if>
 			<if test='category != "전체"'>
 				where category like concat('%', #{ category }, '%')
 			</if>
@@ -53,7 +56,7 @@
 	</select>
 	
 	<select id="selectProductFilesByProductNo" resultType="ProductFile">
-		select <include refid="productFileBasicColumns"/>
+		select <include refid="productFileBasicColumns"/>, productFileNo
 		from productfile
 		where productNo = #{ productNo } and flag = 0
 	</select>
@@ -79,7 +82,7 @@
 	</update>
 	
 	<select id="selectProductFileByProductFileNo" parameterType="int" resultType="ProductFile">
-		select <include refid="productFileBasicColumns"/>
+		select <include refid="productFileBasicColumns"/>, productFileNo
 		from productfile
 		where productFileNo = #{ productFileNo } 
 	</select>
