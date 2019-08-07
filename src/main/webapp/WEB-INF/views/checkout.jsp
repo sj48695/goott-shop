@@ -113,11 +113,8 @@
                     <div class="order_box">
                         <h2>Your Order</h2>
                         <ul class="list">
-                            <li><a href="#"><h4>Product <span>Total</span></h4></a></li>
-                         <c:forEach var="product" items="${ products }"><!-- 
-                         <input type="hidden" name="productNo" value="">
-                         <input type="hidden" name="count" value="">
-                         <input type="hidden" name="price" value=""> -->
+                            <li><a href="#"><h4>Product <span>Quantity</span><span>Total</span></h4></a></li>
+                         <c:forEach var="product" items="${ products }">
                             <li>
                             	<a href="#">${ product.productName }
 	                            	<span class="middle">${ product.count }개</span> 

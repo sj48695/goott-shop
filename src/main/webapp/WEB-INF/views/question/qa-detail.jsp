@@ -63,7 +63,6 @@
 										rows="20">${ fn:replace(question.content, enter,'<br>')}</td>
 								</tr>
 								<tr>
-									
 									<td style="border-bottom:solid 0px;">
 									</td>
 								</tr>
@@ -125,6 +124,8 @@
 								<td style="width: 50px; vertical-align: middle"><a
 									id="writecomment" href="javascript:"
 									style="text-decoration: none"> 댓글등록
+									
+									
 								</a></td>
 							</tr>
 						</table>

@@ -31,4 +31,11 @@ public class MemberServiceImpl implements MemberService{
 		return member;
 	}
 
+	@Override
+	public void updateMember(Member member) {
+		String pwd = Util.getHashedString(member.getPwd(), "SHA-256");
+		member.setPwd(pwd); 
+		memberRepository.updateMember(member);	
+	}
+
 }

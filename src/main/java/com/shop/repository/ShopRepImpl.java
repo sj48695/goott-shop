@@ -81,6 +81,11 @@ public class ShopRepImpl implements ShopRep {
 	}
 
 	@Override
+	public List<Cart> findMyCartList(String memberId) {
+		List<Cart> carts = shopMapper.findMyCartList(memberId);
+		return carts;
+	}
+	
 	public List<Cart> selectCheckoutList(String memberId, String[] cartNos) {
 
 		HashMap<String, Object> params = new HashMap<String, Object>();
@@ -93,6 +98,7 @@ public class ShopRepImpl implements ShopRep {
 		params.put("codeList", codeList);
 		List<Cart> checkoutList = shopMapper.selectCheckoutList(params);
 		return checkoutList;
+
 	}
 
 	@Override
@@ -112,6 +118,15 @@ public class ShopRepImpl implements ShopRep {
 		params.put("productNo", productNo);
 		params.put("count", count);
 		shopMapper.updateProductCountByBuy(params);
+	}
+
+	@Override
+	public List<Buy> selectLatelyBuyList(String memberId, int rows) {
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("memberId", memberId);
+		params.put("rows", rows);
+		List<Buy> buyList = shopMapper.selectLatelyBuyList(params);
+		return buyList;
 	}
 
 }

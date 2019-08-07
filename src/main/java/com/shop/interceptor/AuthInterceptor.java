@@ -17,7 +17,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter { // class 상속
 		
 		String uri = req.getRequestURI();
 		
-		if (uri.contains("/shop/")) {
+		if (uri.contains("/qa-write") || uri.contains("/cart") || uri.contains("/checkout/") || uri.contains("/manager")) {
 			HttpSession session = req.getSession();
 			if (session.getAttribute("loginuser") == null) {//로그인하지 않은 경우				
 				resp.sendRedirect("/shop/account/login");

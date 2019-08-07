@@ -68,6 +68,12 @@ public class ShopServiceImpl implements ShopService {
 	public void updateCartCntByCartNo(int cartNo, int count) {
 		shopRep.updateCartCntByCartNo(cartNo, count);
 	}
+
+	@Override
+	public List<Cart> findMyCartList(String memberId) {
+		List<Cart> carts = shopRep.findMyCartList(memberId);
+		return carts;
+	}
 	
 	@Override
 	public List<Cart> findCheckoutList(String memberId, String cartNostrs) {
@@ -97,6 +103,12 @@ public class ShopServiceImpl implements ShopService {
 			shopRep.updateProductCountByBuy(cart.getProductNo(), cart.getCount());
 		}
 		shopRep.deleteCart(cartNoList);
+	}
+
+	@Override
+	public List<Buy> findLatelyBuyList(String memberId, int rows) {
+		List<Buy> buyList = shopRep.selectLatelyBuyList(memberId, rows);
+		return buyList;
 	}
 
 }

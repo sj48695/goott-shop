@@ -24,6 +24,8 @@ public interface ShopRep {
 
 	void updateCartCntByCartNo(int cartNo, int count);
 
+	List<Cart> findMyCartList(String memberId);
+
 	List<Cart> selectCheckoutList(String memberId, String[] cartNo);
 
 	void insertBuy(Buy buy);
@@ -31,5 +33,7 @@ public interface ShopRep {
 	Cart selectCartByCartNo(int cartNo);
 
 	void updateProductCountByBuy(int productNo, int count);
+
+	List<Buy> selectLatelyBuyList(String memberId, int rows);
 
 }

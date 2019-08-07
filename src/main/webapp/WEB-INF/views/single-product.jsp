@@ -59,9 +59,9 @@
 							</ul>
 							<p>${ product.content }</p>
 							
-							<c:set var="colors" value="${ fn:split(product.color, ', ') }"/>
-							<c:set var="sizes" value="${ fn:split(product.size, ', ') }"/>
-							<c:set var="productNames" value="${ fn:split(product.productName, ', ') }"/>
+							<c:set var="colors" value="${ fn:split(product.color, ',') }"/>
+							<c:set var="sizes" value="${ fn:split(product.size, ',') }"/>
+							<c:set var="productNames" value="${ fn:split(product.productName, ',') }"/>
 							
 							<div class="product_count w-100">
 	              				<div class="row py-1">

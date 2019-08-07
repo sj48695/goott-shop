@@ -33,6 +33,8 @@ public interface ShopMapper {
 
 	void updateCartCntByCartNo(HashMap<String, Object> params);
 
+	List<Cart> findMyCartList(String memberId);
+	
 	List<Cart> selectCheckoutList(HashMap<String, Object> params);
 
 	void insertBuy(Buy buy);
@@ -40,5 +42,7 @@ public interface ShopMapper {
 	void updateProductCountByBuy(HashMap<String, Integer> params);
 
 	Cart selectCartByCartNo(int cartNo);
+
+	List<Buy> selectLatelyBuyList(HashMap<String, Object> params);
 
 }

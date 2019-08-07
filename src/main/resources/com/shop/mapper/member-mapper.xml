@@ -27,6 +27,20 @@
 		where memberId = #{ memberId } and pwd = #{ pwd }
 	</select>
 	
+	<update id="updateMember" parameterType="Member">
+		update member
+		set 
+		pwd = #{ pwd }
+		, name = #{ name }
+		, phone = #{ phone }
+		, postCode = #{ postCode }
+		, roadAddr = #{ roadAddr }
+		, jibunAddr = #{ jibunAddr }
+		, detailAddr = #{ detailAddr }
+		, extraAddr = #{ extraAddr }
+		where memberId = #{ memberId }
+	</update>
+	
 <!--  <select id="selectHostList" parameterType="String" resultType="Host">
 		select name, content, type, address, parking, hostNo, hostId, holiday, openStart, openEnd, ok
 		from Host
@@ -62,12 +76,6 @@
 		where hostNo = #{ hostNo }
 		order by hostNo desc
 	</select>
-	
-	<update id="updateMember" parameterType="Member">
-		update Member
-		set passwd = #{ passwd }, phone = #{ phone }
-		where id = #{ id }
-	</update>
 	
 	<update id="updateOk" parameterType="Host">
 		update host
