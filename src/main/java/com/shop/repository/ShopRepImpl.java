@@ -31,12 +31,13 @@ public class ShopRepImpl implements ShopRep {
 	}
 
 	@Override
-	public List<Product> selectProducts(String category, String keyfield, String keyword, int start, int count) {
+	public List<Product> selectProducts(String category, String sorting, String keyfield, String keyword, int start, int count) {
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("category", category);
+		params.put("sorting", sorting);
 		params.put("keyfield", keyfield);
 		params.put("keyword", keyword);
-		params.put("start", start);
+		params.put("start", start-1);
 		params.put("count", count);
 		List<Product> products = shopMapper.selectProducts(params);
 		return products;
@@ -133,6 +134,12 @@ public class ShopRepImpl implements ShopRep {
 		params.put("rows", rows);
 		List<Buy> buyList = shopMapper.selectLatelyBuyList(params);
 		return buyList;
+	}
+
+	@Override
+	public int selectProductsCount() {
+		int count = shopMapper.selectProductsCount();
+		return count;
 	}
 
 }

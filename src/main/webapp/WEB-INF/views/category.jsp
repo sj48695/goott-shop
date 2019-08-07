@@ -32,20 +32,20 @@
             <div class="head">Browse Categories</div>
             <ul class="main-categories">
               <li class="common-filter">
-                <form id="category" action="/category" method="post">
+                <form action="/shop/category/search" method="post" onchange="category()">
                 	<input type="hidden" name="keyfield" value="all">
                 	<input type="hidden" name="keyword" value="">
                 	<input type="hidden" name="start" value="0">
                   <ul>
                   	<li class="filter-list">
-                    	<input class="pixel-radio" type="radio" id="all" name="category" value="전체" onclick="category()">
+                    	<input class="pixel-radio" type="radio" id="all" name="category" value="전체">
                     	<label for="all">전체
-                    		<span> (<fmt:formatNumber pattern="#,###"> ${ category.categoryCnt }</fmt:formatNumber>)</span>
+                    		<span> (<fmt:formatNumber pattern="#,###"> ${ allCount }</fmt:formatNumber>)</span>
                     	</label>
                     </li>
                   <c:forEach var="category" items="${ categories }">
                     <li class="filter-list">
-                    	<input class="pixel-radio" type="radio" id="${ category }" name="category" value="${ category }" onclick="category()">
+                    	<input class="pixel-radio" type="radio" id="${ category }" name="category" value="${ category }">
                     	<label for="${ category }">${ category.categoryName }
                     		<span> (<fmt:formatNumber pattern="#,###"> ${ category.categoryCnt }</fmt:formatNumber>)</span>
                     	</label>
@@ -91,32 +91,33 @@
           </div> --%>
         </div>
         <div class="col-xl-9 col-lg-8 col-md-7">
-          <!-- Start Filter Bar -->
-          <div class="filter-bar d-flex flex-wrap align-items-center">
-            <div class="sorting">
-              <select>
-                <option value="1">Default sorting</option>
-                <option value="1">Default sorting</option>
-                <option value="1">Default sorting</option>
-              </select>
-            </div>
-            <div class="sorting mr-auto">
-              <select>
-                <option value="1">Show 12</option>
-                <option value="1">Show 12</option>
-                <option value="1">Show 12</option>
-              </select>
-            </div>
-            <div>
-              <div class="input-group filter-bar-search">
-                <input type="text" placeholder="Search">
-                <div class="input-group-append">
-                  <button type="button"><i class="ti-search"></i></button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- End Filter Bar -->
+				<form action="/shop/category/search" method="GET">
+					<!-- Start Filter Bar -->
+					<div class="filter-bar d-flex flex-wrap align-items-center">
+						<div class="sorting mr-auto">
+							<select name="sorting">
+								<option value="regDate">최신순</option>
+								<option value="price">가격순</option>
+							</select>
+						</div>
+						<div class="sorting">
+							<select name="keyfield">
+								<option value="title" ${ keyfield eq 'title' ? "selected" : "" }>제목</option>
+								<option value="productName" ${ keyfield eq 'productName' ? "selected" : "" }>상품명</option>
+								<option value="content" ${ keyfield eq 'content' ? "selected" : "" }>내용</option>
+							</select>
+						</div>
+						<div>
+							<div class="input-group filter-bar-search">
+								<input type="text" placeholder="Search" name="keyword" value="${ keyword }">
+								<div class="input-group-append">
+									<button type="submit"><i class="ti-search"></i></button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+				<!-- End Filter Bar -->
          <!-- Start Best Seller -->
 			<section class="lattest-product-area pb-40 category-list">
 				<div class="row">

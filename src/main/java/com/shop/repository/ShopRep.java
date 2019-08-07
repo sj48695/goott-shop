@@ -10,7 +10,7 @@ import com.shop.vo.Product;
 public interface ShopRep {
 	Product selectProductByProductNo(int productNo);
 
-	List<Product> selectProducts(String category, String keyfield, String keyword, int start, int count);
+	List<Product> selectProducts(String category, String keyfield, String keyword, String keyword2, int start, int count);
 
 	List<HashMap<String, Object>> selectCategories();
 
@@ -35,5 +35,7 @@ public interface ShopRep {
 	void updateProductCountByBuy(int productNo, int count);
 
 	List<Buy> selectLatelyBuyList(String memberId, int rows);
+
+	int selectProductsCount();
 
 }

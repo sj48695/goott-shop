@@ -11,7 +11,7 @@ public interface ShopService {
 
 	Product findProductByProductNo(int productNo);
 
-	List<Product> findProducts(String category, String keyfield, String keyword, int start, int count);
+	List<Product> findProducts(String category, String keyfield, String keyword, String keyword2, int start, int count);
 
 	List<HashMap<String, Object>> findCategories();
 
@@ -32,6 +32,8 @@ public interface ShopService {
 	List<Cart> findCheckoutList(String memberId, String cartNostrs);
 
 	List<Buy> findLatelyBuyList(String memberId, int rows);
+
+	int findProductsCount();
 	
 }
 

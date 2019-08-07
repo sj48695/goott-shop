@@ -32,24 +32,30 @@ public class ShopController {
 	
 	@RequestMapping(value="/category", method = RequestMethod.GET)
 	public String productList(Model model){
-		List<Product> products = shopService.findProducts("all", "all", "", 1, pageSize);
+		List<Product> products = shopService.findProducts("all", "regDate", "all", "", 1, pageSize);
 		List<HashMap<String, Object>> categories = shopService.findCategories();
 		List<String> colors = shopService.findColors();
+		int allCount = shopService.findProductsCount();
 		model.addAttribute("colors", colors);
 		model.addAttribute("categories", categories);
+		model.addAttribute("allCount",allCount);
 		model.addAttribute("products", products);
 		return "category";
 	}
 	
 	@RequestMapping(value="/category/search", method = RequestMethod.GET)
-	public String searchCategory(Model model, String category, String keyfield, String keyword, int start){
-		List<Product> products = shopService.findProducts(category, keyfield, keyword, start, pageSize);
+	public String searchCategory(Model model, String sorting, String keyfield, String keyword){
+		List<Product> products = shopService.findProducts("all", sorting, keyfield, keyword, 1, pageSize);
 		List<HashMap<String, Object>> categories = shopService.findCategories();
 		List<String> colors = shopService.findColors();
+		int allCount = shopService.findProductsCount();
 		model.addAttribute("colors", colors);
 		model.addAttribute("categories", categories);
+		model.addAttribute("allCount",allCount);
 		model.addAttribute("products", products);
-		return "productlist";
+		model.addAttribute("keyfield", keyfield);
+		model.addAttribute("keyword", keyword);
+		return "category";
 	}
 	
 //	@RequestMapping(value="/category/productList", method = RequestMethod.GET)

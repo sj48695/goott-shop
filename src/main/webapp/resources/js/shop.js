@@ -121,16 +121,31 @@ $(function() {
 
 
 function category(){
-	var formData = $('#category').serilize();
+	var formData = $(this).serialize();
 	$.ajax({
 		url:"/shop/category/search",
 		method:"GET",
 		data : formData,
 		success: function(data, xhr, status){
+			console.log(data);
 			$('.category-list').load(data);
 		},
 		error:function(xhr, status, err){
-			
+			alert(err);
+		}
+	});
+	
+	var formData = $(this).serialize();
+	$.ajax({
+		url:"/shop/category/search",
+		method:"GET",
+		data : formData,
+		success: function(data, xhr, status){
+			console.log(data);
+			$('.category-list').load(data);
+		},
+		error:function(xhr, status, err){
+			alert(err);
 		}
 	});
 }
