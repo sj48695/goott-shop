@@ -176,7 +176,16 @@
 		)	
 	</insert>
 	
+	<!-- mypage question -->
 
+	<select id="findMyQuestionList" parameterType="String" resultType="Question">
+		select questionNo, category, title, uploader, regDate, secure,
+		(select count(*) from questioncomment where questionNo=question.questionno) recnt
+		from question
+		where deleted = '0' 
+  		and uploader = #{ memberId }
+		order by questionNo desc
+	</select>
 	
 	
 	
