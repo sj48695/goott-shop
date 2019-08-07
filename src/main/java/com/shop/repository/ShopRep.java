@@ -6,6 +6,7 @@ import java.util.List;
 import com.shop.vo.Buy;
 import com.shop.vo.Cart;
 import com.shop.vo.Product;
+import com.shop.vo.Review;
 
 public interface ShopRep {
 	Product selectProductByProductNo(int productNo);
@@ -37,5 +38,19 @@ public interface ShopRep {
 	List<Buy> selectLatelyBuyList(String memberId, int rows);
 
 	int selectProductsCount();
+
+	void insertReview(Review review);
+
+	void deleteReview(int reviewNo);
+
+	void updateReview(Review review);
+
+	List<Review> selectReviewsByProductNo(int productNo);
+
+	Review selectReviewByReviewNo(int reviewNo);
+
+	void updateReviewStep(Review parent);
+
+	void insertComment(Review review);
 
 }

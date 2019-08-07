@@ -8,6 +8,7 @@ import com.shop.mapper.ShopMapper;
 import com.shop.vo.Buy;
 import com.shop.vo.Cart;
 import com.shop.vo.Product;
+import com.shop.vo.Review;
 
 public class ShopRepImpl implements ShopRep {
 
@@ -140,6 +141,44 @@ public class ShopRepImpl implements ShopRep {
 	public int selectProductsCount() {
 		int count = shopMapper.selectProductsCount();
 		return count;
+	}
+	@Override
+	public void insertReview(Review review) {
+		shopMapper.insertReview(review);
+	}
+	
+	@Override
+	public void updateReview(Review review) {
+		shopMapper.updateReview(review);
+	}
+	
+	@Override
+	public void deleteReview(int reviewNo) {
+		shopMapper.deleteReview(reviewNo);
+	}
+
+	@Override
+	public ArrayList<Review> selectReviewsByProductNo(int productNo) {
+		List<Review> reviews =
+			shopMapper.selectReviewsByProductNo(productNo);
+		return (ArrayList<Review>)reviews;
+	}
+	
+	@Override
+	public Review selectReviewByReviewNo(int reviewNo) {
+		Review review =
+			shopMapper.selectReviewByReviewNo(reviewNo);
+		return review;
+	}
+	
+	@Override
+	public void updateReviewStep(Review review) {
+		shopMapper.updateReviewStep(review);
+	}
+	
+	@Override
+	public void insertComment(Review review) {
+		shopMapper.insertComment(review);
 	}
 
 }
