@@ -19,7 +19,7 @@ public interface ShopMapper {
 
 	Product selectProductByProductNo(int productNo);
 
-	List<Product> selectProducts();
+	List<Product> selectProducts(HashMap<String, Object> params);
 
 	List<HashMap<String, Object>> selectCategories();
 
@@ -46,5 +46,7 @@ public interface ShopMapper {
 	List<Buy> selectLatelyBuyList(HashMap<String, Object> params);
 
 	List<Buy> findMyBuyList(String memberId);
+
+	int selectProductsCount();
 
 }

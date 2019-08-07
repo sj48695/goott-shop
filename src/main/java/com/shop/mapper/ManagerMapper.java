@@ -1,5 +1,6 @@
 package com.shop.mapper;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.shop.vo.Product;
@@ -12,8 +13,19 @@ public interface ManagerMapper {
 
 	void insertProductFile(ProductFile file);
 
-	List<Product> selectProduct();
+	List<Product> selectProduct(HashMap<String, Object> param);
 	
 	ProductFile selectProductFile(int productNo);
 	
+	Product selectProductByProductNo(int productNo);
+	
+	List<ProductFile> selectProductFilesByProductNo(int productNo);
+
+	void updateProduct(Product product);
+
+	void deleteProduct(int productNo);
+
+	ProductFile selectProductFileByProductFileNo(int productFileNo);
+
+	void deleteProductFile(int productFileNo);
 }

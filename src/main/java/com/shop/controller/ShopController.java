@@ -28,17 +28,42 @@ public class ShopController {
 	@Autowired
 	@Qualifier("shopService")
 	private ShopService shopService;
+	int pageSize=10;
 	
 	@RequestMapping(value="/category", method = RequestMethod.GET)
-	public String category(Model model){
-		List<Product> products = shopService.findProducts();
+	public String productList(Model model){
+		List<Product> products = shopService.findProducts("all", "regDate", "all", "", 1, pageSize);
 		List<HashMap<String, Object>> categories = shopService.findCategories();
 		List<String> colors = shopService.findColors();
+		int allCount = shopService.findProductsCount();
 		model.addAttribute("colors", colors);
 		model.addAttribute("categories", categories);
+		model.addAttribute("allCount",allCount);
 		model.addAttribute("products", products);
 		return "category";
 	}
+	
+	@RequestMapping(value="/category/search", method = RequestMethod.GET)
+	public String searchCategory(Model model, String sorting, String keyfield, String keyword){
+		List<Product> products = shopService.findProducts("all", sorting, keyfield, keyword, 1, pageSize);
+		List<HashMap<String, Object>> categories = shopService.findCategories();
+		List<String> colors = shopService.findColors();
+		int allCount = shopService.findProductsCount();
+		model.addAttribute("colors", colors);
+		model.addAttribute("categories", categories);
+		model.addAttribute("allCount",allCount);
+		model.addAttribute("products", products);
+		model.addAttribute("keyfield", keyfield);
+		model.addAttribute("keyword", keyword);
+		return "category";
+	}
+	
+//	@RequestMapping(value="/category/productList", method = RequestMethod.GET)
+//	public String productListForm(Model model, String category, String keyfield, String keyword, int start, int count){
+//		List<Product> products = shopService.findProducts(category, keyfield, keyword, start, count);
+//		model.addAttribute("products", products);
+//		return "productlist";
+//	}
 	
 	@RequestMapping(value="/cart", method = RequestMethod.GET)
 	public String cart(Model model, HttpSession session){

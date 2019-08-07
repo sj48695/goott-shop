@@ -23,15 +23,29 @@ public class ManagerServiceImpl implements ManagerService{
 		int newProductNo = managerRep.insertProduct(product);
 		System.out.println(product);
 		
+		// 대표이미지
+		ProductFile titleFile = product.getFile();
+		titleFile.setProductNo(newProductNo);
+		managerRep.insertProductFile(titleFile);
+		
+		insertProductFiles(product, newProductNo);
+		
+		return newProductNo;
+	}
+
+	@Override
+	public void insertProductFiles(Product product, int productNo) {
+		
+		// 이미지
 		for (ProductFile file : product.getFiles()) {
-			file.setProductNo(newProductNo);
+			file.setProductNo(productNo);
 			System.out.println(file);
 			managerRep.insertProductFile(file);
 			System.out.println(file);
 		}
-			return newProductNo;
+		
 	}
-
+	
 	@Override
 	public void insertProductFile(ProductFile file) {
 		
@@ -40,8 +54,8 @@ public class ManagerServiceImpl implements ManagerService{
 	}
 	
 	@Override
-	public List<Product> findProductList() {
-		List<Product> products = managerRep.selectProduct();
+	public List<Product> findProductList(String category) {
+		List<Product> products = managerRep.selectProduct(category);
 		
 		return products;
 	}
@@ -51,6 +65,55 @@ public class ManagerServiceImpl implements ManagerService{
 		ProductFile file = managerRep.selectProductFile(productNo);
 		
 		return file;
+	}
+
+	@Override
+	public Product findProductByProductNo(int productNo) {
+		Product product = managerRep.selectProductByProductNo(productNo);
+		
+		return product;
+	}
+
+	@Override
+	public List<ProductFile> findProductFilesByProductNo(int productNo) {
+		List<ProductFile> files = managerRep.selectProductFilesByProductNo(productNo);
+		
+		return files;
+	}
+
+	@Override
+	public ProductFile findProductFile(int productNo) {
+		ProductFile file = managerRep.selectProductFile(productNo);
+		
+		return file;
+	}
+
+	@Override
+	public void updateProduct(Product product) {
+		managerRep.updateProduct(product);
+	}
+	
+	@Override
+	public void updateProductFile(ProductFile productFile) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteProduct(int productNo) {
+		managerRep.deleteProduct(productNo);
+	}
+
+	@Override
+	public ProductFile findProductFileByProductFileNo(int productFileNo) {
+		ProductFile file = managerRep.selectProductFileByProductFileNo(productFileNo);
+		
+		return file;
+	}
+
+	@Override
+	public void deleteProductFile(int productFileNo) {
+		managerRep.deleteProductFile(productFileNo);
 	}
 	
 }

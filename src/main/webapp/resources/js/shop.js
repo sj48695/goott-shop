@@ -32,23 +32,32 @@ function readURL(input,target) {
 $(function () {
 
 	/* ----------- Img preview ---------- */
+	$("#writeForm").on("change", "#titleImgFile", function (event) {
+		$('.inner_img').empty();
+		readURL(this, $(".inner_img"));
+	});
 	$("#writeForm").on("change", "#imgFile", function (event) {
 		$('.inner_imgs').empty();
 		readURL(this, $(".inner_imgs"));
 	});
 
+	$("#updateForm").on("change", "#titleImgFile", function (event) {
+		$(".inner_img").empty();
+	    readURL(this, $(".inner_img"));
+	});
 	$("#updateForm").on("change", "#imgFile", function (event) {
 	    readURL(this, $(".inner_imgs"));
 	});
 
+
 	//이미지 삭제
 	$('.img-wrap .close').on('click', function() {
-		var spaceFileNo = $(this).attr('data-fileNo');
+		var productFileNo = $(this).attr('data-fileNo');
 		var deleteBtn = $(this).parent().parent();
 		$.ajax({
-			url: "/spacerental/space/delete-file",
+			url: "/shop/manager/delete-file",
 			method: "GET",
-			data: {"spaceFileNo" : spaceFileNo },
+			data: {"productFileNo" : productFileNo },
 			success: function(data, status, xhr){
 				deleteBtn.remove();
 			},
@@ -57,6 +66,12 @@ $(function () {
 			}
 		});
 	   
+	});
+});
+
+$(function(){
+	$('#category_form').on('change', function(event){
+		this.form.submit();
 	});
 });
 
@@ -97,8 +112,43 @@ $(function() {
 			}
 		});
 	});
+	
+	
 
 });
+
+/*---------------------category.jsp----------------------*/
+
+
+function category(){
+	var formData = $(this).serialize();
+	$.ajax({
+		url:"/shop/category/search",
+		method:"GET",
+		data : formData,
+		success: function(data, xhr, status){
+			console.log(data);
+			$('.category-list').load(data);
+		},
+		error:function(xhr, status, err){
+			alert(err);
+		}
+	});
+	
+	var formData = $(this).serialize();
+	$.ajax({
+		url:"/shop/category/search",
+		method:"GET",
+		data : formData,
+		success: function(data, xhr, status){
+			console.log(data);
+			$('.category-list').load(data);
+		},
+		error:function(xhr, status, err){
+			alert(err);
+		}
+	});
+}
 
 /*---------------------cart.jsp----------------------*/
 
@@ -283,22 +333,6 @@ daum.postcode.load(function(){
                 } else {
                     document.getElementById("extraAddress").value = '';
                 }
-
-//                var guideTextBox = document.getElementById("guide");
-//                // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
-//                if(data.autoRoadAddress) {
-//                    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
-//                    guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
-//                    guideTextBox.style.display = 'block';
-//
-//                } else if(data.autoJibunAddress) {
-//                    var expJibunAddr = data.autoJibunAddress;
-//                    guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
-//                    guideTextBox.style.display = 'block';
-//                } else {
-//                    guideTextBox.innerHTML = '';
-//                    guideTextBox.style.display = 'none';
-//                }
             }
         }).open();
     });
