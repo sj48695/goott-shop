@@ -291,9 +291,10 @@
 		order by buyDate desc 
 	</select>
 	
-	<select id="selectBuyCountByMemberId" resultType="int">
+	<select id="selectBuyCountByMemberId" parameterType="hashmap" resultType="int">
 		select count(*) from house.buy b 
 		where b.memberId = #{ memberId }
+		and productNo = #{ productNo }
 	</select>
 	
 </mapper>

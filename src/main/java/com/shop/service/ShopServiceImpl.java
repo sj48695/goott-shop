@@ -159,8 +159,8 @@ public class ShopServiceImpl implements ShopService {
 	}
 
 	@Override
-	public int selectBuyCountByMemberId(String memberId) {
-		int buyCount = shopRep.selectBuyCountByMemberId(memberId);
+	public int selectBuyCountByMemberId(String memberId, int productNo) {
+		int buyCount = shopRep.selectBuyCountByMemberId(memberId, productNo);
 		return buyCount;
 	}
 	
