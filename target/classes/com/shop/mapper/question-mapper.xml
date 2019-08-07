@@ -99,7 +99,7 @@
 	
 	<update id="updateQuestion" parameterType="com.shop.vo.Question">
 		UPDATE question
-		SET CATEGORY =  #{ category }, title = #{ title }, content = #{ content }
+		SET CATEGORY =  #{ category }, title = #{ title }, content = #{ content }, pwd = #{ pwd }, secure = #{ secure } 
 		WHERE questionNo = #{ questionNo }
 	</update>
 	
