@@ -78,32 +78,7 @@
 
 								<input type="button" id="cancel_button"
 									class="button button-subscribe mr-auto mb-1" value="back" /> <br> <br>
-								<script type="text/javascript">
-		        	//브라우저가 html을 모두 읽고 처리할 준비가 되었을 때 호출 할 함수 지정
-		        	window.addEventListener('load',function(event){//js의 main 함수 역할
-						var btnCancel =document.querySelector('#cancel_button');
-		        		btnCancel.addEventListener('click', function(event) {
-		        			location.href="/shop/qa-list";//주소창에 list을 입력하고 엔터
-		        			//history.back(); //브라우저의 이전 버튼을 클릭
-		        		});
-		        		
-		        		var btnDelete = document.querySelector('#delete_button');
-		        		btnDelete.addEventListener('click', function(event){
-		        			var ok = confirm("${question.questionNo}번 자료를 삭제할까요?");//의사 확인문장
-		        			if(ok){
-		        			//<a 를 통한 요청이므로 주소 뒤에 ?key=value 형식을 써서 데이터 전송
-		        			location.href="/shop/delete/${ question.questionNo }";
-		        			}
-		        		});
-		        		
-		        		var btnUpdate = document.querySelector('#update_button');
-		        		btnUpdate.addEventListener('click', function(event){
-		        			//<a 를 통한 요청이므로 주소 뒤에 ?key=value 형식을 써서 데이터 전송
-		        			location.href="/shop/qa-update/${ question.questionNo }";
-		        		});
-		        		
-		        	});
-		        	</script>
+								
 							</div>
 						</div>
 					</div>
@@ -169,7 +144,7 @@
 															data-commentno="${ comment.commentNo }">삭제</a>
 													</div>
 												</c:if>
-												<br /> <a class="recomment-link btn btn-outline-secondary"
+												<br /> <a class="recomment-link button button-subscribe btn-xs" 
 													data-commentno="${ comment.commentNo }">댓글 쓰기</a>
 											</div> <!-- 수정 -->
 											<div id='commentedit${ comment.commentNo }'
@@ -238,6 +213,123 @@
 
 	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 
+
+ <script type="text/javascript">
+		function recalc() {
+			var page1 = Math.floor( commentsCount / pageSize );
+			var page2 = (${ commentsCount } % pageSize) > 0 ? 1 : 0;
+			lastPage = page1 + page2;
+		}
+	    
+		var currentPage = 1;
+		var pagerSize = 3;
+		var pageSize = 3;
+		var commentsCount = ${ commentsCount };	
+		var questionNo = ${ question.questionNo };
+		var lastPage = recalc();
+		
+	    function loadComments() {
+			$("#comment-list").load('/shop/question/comment-list', 
+									{ "questionNo" : questionNo, "pageNo": currentPage },
+									function() {});
+		}
+	    $(function() {
+	    	
+	    	var pageOne = $('#pager a.pageno:first');
+	    	pageOne.text("[" + pageOne.text() + "]")
+	    	
+	    	$('#pager #first').on('click', function(event) {
+	    		if (currentPage == 1) {
+	    			return;
+	    		}
+	    		
+	    		currentPage = 1;
+	    		$('#pager .pageno').each(function(idx, item) {
+	    			$(this).attr('data-pageno', idx + 1);
+	    			$(this).text( (idx + 1));
+	    		});
+	    		
+	    		loadComments();
+	    	});
+	    	
+	    	$('#pager #prev').on('click', function(event) {
+	    		if (currentPage == 1) {
+	    			return;
+	    		}
+	    		
+	    		var pageNo = $('#pager .pageno:first').attr("data-pageno");
+	    		if (currentPage == pageNo) {
+	    			$('#pager .pageno').each(function(idx, item) {
+		    			$(this).attr('data-pageno', currentPage - (pagerSize - idx));
+		    			$(this).text( (currentPage - (pagerSize - idx) ));
+		    		});
+	    		}
+	    		
+	    		currentPage--;	
+	    		
+	    		loadComments();
+	    	});
+	    	
+	    	$('#pager .pageno').on('click', function(event) {
+	    		var pageNo = $(this).attr('data-pageno');
+	    		if (pageNo == currentPage) {
+	    			return;
+	    		}
+	    		
+	    		$(this).text( "[" + pageNo + "]" );
+	    		var tmp = $("#pager a[data-pageno=" + currentPage +"]");
+	    		tmp.text(tmp.attr('data-pageno'));
+	    		currentPage = parseInt(pageNo);
+	    		
+	    		loadComments();
+	    	});
+	    	
+	    	$('#pager #last').on('click', function(event) {
+	    		if (currentPage == lastPage) {
+	    			return;
+	    		}
+	    		
+	    		currentPage = lastPage;
+	    		var firstItem = lastPage - (lastPage % pagerSize) + 1;
+	    		$('#pager .pageno').each(function(idx, item) {
+	    			// $(this).attr('data-pageno', lastPage - (pagerSize - idx) + 1);
+	    			// $(this).text( (lastPage - (pagerSize - idx) + 1 ));
+	    			if (firstItem + idx <= lastPage) {
+		    			$(this).attr('data-pageno', firstItem + idx);
+		    			$(this).text(firstItem + idx);
+	    			} else {
+	    				$(this).attr('data-pageno', -1);
+		    			$(this).text("");
+	    			}
+	    		});
+	    		
+	    		loadComments();
+	    	});
+	    	
+	    	$('#pager #next').on('click', function(event) {
+	    		if (currentPage == lastPage) {
+	    			return;
+	    		}
+	    		
+	    		var pageNo = $('#pager .pageno:last').attr("data-pageno");
+	    		if (currentPage == pageNo) {
+	    			$('#pager .pageno').each(function(idx, item) {
+	    				if ((currentPage + idx + 1) <= lastPage) {
+			    			$(this).attr('data-pageno', (currentPage + idx + 1));
+			    			$(this).text((currentPage + idx + 1));
+	    				} else {
+	    					$(this).attr('data-pageno', -1);
+			    			$(this).text("");
+	    				}
+		    		});
+	    		}
+	    		
+	    		currentPage++;
+	    		
+	    		loadComments();
+	    	});
+	    });
+    </script>
 
 
 <!-- 댓글 javascript -->
@@ -401,8 +493,8 @@ $(function() {
 			<!-- Modal footer -->
 			<div class="modal-footer">
 				<button type="button" id="write-recomment"
-					class="btn btn-outline-secondary">댓글 등록</button>
-				<button type="button" class="btn btn-outline-secondary"
+					class="button button-subscribe btn-xs">댓글 등록</button>
+				<button type="button" class="button button-subscribe btn-xs"
 					data-dismiss="modal">취소</button>
 			</div>
 
@@ -411,23 +503,4 @@ $(function() {
 </div>
 
 
-<script type="text/javascript">
-
-$(function() {
-	
-	$('a[id^=pageno]').on('click', function(event) {
-		var id = $(this).attr('id');
-		var pageNo = id.split('-')[1];
-		var uploadNo = $(this).attr("dat")
-		
-		$("#comment-list").load('/shop/question/comment-list', 
-								{ "questionNo" : 1, "pageNo": pageNo }, 
-								function() {});
-	});
-	
-	
-	
-});
-
-</script>
 <jsp:include page="../include/footer.jsp" />

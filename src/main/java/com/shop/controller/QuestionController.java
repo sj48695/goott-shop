@@ -154,8 +154,8 @@ public class QuestionController {
 		  params.put("to", to);
 		  
 	      List<QuestionComment> comments = 
-	    		  //questionService.findCommentListByQuestionNo(questionNo);
-	    		  questionService.findCommentListByQuestionNoWithPaging(params);
+	    		  questionService.findCommentListByQuestionNo(questionNo);
+	    		  //questionService.findCommentListByQuestionNoWithPaging(params);
 	      question.setComments(comments);
 	      
 	      questionService.readCount(questionNo);
@@ -174,7 +174,7 @@ public class QuestionController {
 	public String productSelectForm(Model model ) {
 		
 		
-		List<Product> products = shopService.findProducts();
+		List<Product> products = shopService.findProducts("all", "regDate", "all", "", 1, 10);
 		
 		model.addAttribute("products", products);
 		

@@ -72,8 +72,8 @@
 						</table>
 						<br>
 						<div class="buttons">
-							<input type="submit" value="자료등록" id="insertBoard" class="btn btn-outline-secondary" /> 
-							<input id="cancel_button" type="button" value="취소" class="btn btn-outline-secondary" />
+							<input type="submit" value="자료등록" id="insertBoard" class="button button-subscribe mr-auto mb-1" /> 
+							<input id="cancel_button" type="button" value="취소" class="button button-subscribe mr-auto mb-1" />
 						</div>
 					</form>
 				</div>
