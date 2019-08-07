@@ -4850,6 +4850,15 @@ scale
    margin-right: 16px;
    margin-bottom: 16px;
 }
+.img-wrap {
+    position: relative;
+}
+.img-wrap .close {
+    position: absolute;
+    top: 5px;
+    right: 20px;
+    z-index: 100;
+}
 
 /* ---------------------------------------------------
     SIDEBAR STYLE

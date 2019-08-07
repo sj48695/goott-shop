@@ -16,12 +16,6 @@
 								<img class="img-fluid" src="/shop/resources/files/product-files/${ file.fileName }" alt="">
 							</c:forEach>
 						</div>
-						
-						<div class="slide-one-item home-slider owl-carousel">
-               <c:forEach var="file" items="${ host.files }">
-               <img src="/spacerental/resources/files/space-files/${ file.savedFileName }" style="width:668px;height:400px;" class="img-fluid">
-               </c:forEach>
-            </div>
 						<!-- <div class="single-prd-item">
 							<img class="img-fluid" src="/shop/resources/img/category/s-p1.jpg" alt="">
 						</div>
@@ -30,7 +24,7 @@
 						</div> -->
 					</div>
 				</div>
-				<div class="col-lg-5 offset-lg-1">			
+				<div class="col-lg-5 offset-lg-1" id="detail_box">			
 					<div class="s_product_text">
 						<form id="updateForm" action="/shop/cart" method="post">
 							<input hidden="true" name="productNo" value="${ product.productNo }">

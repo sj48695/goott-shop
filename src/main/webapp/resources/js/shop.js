@@ -16,7 +16,7 @@ function readURL(input,target) {
 			
 			var reader = new FileReader();
 			reader.onload = function(e) {
-				var result = "<img width='200' height='200' src='" + e.target.result + "'>";
+				var result = "<img class='fileImg' src='" + e.target.result + "'>";
 				target.append(result);
 				console.log(result);
 				index++;
@@ -75,6 +75,12 @@ $(function(){
 	});
 });
 
+//var currentPosition = parseInt($("#detail_box").css("top")); 
+//$(window).scroll(function() { 
+//	// 현재 스크롤 위치
+//	var position = $(window).scrollTop(); 
+//	$("#detail_box").stop().animate({"top":position+currentPosition+"px"},1000); 
+//});
 
 
 $(function() {

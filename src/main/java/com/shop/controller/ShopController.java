@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.shop.service.ManagerService;
 import com.shop.service.ShopService;
 import com.shop.vo.Buy;
 import com.shop.vo.Cart;
 import com.shop.vo.Member;
 import com.shop.vo.Product;
+import com.shop.vo.ProductFile;
 import com.shop.vo.Review;
 
 @Controller
@@ -31,12 +33,22 @@ public class ShopController {
 	private ShopService shopService;
 	int pageSize=10;
 	
+	@Autowired
+	@Qualifier("managerService")
+	private ManagerService managerService;
+	
 	@RequestMapping(value="/category", method = RequestMethod.GET)
 	public String productList(Model model){
 		List<Product> products = shopService.findProducts("all", "regDate", "all", "", 1, pageSize);
 		List<HashMap<String, Object>> categories = shopService.findCategories();
 		List<String> colors = shopService.findColors();
+		
+		for(Product product : products) {
+			product.setFile(managerService.findUploadFile(product.getProductNo()));
+		}
+
 		int allCount = shopService.findProductsCount();
+
 		model.addAttribute("colors", colors);
 		model.addAttribute("categories", categories);
 		model.addAttribute("allCount",allCount);
@@ -49,6 +61,11 @@ public class ShopController {
 		List<Product> products = shopService.findProducts("all", sorting, keyfield, keyword, 1, pageSize);
 		List<HashMap<String, Object>> categories = shopService.findCategories();
 		List<String> colors = shopService.findColors();
+		
+		for(Product product : products) {
+			product.setFile(managerService.findUploadFile(product.getProductNo()));
+		}
+		
 		int allCount = shopService.findProductsCount();
 		model.addAttribute("colors", colors);
 		model.addAttribute("categories", categories);
@@ -59,13 +76,6 @@ public class ShopController {
 		return "category";
 	}
 	
-//	@RequestMapping(value="/category/productList", method = RequestMethod.GET)
-//	public String productListForm(Model model, String category, String keyfield, String keyword, int start, int count){
-//		List<Product> products = shopService.findProducts(category, keyfield, keyword, start, count);
-//		model.addAttribute("products", products);
-//		return "productlist";
-//	}
-	
 	@RequestMapping(value="/cart", method = RequestMethod.GET)
 	public String cart(Model model, HttpSession session){
 		Member loginuser = (Member) session.getAttribute("loginuser");
@@ -75,7 +85,10 @@ public class ShopController {
 			String rows = "";
 			for(Cart cart : carts) {
 				rows = rows + cart.getCartNo() + ",";
+				cart.setFile(managerService.findUploadFile(cart.getProductNo()));
 			}
+			
+			
 			model.addAttribute("rows", rows);
 			model.addAttribute("carts", carts);
 			return "cart";
@@ -159,6 +172,11 @@ public class ShopController {
 	@RequestMapping(value="/single-product/{productNo}", method = RequestMethod.GET)
 	public String detail(@PathVariable int productNo, Model model, HttpSession session){
 		Product product = shopService.findProductByProductNo(productNo);
+		// 이미지
+		List<ProductFile> files = managerService.findProductFilesByProductNo(productNo);
+		
+		product.setFiles((ArrayList<ProductFile>)files);
+		
 		product.setReviews((ArrayList<Review>) shopService.findReviewListByProductNo(productNo));
 		int buyCount = 0;
 

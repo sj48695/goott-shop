@@ -33,9 +33,10 @@ public class ManagerRepImpl implements ManagerRep{
 	}
 
 	@Override
-	public List<Product> selectProduct(String category) {
+	public List<Product> selectProduct(String category, String keyword) {
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("category", category);
+		params.put("keyword", keyword);
 		
 		List<Product> products = managerMapper.selectProduct(params);
 		
@@ -67,6 +68,13 @@ public class ManagerRepImpl implements ManagerRep{
 	public void updateProduct(Product product) {
 		
 		managerMapper.updateProduct(product);
+		
+	}
+	
+	@Override
+	public void updateProductFile(ProductFile productFile) {
+		
+		managerMapper.updateProductFile(productFile);
 		
 	}
 

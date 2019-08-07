@@ -18,34 +18,7 @@
 										</div>
 										<span>${ review.content }</span>
 										
-										<div style="width: 30px;height: 30px">
-											<a class="comment-link"
-												data-toggle="collapse" href="#comment-collapse${ review.reviewNo }"
-												aria-controls="comment-collapse${ review.reviewNo }">
-													<img src="/shop/resources/img/comment.svg" class="svg">
-											</a>
-										</div>
 
-									</div>
-									<div>
-									<div class="row">
-										<div class="col">
-											<div class="collapse multi-collapse" id="comment-collapse${ review.reviewNo }">
-												<div class="card card-body">
-												<form id="comment-form" class="form-inline row">
-													<input type="hidden" name="reviewNo" value="${ review.reviewNo }">
-									               <input type="hidden" name="productNo" id="productNo" value=""> 
-									               <input type="hidden" name="memberId" value="${ loginuser.memberId }">
-									               <div class="col-md-12">
-									                  <textarea class="form-control mr-1" name="content" cols="${ 60 - review.depth*5 }" rows="3"></textarea>
-									                  <a class="btn btn-primary py-3 px-4" id="write-comment" 
-									                  	data-reviewno='${ review.reviewNo }' href="javascript:">댓글<br>등록</a>
-									               </div>
-									            </form>
-									            </div>
-											</div>
-										</div>
-									</div>
 									</div>
 									<div id='reviewedit${ review.reviewNo }' style="display: none" class="container">
 										<div class="col-sm-12 row justify-content-between py-1">

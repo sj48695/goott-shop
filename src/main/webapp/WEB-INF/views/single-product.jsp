@@ -35,7 +35,9 @@
 				<div class="col-lg-6">
 					<div class="owl-carousel owl-theme s_Product_carousel">
 						<div class="single-prd-item">
-							<img class="img-fluid" src="/shop/resources/img/category/s-p1.jpg" alt="">
+							<c:forEach var="file" items="${ product.files }">
+								<img class="img-fluid" src="/shop/resources/files/product-files/${ file.fileName }" alt="">
+							</c:forEach>
 						</div>
 						<!-- <div class="single-prd-item">
 							<img class="img-fluid" src="/shop/resources/img/category/s-p1.jpg" alt="">
@@ -57,7 +59,7 @@
 								<li><a class="active" href="#"><span>Category</span> : ${ product.category }</a></li>
 								<li><a href="#"><span>Availibility</span> : In Stock</a></li>
 							</ul>
-							<p>${ product.content }</p>
+							<%-- <p>${ product.content }</p> --%>
 							
 							<c:set var="colors" value="${ fn:split(product.color, ',') }"/>
 							<c:set var="sizes" value="${ fn:split(product.size, ',') }"/>
@@ -110,10 +112,6 @@
 									<input type="submit" class="button button-header col-5 m-3 pr-0 text-center" value="Buy Now">
 								</div>
 							</div>
-							<div class="card_area d-flex align-items-center">
-								<a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>
-								<a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
-							</div>
 						</form>
 					</div>
 				</div>
@@ -132,10 +130,6 @@
 				<li class="nav-item">
 					<a class="nav-link" id="specification-tab" data-toggle="tab" href="#specification" role="tab" aria-controls="specification"
 					 aria-selected="false">Specification</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" id="comments-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="comments"
-					 aria-selected="false">Comments</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link active" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review"
@@ -186,166 +180,25 @@
 						</table>
 					</div>
 				</div>
-				<div class="tab-pane fade" id="comments" role="tabpanel" aria-labelledby="comments-tab">
-					<div class="row">
-						<div class="col-lg-6">
-							<div class="comment_list">
-								<div class="review_item">
-									<div class="media">
-										<div class="d-flex">
-											<img src="/shop/resources/img/product/review-1.png" alt="">
-										</div>
-										<div class="media-body">
-											<h4>Blake Ruiz</h4>
-											<h5>12th Feb, 2018 at 05:56 pm</h5>
-											<a class="reply_btn" href="#">Reply</a>
-										</div>
-									</div>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-										dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-										commodo</p>
-								</div>
-								<div class="review_item reply">
-									<div class="media">
-										<div class="d-flex">
-											<img src="/shop/resources/img/product/review-2.png" alt="">
-										</div>
-										<div class="media-body">
-											<h4>Blake Ruiz</h4>
-											<h5>12th Feb, 2018 at 05:56 pm</h5>
-											<a class="reply_btn" href="#">Reply</a>
-										</div>
-									</div>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-										dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-										commodo</p>
-								</div>
-								<div class="review_item">
-									<div class="media">
-										<div class="d-flex">
-											<img src="/shop/resources/img/product/review-3.png" alt="">
-										</div>
-										<div class="media-body">
-											<h4>Blake Ruiz</h4>
-											<h5>12th Feb, 2018 at 05:56 pm</h5>
-											<a class="reply_btn" href="#">Reply</a>
-										</div>
-									</div>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-										dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-										commodo</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="review_box">
-								<h4>Post a comment</h4>
-								<form class="row contact_form" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
-									<div class="col-md-12">
-										<div class="form-group">
-											<input type="text" class="form-control" id="name" name="name" placeholder="Your Full name">
-										</div>
-									</div>
-									<div class="col-md-12">
-										<div class="form-group">
-											<input type="email" class="form-control" id="email" name="email" placeholder="Email Address">
-										</div>
-									</div>
-									<div class="col-md-12">
-										<div class="form-group">
-											<input type="text" class="form-control" id="number" name="number" placeholder="Phone Number">
-										</div>
-									</div>
-									<div class="col-md-12">
-										<div class="form-group">
-											<textarea class="form-control" name="message" id="message" rows="1" placeholder="Message"></textarea>
-										</div>
-									</div>
-									<div class="col-md-12 text-right">
-										<button type="submit" value="submit" class="btn primary-btn">Submit Now</button>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
+				
 				<div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
-					<div class="row">
-						<div class="col-lg-12">
-							<div class="review_list">
-								<div class="review_item">
-									<div class="media">
-										<div class="d-flex">
-											<img src="/shop/resources/img/product/review-1.png" alt="">
-										</div>
-										<div class="media-body">
-											<h4>Blake Ruiz</h4>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-										</div>
-									</div>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-										dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-										commodo</p>
-								</div>
-								<div class="review_item">
-									<div class="media">
-										<div class="d-flex">
-											<img src="/shop/resources/img/product/review-2.png" alt="">
-										</div>
-										<div class="media-body">
-											<h4>Blake Ruiz</h4>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-										</div>
-									</div>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-										dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-										commodo</p>
-								</div>
-								<div class="review_item">
-									<div class="media">
-										<div class="d-flex">
-											<img src="/shop/resources/img/product/review-3.png" alt="">
-										</div>
-										<div class="media-body">
-											<h4>Blake Ruiz</h4>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-										</div>
-									</div>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-										dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-										commodo</p>
-								</div>
-							</div>
-						</div>
+					
 						<div>
-						<div>
+						
 				<!-- 후기 -->
 				<c:if test="${ buyCount > 0 }">
 	            <form id="reviewform" class="form-inline row">
-	               <h4 class="text-black col-md-12 py-3"><b>후기</b></h4>
+	               <h4 class="text-black py-3 ml-5"><b>후기</b></h4>
 	               <input type="hidden" name="productNo" id="productNo" value="${ product.productNo }"> 
 	               <input type="hidden" name="memberId" value="${ loginuser.memberId }">
-					<div class="col-md-12">
+					<div class="container ml-5">
 						<!-- <div class='starrr' id='star'></div>
 						<br /> 
 						<input type="hidden" name='rating' id='star_input' /> -->
-						<textarea class="form-control mr-1" id="review_content"
-							name="content" cols="65" rows="3"></textarea>
-						<a class="btn btn-primary py-3 px-4" id="writereview"
-							href="javascript:">댓글<br>등록
-						</a>
+						<textarea id="review_content" name="content" cols="150" rows="10"></textarea>
+						<div class="offset-md-9">
+							<a class="gray_btn" id="writereview" href="javascript:">댓글등록</a>
+						</div>
 					</div>
 				</form>
 	            </c:if>
@@ -371,17 +224,16 @@
 											</div>
 										</div>
 										<span>${ review.content }</span>
-										
-										<div style="width: 30px;height: 30px">
+										<%-- <div style="width: 30px;height: 30px">
 											<a class="comment-link"
 												data-toggle="collapse" href="#comment-collapse${ review.reviewNo }"
 												aria-controls="comment-collapse${ review.reviewNo }">
 													<img src="/shop/resources/img/comment.svg" class="svg">
 											</a>
-										</div>
+										</div> --%>
 
 									</div>
-									<div>
+									<%-- <div>
 									<div class="row">
 										<div class="col">
 											<div class="collapse multi-collapse" id="comment-collapse${ review.reviewNo }">
@@ -400,15 +252,14 @@
 											</div>
 										</div>
 									</div>
-									</div>
+									</div> --%>
 									<div id='reviewedit${ review.reviewNo }' style="display: none" class="container">
 										<div class="col-sm-12 row justify-content-between py-1">
 											${ review.memberId } &nbsp;&nbsp; [${ regDate }]
 										</div>
 										<form id="updateform${ review.reviewNo }">
 											<input type="hidden" name="reviewNo" value="${ review.reviewNo }" />
-											<textarea class="form-control"name="content" style="width: 550px" rows="3"
-												maxlength="200">${ review.content }</textarea>
+											<textarea class="form-control"name="content" rows="5" maxlength="200">${ review.content }</textarea>
 										</form>
 										<div>
 											<a class="updatereview" href="javascript:" data-reviewno="${ review.reviewNo }">수정</a> &nbsp; 
@@ -428,8 +279,6 @@
 					</table>
 				</c:if>
 				</div>
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>
