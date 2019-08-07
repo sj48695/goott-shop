@@ -11,7 +11,7 @@ public interface ShopService {
 
 	Product findProductByProductNo(int productNo);
 
-	List<Product> findProducts();
+	List<Product> findProducts(String category, String keyfield, String keyword, int start, int count);
 
 	List<HashMap<String, Object>> findCategories();
 

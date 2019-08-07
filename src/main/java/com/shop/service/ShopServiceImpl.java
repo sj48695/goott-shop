@@ -30,8 +30,8 @@ public class ShopServiceImpl implements ShopService {
 	}
 
 	@Override
-	public List<Product> findProducts() {
-		List<Product> products = shopRep.selectProducts();
+	public List<Product> findProducts(String category, String keyfield, String keyword, int start, int count) {
+		List<Product> products = shopRep.selectProducts(category, keyfield, keyword, start, count);
 		return products;
 	}
 

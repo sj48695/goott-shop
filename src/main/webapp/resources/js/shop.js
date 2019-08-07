@@ -97,8 +97,28 @@ $(function() {
 			}
 		});
 	});
+	
+	
 
 });
+
+/*---------------------category.jsp----------------------*/
+
+
+function category(){
+	var formData = $('#category').serilize();
+	$.ajax({
+		url:"/shop/category/search",
+		method:"GET",
+		data : formData,
+		success: function(data, xhr, status){
+			$('.category-list').load(data);
+		},
+		error:function(xhr, status, err){
+			
+		}
+	});
+}
 
 /*---------------------cart.jsp----------------------*/
 
@@ -283,22 +303,6 @@ daum.postcode.load(function(){
                 } else {
                     document.getElementById("extraAddress").value = '';
                 }
-
-//                var guideTextBox = document.getElementById("guide");
-//                // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
-//                if(data.autoRoadAddress) {
-//                    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
-//                    guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
-//                    guideTextBox.style.display = 'block';
-//
-//                } else if(data.autoJibunAddress) {
-//                    var expJibunAddr = data.autoJibunAddress;
-//                    guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
-//                    guideTextBox.style.display = 'block';
-//                } else {
-//                    guideTextBox.innerHTML = '';
-//                    guideTextBox.style.display = 'none';
-//                }
             }
         }).open();
     });

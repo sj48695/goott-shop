@@ -19,7 +19,7 @@ public interface ShopMapper {
 
 	Product selectProductByProductNo(int productNo);
 
-	List<Product> selectProducts();
+	List<Product> selectProducts(HashMap<String, Object> params);
 
 	List<HashMap<String, Object>> selectCategories();
 

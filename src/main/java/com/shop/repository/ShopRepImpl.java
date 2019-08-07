@@ -31,8 +31,14 @@ public class ShopRepImpl implements ShopRep {
 	}
 
 	@Override
-	public List<Product> selectProducts() {
-		List<Product> products = shopMapper.selectProducts();
+	public List<Product> selectProducts(String category, String keyfield, String keyword, int start, int count) {
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("category", category);
+		params.put("keyfield", keyfield);
+		params.put("keyword", keyword);
+		params.put("start", start);
+		params.put("count", count);
+		List<Product> products = shopMapper.selectProducts(params);
 		return products;
 	}
 

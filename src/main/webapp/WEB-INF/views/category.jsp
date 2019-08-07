@@ -32,11 +32,20 @@
             <div class="head">Browse Categories</div>
             <ul class="main-categories">
               <li class="common-filter">
-                <form action="#">
+                <form id="category" action="/category" method="post">
+                	<input type="hidden" name="keyfield" value="all">
+                	<input type="hidden" name="keyword" value="">
+                	<input type="hidden" name="start" value="0">
                   <ul>
+                  	<li class="filter-list">
+                    	<input class="pixel-radio" type="radio" id="all" name="category" value="전체" onclick="category()">
+                    	<label for="all">전체
+                    		<span> (<fmt:formatNumber pattern="#,###"> ${ category.categoryCnt }</fmt:formatNumber>)</span>
+                    	</label>
+                    </li>
                   <c:forEach var="category" items="${ categories }">
                     <li class="filter-list">
-                    	<input class="pixel-radio" type="radio" id="${ category }" name="category">
+                    	<input class="pixel-radio" type="radio" id="${ category }" name="category" value="${ category }" onclick="category()">
                     	<label for="${ category }">${ category.categoryName }
                     		<span> (<fmt:formatNumber pattern="#,###"> ${ category.categoryCnt }</fmt:formatNumber>)</span>
                     	</label>
@@ -47,7 +56,7 @@
               </li>
             </ul>
           </div>
-          <div class="sidebar-filter">
+          <%-- <div class="sidebar-filter">
             <div class="top-filter-head">Product Filters</div>
             
             <div class="common-filter">
@@ -79,7 +88,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> --%>
         </div>
         <div class="col-xl-9 col-lg-8 col-md-7">
           <!-- Start Filter Bar -->
@@ -108,32 +117,31 @@
             </div>
           </div>
           <!-- End Filter Bar -->
-          <!-- Start Best Seller -->
-          <section class="lattest-product-area pb-40 category-list">
-            <div class="row">
-            <c:forEach var="product" items="${ products }">
-              <div class="col-md-6 col-lg-4">
-                <div class="card text-center card-product">
-                  <div class="card-product__img">
-                    <a href="/shop/single-product/${ product.productNo }">
-	                    <img class="card-img" src="/shop/resources/img/product/product1.png" alt="">
-					</a>
-                    <%-- <ul class="card-product__imgOverlay">
-                      <li><button onclick="location.href='/shop/single-product/${ product.productNo }'"><i class="ti-search"></i></button></li><!-- 
-                      <li><button><i class="ti-shopping-cart"></i></button></li> -->
-                      <li><button><i class="ti-heart"></i></button></li>
-                    </ul> --%>
-                  </div>
-                  <div class="card-body">
-                    <h4 class="card-product__title"><a href="/shop/single-product/${ product.productNo }">${ product.title }</a></h4>
-                    <p class="card-product__price"><fmt:formatNumber pattern="#,###￦" >${ product.price }</fmt:formatNumber></p>
-                  </div>
-                </div>
-              </div>
-			</c:forEach>
-            </div>
-          </section>
-          <!-- End Best Seller -->
+         <!-- Start Best Seller -->
+			<section class="lattest-product-area pb-40 category-list">
+				<div class="row">
+					<c:forEach var="product" items="${ products }">
+						<div class="col-md-6 col-lg-4">
+							<div class="card text-center card-product">
+								<div class="card-product__img">
+									<a href="/shop/single-product/${ product.productNo }"> 
+										<img class="card-img" src="/shop/resources/img/product/product1.png">
+									</a>
+								</div>
+								<div class="card-body">
+									<h4 class="card-product__title">
+										<a href="/shop/single-product/${ product.productNo }">${ product.title }</a>
+									</h4>
+									<p class="card-product__price">
+										<fmt:formatNumber pattern="#,###￦">${ product.price }</fmt:formatNumber>
+									</p>
+								</div>
+							</div>
+						</div>
+					</c:forEach>
+				</div>
+			</section>
+			<!-- End Best Seller -->
         </div>
       </div>
     </div>
