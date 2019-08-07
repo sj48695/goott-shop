@@ -188,4 +188,10 @@ public class ShopRepImpl implements ShopRep {
 		shopMapper.insertComment(review);
 	}
 
+	@Override
+	public int selectBuyCountByMemberId(String memberId) {
+		int buyCount = shopMapper.selectBuyCountByMemberId(memberId);
+		return buyCount;
+	}
+
 }

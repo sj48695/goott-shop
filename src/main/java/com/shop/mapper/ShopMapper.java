@@ -63,5 +63,7 @@ public interface ShopMapper {
 	void updateReviewStep(Review review);
 
 	void insertComment(Review review);
+	
+	int selectBuyCountByMemberId(String memberId);
 
 }

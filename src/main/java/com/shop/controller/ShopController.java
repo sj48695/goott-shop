@@ -157,9 +157,16 @@ public class ShopController {
 	}
 	
 	@RequestMapping(value="/single-product/{productNo}", method = RequestMethod.GET)
-	public String detail(@PathVariable int productNo, Model model){
+	public String detail(@PathVariable int productNo, Model model, HttpSession session){
 		Product product = shopService.findProductByProductNo(productNo);
 		product.setReviews((ArrayList<Review>) shopService.findReviewListByProductNo(productNo));
+		int buyCount = 0;
+
+		Member loginuser = (Member) session.getAttribute("loginuser");
+		if (loginuser != null) {
+			buyCount = shopService.selectBuyCountByMemberId(loginuser.getMemberId());
+		} 
+		model.addAttribute("buyCount",buyCount);
 		model.addAttribute("product", product);
 		return "single-product";
 	}

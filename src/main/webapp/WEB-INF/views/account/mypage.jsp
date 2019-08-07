@@ -208,7 +208,7 @@
 								<c:forEach var="buy" items="${ buyList }">
 									<tr>
 										<td>
-											<p>${ buy.title }</p>
+											<p><a href="/shop/single-product/${ buy.productNo }">${ buy.title }</a></p>
 											<p>- ${ buy.productName }(${ buy.color }/${ buy.size })</p>
 										</td>
 										<td>

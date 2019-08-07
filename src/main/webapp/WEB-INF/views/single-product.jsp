@@ -332,7 +332,7 @@
 						<div>
 						<div>
 				<!-- 후기 -->
-				<%-- <c:if test="${ product.reviewCheck }"> --%>
+				<c:if test="${ buyCount > 0 }">
 	            <form id="reviewform" class="form-inline row">
 	               <h4 class="text-black col-md-12 py-3"><b>후기</b></h4>
 	               <input type="hidden" name="productNo" id="productNo" value="${ product.productNo }"> 
@@ -343,12 +343,12 @@
 						<input type="hidden" name='rating' id='star_input' /> -->
 						<textarea class="form-control mr-1" id="review_content"
 							name="content" cols="65" rows="3"></textarea>
-						<a class="btn btn-primary py-3 px-4" id="memberIdeview"
+						<a class="btn btn-primary py-3 px-4" id="writereview"
 							href="javascript:">댓글<br>등록
 						</a>
 					</div>
 				</form>
-	            <%-- </c:if> --%>
+	            </c:if>
 	            
 	            <hr style="border-color: #4a2773;">
 				<!-- review list -->
