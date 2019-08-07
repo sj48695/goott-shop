@@ -10,15 +10,12 @@
             <ul class="list-unstyled components">
                 <li class="active">
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">상품</a>
-                    <ul class="collapse list-unstyled" id="homeSubmenu">
+                    <ul class="collapse list-unstyled" id="managersidebar">
                         <li>
                             <a href="/shop/manager/write-product">상품등록</a>
                         </li>
                         <li>
                             <a href="/shop/manager/list-product">상품목록</a>
-                        </li>
-                        <li>
-                            <a href="#">Home 3</a>
                         </li>
                     </ul>
                 </li>
