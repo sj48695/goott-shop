@@ -1,11 +1,13 @@
 package com.shop.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import com.shop.vo.Buy;
 import com.shop.vo.Cart;
 import com.shop.vo.Product;
+import com.shop.vo.Review;
 
 public interface ShopService {
 
@@ -33,9 +35,19 @@ public interface ShopService {
 
 	List<Buy> findLatelyBuyList(String memberId, int rows);
 
-	List<Buy> findMyBuyList(String memberId);
-
 	int findProductsCount();
+
+	void writeReview(Review review);
+
+	List<Review> findReviewListByProductNo(int productNo);
+
+	void deleteReview(int reviewNo);
+
+	void updateReview(Review review);
+
+	void writeComment(Review review);
+
+	List<Buy> findMyBuyList(String memberId);
 	
 }
 

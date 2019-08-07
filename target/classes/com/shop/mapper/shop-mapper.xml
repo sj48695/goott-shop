@@ -207,6 +207,81 @@
 		select cartNo, regDate, <include refid="cartColumns"/> from cart where cartNo = #{ cartNo }
 	</select>
 	
+	<!-- =========================================
+						Review 
+	============================================= -->
+	
+	<sql id="reviewBasicColumns">
+		content, memberId, groupNo, step, depth, productNo
+	</sql>
+	
+	<insert id="insertReview" parameterType="Review">
+		INSERT INTO review
+		(
+			<include refid="reviewBasicColumns"/>
+		)
+		VALUES
+		(
+			#{content}
+			, #{memberId}
+			, 1
+			, 1
+			, 0
+			, #{productNo}
+		)
+	</insert><!-- groupNo바꿈 -->
+	
+	<update id="updateReview" parameterType="Review">
+		UPDATE review
+		SET CONTENT = #{ content }
+		WHERE reviewNo = #{ reviewNo }
+	</update>
+	
+	<delete id="deleteReview" parameterType="int">
+		DELETE FROM review			
+		WHERE reviewNo = #{ reviewNo }
+	</delete>	
+	
+	<!-- ============================================
+							reReview 
+		============================================= -->
+	
+	<select id="selectReviewByReviewNo" 
+		parameterType="int" resultType="Review">
+		SELECT reviewNo, <include refid="reviewBasicColumns"/>, regDate
+		FROM review 
+		WHERE reviewNo = #{ reviewNo }
+	</select>
+	
+	<update id="updateReviewStep" parameterType="Review">
+		UPDATE review
+		SET STEP = STEP + 1
+		WHERE GROUPNO = #{ groupNo } AND STEP <![CDATA[>]]> #{ step }
+	</update>
+	
+	<insert id="insertComment" parameterType="Review">
+		INSERT INTO review
+		(
+			<include refid="reviewBasicColumns"/>
+		)
+		VALUES
+		(			
+			#{content}
+			, #{memberId}
+			, #{groupNo}
+			, #{step}
+			, #{depth}
+			, #{productNo}
+		)	
+	</insert>
+	
+	<select id="selectReviewsByProductNo" 
+		parameterType="int" resultType="Review">
+		SELECT reviewNo, <include refid="reviewBasicColumns"/>, regDate
+		FROM review 
+		WHERE productNo = #{ productNo } ORDER BY GROUPNO DESC, STEP ASC 
+	</select>
+	
 	<!-- member buyList -->
 	<select id="findMyBuyList" resultType="Buy" parameterType="String">
 		select p.title, buyNo, buyDate, b.productNo, b.count, b.price, b.productName, b.color, b.size, name, phone, address, orderMsg, memberId

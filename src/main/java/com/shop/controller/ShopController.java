@@ -21,6 +21,7 @@ import com.shop.vo.Buy;
 import com.shop.vo.Cart;
 import com.shop.vo.Member;
 import com.shop.vo.Product;
+import com.shop.vo.Review;
 
 @Controller
 public class ShopController {
@@ -158,6 +159,7 @@ public class ShopController {
 	@RequestMapping(value="/single-product/{productNo}", method = RequestMethod.GET)
 	public String detail(@PathVariable int productNo, Model model){
 		Product product = shopService.findProductByProductNo(productNo);
+		product.setReviews((ArrayList<Review>) shopService.findReviewListByProductNo(productNo));
 		model.addAttribute("product", product);
 		return "single-product";
 	}
@@ -194,6 +196,56 @@ public class ShopController {
 		
 		return "account/myCartList";
 		
+	}
+
+
+	@RequestMapping(path="/review/write-review", 
+					method=RequestMethod.POST, 
+					produces="text/plain;charset=utf-8")//응답컨텐프의 종류 지정
+	@ResponseBody//반환값은 뷰이름이 아니고 응답컨텐츠이다.
+	public String writeReview(Review review){
+		shopService.writeReview(review);
+		return "success";
+	}
+	
+	@RequestMapping(value = "/review/review-list", method = RequestMethod.POST)
+	public String reviewList(int productNo, Model model) {
+		
+		List<Review> reviews = shopService.findReviewListByProductNo(productNo);
+		model.addAttribute("reviews", reviews);
+		
+		return "reviews";
+	}
+	
+	@RequestMapping(value = "/review/delete-review", method = RequestMethod.GET)
+	@ResponseBody
+	public String deleteReview(int reviewNo) {
+		
+		shopService.deleteReview(reviewNo);
+		
+		return "success";
+	}
+	
+	@RequestMapping(value = "/review/update-review", method = RequestMethod.POST)
+	@ResponseBody
+	public String updateReview(Review review) {
+		
+		shopService.updateReview(review);
+		
+		return "success";
+	}
+	
+	
+	
+	@RequestMapping(path = "/review/write-comment", 
+			method = RequestMethod.POST, 
+			produces = "text/plain;charset=utf-8") //응답 컨텐츠의 종류 지정
+	@ResponseBody //반환 값은 뷰이름이 아니고 응답컨텐츠입니다
+	public String writeRereview(Review review) {
+	
+		shopService.writeComment(review);
+		
+		return "success"; // WEB-INF/views/success.jsp
 	}
 	
 //	회원 구매내역

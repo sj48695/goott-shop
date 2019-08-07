@@ -7,6 +7,7 @@ import com.shop.vo.Buy;
 import com.shop.vo.Cart;
 import com.shop.vo.Product;
 import com.shop.vo.ProductFile;
+import com.shop.vo.Review;
 
 //이 인터페이스의 패키지와 인터페이스 이름은 member-mapper.xml 파일의 namespace와 일치
 public interface ShopMapper {
@@ -48,5 +49,19 @@ public interface ShopMapper {
 	List<Buy> findMyBuyList(String memberId);
 
 	int selectProductsCount();
+
+	void insertReview(Review review);
+
+	void updateReview(Review review);
+
+	void deleteReview(int reviewNo);
+
+	List<Review> selectReviewsByProductNo(int productNo);
+
+	Review selectReviewByReviewNo(int reviewNo);
+
+	void updateReviewStep(Review review);
+
+	void insertComment(Review review);
 
 }

@@ -272,32 +272,6 @@
 				<div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
 					<div class="row">
 						<div class="col-lg-12">
-							<div class="row total_rate">
-								<div class="col-6">
-									<div class="box_total">
-										<h5>Overall</h5>
-										<h4>4.0</h4>
-										<h6>(03 Reviews)</h6>
-									</div>
-								</div>
-								<div class="col-6">
-									<div class="rating_list">
-										<h3>Based on 3 Reviews</h3>
-										<ul class="list">
-											<li><a href="#">5 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-													 class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-											<li><a href="#">4 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-													 class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-											<li><a href="#">3 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-													 class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-											<li><a href="#">2 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-													 class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-											<li><a href="#">1 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-													 class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
 							<div class="review_list">
 								<div class="review_item">
 									<div class="media">
@@ -359,18 +333,18 @@
 						<div>
 						
 				<!-- 후기 -->
-				<%-- <c:if test="${ space.reviewCheck }"> --%>
+				<%-- <c:if test="${ product.reviewCheck }"> --%>
 	            <form id="reviewform" class="form-inline row">
 	               <h4 class="text-black col-md-12 py-3"><b>후기</b></h4>
-	               <input type="hidden" name="spaceNo" id="spaceNo" value="${ space.spaceNo }"> 
-	               <input type="hidden" name="writer" value="${ loginuser.memberId }">
+	               <input type="hidden" name="productNo" id="productNo" value="${ product.productNo }"> 
+	               <input type="hidden" name="memberId" value="${ loginuser.memberId }">
 					<div class="col-md-12">
 						<!-- <div class='starrr' id='star'></div>
 						<br /> 
 						<input type="hidden" name='rating' id='star_input' /> -->
 						<textarea class="form-control mr-1" id="review_content"
 							name="content" cols="65" rows="3"></textarea>
-						<a class="btn btn-primary py-3 px-4" id="writereview"
+						<a class="btn btn-primary py-3 px-4" id="memberIdeview"
 							href="javascript:">댓글<br>등록
 						</a>
 					</div>
@@ -379,16 +353,16 @@
 	            
 	            <hr style="border-color: #4a2773;">
 				<!-- review list -->
-				<c:if test="${ not empty space.reviews and space.reviews[0].reviewNo != 0 }">
+				<c:if test="${ not empty product.reviews and product.reviews[0].reviewNo != 0 }">
 					<table id="review-list" class="w-100 m-auto border-top">
-						<c:forEach var="review" items="${ space.reviews }">
+						<c:forEach var="review" items="${ product.reviews }">
 						<fmt:formatDate value="${ review.regDate }" var="regDate" type="date" pattern="yyyy-MM-dd hh:mm:ss"/>
 							<tr id="tr${ review.reviewNo }">
 								<td class="border-bottom text-left" style="padding-left:${ review.depth*20 + 10 }px">
 									<div id='reviewview${ review.reviewNo }' class="container">
 										<div class="col-sm-12 row justify-content-between py-1">
-											${ review.writer } &nbsp;&nbsp; [${ regDate }] 
-											<div class="row"style='display:${ loginuser.id eq review.writer ? "block" : "none" }'>
+											${ review.memberId } &nbsp;&nbsp; [${ regDate }] 
+											<div class="row"style='display:${ loginuser.memberId eq review.memberId ? "block" : "none" }'>
 												<a class="editreview" data-reviewno='${ review.reviewNo }' href="javascript:" style="width: 30px; height: 30px">
 													편집<!-- <img src="/spacerental/resources/images/edit.svg" class="svg"> -->
 												</a> &nbsp; 
@@ -403,7 +377,7 @@
 											<a class="comment-link"
 												data-toggle="collapse" href="#comment-collapse${ review.reviewNo }"
 												aria-controls="comment-collapse${ review.reviewNo }">
-													<img src="/spacerental/resources/images/comment.svg" class="svg">
+													<img src="/shop/resources/img/comment.svg" class="svg">
 											</a>
 										</div>
 
@@ -415,8 +389,8 @@
 												<div class="card-body">
 												<form id="comment-form" class="form-inline row">
 													<input type="hidden" name="reviewNo" value="${ review.reviewNo }">
-									               <input type="hidden" name="spaceNo" id="spaceNo" value="${ space.spaceNo }"> 
-									               <input type="hidden" name="writer" value="${ loginuser.id }">
+									               <input type="hidden" name="productNo" id="productNo" value="${ product.productNo }"> 
+									               <input type="hidden" name="memberId" value="${ loginuser.memberId }">
 									               <div class="col-md-12">
 									                  <textarea class="form-control mr-1" name="content" cols="${ 60 - review.depth*5 }" rows="3"></textarea>
 									                  <a class="btn btn-primary py-3 px-4" id="write-comment" 
@@ -430,7 +404,7 @@
 									</div>
 									<div id='reviewedit${ review.reviewNo }' style="display: none" class="container">
 										<div class="col-sm-12 row justify-content-between py-1">
-											${ review.writer } &nbsp;&nbsp; [${ regDate }]
+											${ review.memberId } &nbsp;&nbsp; [${ regDate }]
 										</div>
 										<form id="updateform${ review.reviewNo }">
 											<input type="hidden" name="reviewNo" value="${ review.reviewNo }" />
@@ -447,7 +421,7 @@
 						</c:forEach>
 					</table>
 				</c:if>
-				<c:if test="${ empty space.reviews or space.reviews[0].reviewNo eq 0 }">
+				<c:if test="${ empty product.reviews or product.reviews[0].reviewNo eq 0 }">
 					<table id="review-list" class="w-100 m-auto border-top">
 						<tr>
 							<td>등록된 후기가 없습니다.</td>
