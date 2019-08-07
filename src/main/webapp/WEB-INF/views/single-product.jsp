@@ -335,18 +335,17 @@
 				<!-- 후기 -->
 				<%-- <c:if test="${ product.reviewCheck }"> --%>
 	            <form id="reviewform" class="form-inline row">
-	               <h4 class="text-black col-md-12 py-3"><b>후기</b></h4>
+	               <h4 class="text-black col-md-11 py-3"><b>후기</b></h4>
 	               <input type="hidden" name="productNo" id="productNo" value="${ product.productNo }"> 
 	               <input type="hidden" name="memberId" value="${ loginuser.memberId }">
-					<div class="col-md-12">
+					<div class="container">
 						<!-- <div class='starrr' id='star'></div>
 						<br /> 
 						<input type="hidden" name='rating' id='star_input' /> -->
-						<textarea class="form-control mr-1" id="review_content"
-							name="content" cols="65" rows="3"></textarea>
-						<a class="btn btn-primary py-3 px-4" id="memberIdeview"
-							href="javascript:">댓글<br>등록
-						</a>
+						<textarea id="review_content" name="content" cols="140" rows="10"></textarea>
+						<div class="d-flex align-items-center justify-content-end">
+							<a class="gray_btn" id="writereview" href="javascript:">댓글등록</a>
+						</div>					
 					</div>
 				</form>
 	            <%-- </c:if> --%>
@@ -372,17 +371,16 @@
 											</div>
 										</div>
 										<span>${ review.content }</span>
-										
-										<div style="width: 30px;height: 30px">
+										<%-- <div style="width: 30px;height: 30px">
 											<a class="comment-link"
 												data-toggle="collapse" href="#comment-collapse${ review.reviewNo }"
 												aria-controls="comment-collapse${ review.reviewNo }">
 													<img src="/shop/resources/img/comment.svg" class="svg">
 											</a>
-										</div>
+										</div> --%>
 
 									</div>
-									<div>
+									<%-- <div>
 									<div class="row">
 										<div class="col">
 											<div class="collapse multi-collapse" id="comment-collapse${ review.reviewNo }">
@@ -401,7 +399,7 @@
 											</div>
 										</div>
 									</div>
-									</div>
+									</div> --%>
 									<div id='reviewedit${ review.reviewNo }' style="display: none" class="container">
 										<div class="col-sm-12 row justify-content-between py-1">
 											${ review.memberId } &nbsp;&nbsp; [${ regDate }]
