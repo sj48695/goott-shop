@@ -113,9 +113,16 @@ public class ShopServiceImpl implements ShopService {
 	}
 
 	@Override
+	public List<Buy> findMyBuyList(String memberId) {
+		List<Buy> buyList = shopRep.findMyBuyList(memberId);
+		return buyList;
+	}
+	
+	@Override
 	public int findProductsCount() {
 		int count = shopRep.selectProductsCount();
 		return count;
+
 	}
 
 	@Override

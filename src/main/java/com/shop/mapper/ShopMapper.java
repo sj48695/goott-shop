@@ -46,6 +46,8 @@ public interface ShopMapper {
 
 	List<Buy> selectLatelyBuyList(HashMap<String, Object> params);
 
+	List<Buy> findMyBuyList(String memberId);
+
 	int selectProductsCount();
 
 	void insertReview(Review review);

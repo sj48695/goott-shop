@@ -138,9 +138,16 @@ public class ShopRepImpl implements ShopRep {
 	}
 
 	@Override
+	public List<Buy> findMyBuyList(String memberId) {
+		List<Buy> buyList = shopMapper.findMyBuyList(memberId);
+		return buyList;
+	}
+	
+	@Override
 	public int selectProductsCount() {
 		int count = shopMapper.selectProductsCount();
 		return count;
+
 	}
 	@Override
 	public void insertReview(Review review) {

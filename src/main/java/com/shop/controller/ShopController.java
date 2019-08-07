@@ -197,7 +197,6 @@ public class ShopController {
 		return "account/myCartList";
 		
 	}
-	
 
 
 	@RequestMapping(path="/review/write-review", 
@@ -247,5 +246,16 @@ public class ShopController {
 		shopService.writeComment(review);
 		
 		return "success"; // WEB-INF/views/success.jsp
+	}
+	
+//	회원 구매내역
+	@RequestMapping(value="/account/myBuyList", method = RequestMethod.GET)
+	public String MyBuyList(Model model, HttpSession session){
+		
+		Member loginuser = (Member) session.getAttribute("loginuser");
+		List<Buy> buyList = shopService.findMyBuyList(loginuser.getMemberId());
+
+		model.addAttribute(buyList);
+		return "account/myBuyList";
 	}
 }

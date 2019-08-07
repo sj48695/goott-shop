@@ -46,6 +46,8 @@ public interface ShopService {
 	void updateReview(Review review);
 
 	void writeComment(Review review);
+
+	List<Buy> findMyBuyList(String memberId);
 	
 }
 
