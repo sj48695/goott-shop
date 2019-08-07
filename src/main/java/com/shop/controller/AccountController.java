@@ -16,6 +16,7 @@ import com.shop.service.ManagerService;
 import com.shop.service.MemberService;
 import com.shop.service.QuestionService;
 import com.shop.service.ShopService;
+import com.shop.vo.Buy;
 import com.shop.vo.Cart;
 import com.shop.vo.Member;
 import com.shop.vo.Product;
@@ -88,6 +89,7 @@ public class AccountController {
 		String memberId = member.getMemberId();
 		
 		List<Cart> carts = shopService.findMyCartList(memberId);
+		List<Buy> buyList = shopService.findMyBuyList(member.getMemberId());
 		List<Question> questions = questionService.findMyQuestionList(memberId);
 		
 		for(Cart cart : carts) {
@@ -96,6 +98,7 @@ public class AccountController {
 
 		model.addAttribute("member", member);
 		model.addAttribute("carts", carts);
+		model.addAttribute("buyList", buyList);
 		model.addAttribute("questions", questions);
 		
 		return "account/mypage";

@@ -7,6 +7,7 @@ import com.shop.repository.ShopRep;
 import com.shop.vo.Buy;
 import com.shop.vo.Cart;
 import com.shop.vo.Product;
+import com.shop.vo.Review;
 
 public class ShopServiceImpl implements ShopService {
 
@@ -30,8 +31,8 @@ public class ShopServiceImpl implements ShopService {
 	}
 
 	@Override
-	public List<Product> findProducts() {
-		List<Product> products = shopRep.selectProducts();
+	public List<Product> findProducts(String category, String sorting, String keyfield, String keyword, int start, int count) {
+		List<Product> products = shopRep.selectProducts(category, sorting, keyfield, keyword, start, count);
 		return products;
 	}
 
@@ -111,4 +112,56 @@ public class ShopServiceImpl implements ShopService {
 		return buyList;
 	}
 
+	@Override
+	public List<Buy> findMyBuyList(String memberId) {
+		List<Buy> buyList = shopRep.findMyBuyList(memberId);
+		return buyList;
+	}
+	
+	@Override
+	public int findProductsCount() {
+		int count = shopRep.selectProductsCount();
+		return count;
+
+	}
+
+	@Override
+	public void writeReview(Review review) {
+		shopRep.insertReview(review);
+	}
+
+	@Override
+	public void deleteReview(int reviewNo) {
+		shopRep.deleteReview(reviewNo);
+	}
+
+	@Override
+	public void updateReview(Review review) {
+		shopRep.updateReview(review);		
+	}
+
+	@Override
+	public List<Review> findReviewListByProductNo(int productNo) {
+		List<Review> reviews = shopRep.selectReviewsByProductNo(productNo);
+		return reviews;
+	}
+	@Override
+	public void writeComment(Review review) {		
+		
+		Review parent = shopRep.selectReviewByReviewNo(review.getReviewNo());
+		shopRep.updateReviewStep(parent);
+		
+		review.setGroupNo(parent.getGroupNo());
+		review.setDepth(parent.getDepth() + 1);
+		review.setStep(parent.getStep() + 1);		
+		
+		shopRep.insertComment(review);
+	}
+
+	@Override
+	public int selectBuyCountByMemberId(String memberId, int productNo) {
+		int buyCount = shopRep.selectBuyCountByMemberId(memberId, productNo);
+		return buyCount;
+	}
+	
 }

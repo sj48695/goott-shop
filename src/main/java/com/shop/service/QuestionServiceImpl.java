@@ -1,13 +1,13 @@
 package com.shop.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.shop.repository.QuestionRep;
 import com.shop.vo.Question;
 import com.shop.vo.QuestionComment;
 import com.shop.vo.QuestionFile;
-import com.shop.vo.QuestionComment;
 
 public class QuestionServiceImpl implements QuestionService {
 	
@@ -157,6 +157,22 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 	
 	
+	
+	/**/
+	
+	@Override
+	public List<QuestionComment> findCommentListByQuestionNoWithPaging(HashMap<String, Object> params) {
 
+		List<QuestionComment> comments =
+				questionRep.selectQuestionByQuestionNoWithPaging(params);
+		
+		return comments;
+	}
+	@Override
+	public int findCommentsCountByQuestionNo(int questionNo) {
+		int commentsCount = 
+				questionRep.selectCommentsCountByQuestionNo(questionNo);
+		return commentsCount;
+	}
 
 }

@@ -4,6 +4,7 @@ package com.shop.mapper;
 import java.util.HashMap;
 import java.util.List;
 
+import com.shop.vo.Product;
 import com.shop.vo.Question;
 import com.shop.vo.QuestionFile;
 import com.shop.vo.QuestionComment;
@@ -55,6 +56,14 @@ public interface QuestionMapper {
 	String selectPwdByQuestionNo(int questionNo);
 
 	List<Question> findMyQuestionList(String memberId);
+	
+	//
+	List<Product> selectProducts();
 
+	
+	//selectCommentsCountByUploadNo
+	
+	List<QuestionComment> selectCommentsByQuestionNoWithPaging(HashMap<String, Object> params);
+	int selectCommentsCountByQuestionNo(int questionNo);
 }
 	

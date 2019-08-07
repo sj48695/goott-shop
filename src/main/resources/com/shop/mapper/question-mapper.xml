@@ -20,7 +20,9 @@
 		SELECT questionNo, category, title, uploader, regDate , secure
 		FROM question
 		WHERE deleted = '0'		
-		
+		<if test='category != "all"'>
+    		AND  category = #{category}
+  		</if>
 		ORDER BY questionNo DESC
 	</select> -->
 	
@@ -187,6 +189,21 @@
 		order by questionNo desc
 	</select>
 	
+		<select id="selectCommentsByQuestionNoWithPaging"
+			parameterType="hashmap" resultType="QuestionComment">
+	        SELECT COMMENTNO, QUESTIONNO, WRITER, CONTENT, REGDATE, GROUPNO, STEP, DEPTH 
+	        FROM questioncomment
+	        WHERE questionno = #{ questionNo }
+	        ORDER BY GROUPNO DESC, STEP ASC
+			LIMIT #{ from }, #{ to }	
+		</select>
+		
+		<select id="selectCommentsCountByQuestionNo"
+			parameterType="int" resultType="int">
+			SELECT COUNT(*)		
+			FROM questioncomment
+			WHERE questionno = #{ questionNo }	
+		</select>
 	
-	
+
 </mapper>

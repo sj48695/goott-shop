@@ -118,8 +118,43 @@ $(function() {
 			}
 		});
 	});
+	
+	
 
 });
+
+/*---------------------category.jsp----------------------*/
+
+
+function category(){
+	var formData = $(this).serialize();
+	$.ajax({
+		url:"/shop/category/search",
+		method:"GET",
+		data : formData,
+		success: function(data, xhr, status){
+			console.log(data);
+			$('.category-list').load(data);
+		},
+		error:function(xhr, status, err){
+			alert(err);
+		}
+	});
+	
+	var formData = $(this).serialize();
+	$.ajax({
+		url:"/shop/category/search",
+		method:"GET",
+		data : formData,
+		success: function(data, xhr, status){
+			console.log(data);
+			$('.category-list').load(data);
+		},
+		error:function(xhr, status, err){
+			alert(err);
+		}
+	});
+}
 
 /*---------------------cart.jsp----------------------*/
 
@@ -304,23 +339,133 @@ daum.postcode.load(function(){
                 } else {
                     document.getElementById("extraAddress").value = '';
                 }
-
-//                var guideTextBox = document.getElementById("guide");
-//                // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
-//                if(data.autoRoadAddress) {
-//                    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
-//                    guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
-//                    guideTextBox.style.display = 'block';
-//
-//                } else if(data.autoJibunAddress) {
-//                    var expJibunAddr = data.autoJibunAddress;
-//                    guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
-//                    guideTextBox.style.display = 'block';
-//                } else {
-//                    guideTextBox.innerHTML = '';
-//                    guideTextBox.style.display = 'none';
-//                }
             }
         }).open();
     });
+});
+
+/* ----------- Review ---------- */
+$(function () {
+	var productNo = $('#reviewform #productNo').val();
+	$('#writereview').on('click', function (event) {
+		
+		//serialize   -   form에 포함된 입력요소의 값을 이름=값&이름=값...형식으로 만드는 함수
+		var formData = $('#reviewform').serialize();
+		
+		$.ajax({
+			url: "/shop/review/write-review",
+			method: "POST",
+			data: formData,
+			success: function (data, status, xhr) {
+				$('textarea').val();
+				alert("댓글 등록");
+				$("#review-list").load('/shop/review/review-list',
+					{ "productNo": productNo },
+					function () {
+						$('#productNo').attr("value", productNo);
+					});
+			},
+			error: function (xhr, status, err) {
+				alert(err);
+			}
+		});
+	});
+
+	var currentreviewNo = -1;
+	
+	$('#review-list').on('click', '.editreview', function (event) {
+		reviewNo = $(this).attr('data-reviewno');
+		$('.collapse').collapse('hide');
+		
+		if (currentreviewNo != -1) {
+			$('#reviewview' + currentreviewNo).css('display', '');
+			$('#reviewedit' + currentreviewNo).css('display', 'none');
+		}
+		$('#reviewview' + reviewNo).css('display', 'none');
+		$('#reviewedit' + reviewNo).css('display', '');
+		currentreviewNo = reviewNo;
+	});
+
+	$('#review-list').on('click', '.cancel', function (event) {
+		reviewNo = $(this).attr('data-reviewno');
+		$('#reviewview' + reviewNo).css('display', '');
+		$('#reviewedit' + reviewNo).css('display', 'none');
+		currentreviewNo = -1;
+	});
+
+	$('#review-list').on('click', '.deletereview', function (event) { //새로 만들어지는 객체에도 이벤트를 적용시키도록 하는 것??
+		reviewNo = $(this).attr('data-reviewno');
+		$.ajax({
+			url: "/shop/review/delete-review",
+			method: "GET",
+			data: "reviewNo=" + reviewNo,
+			success: function (data, status, xhr) {
+				if (data == 'success') {
+					$('#tr' + reviewNo).remove();
+					alert('삭제했습니다');
+				}
+				else alert('삭제실패');
+			},
+			error: function (xhr, status, err) {
+				console.log(err);
+			}
+		});
+	});
+
+	$('#review-list').on('click', '.updatereview', function (event) {
+		//현재 클릭된 <a 의 data-reviewno 속성 값 읽기
+		var reviewNo = $(this).attr('data-reviewno');
+		var content = $('#updateform' + reviewNo + ' textarea').val();
+		var inputData = $('#updateform' + reviewNo).serialize();
+
+		//ajax 방식으로 데이터 수정
+		$.ajax({
+			"url": "/shop/review/update-review",
+			"method": "POST",
+			"data": inputData,
+			"success": function (data, status, xhr) {
+				alert('댓글을 수정했습니다.');
+				var span = $('#reviewview' + reviewNo + ' span');
+				span.html(content.replace(/\n/gi, '<br>'));
+				//view-div는 숨기고, edit-div는 표시하기   
+				$('#reviewview' + reviewNo).css('display', 'block');
+				$('#reviewedit' + reviewNo).css('display', 'none');
+			},
+			"error": function (xhr, status, err) {
+				alert('댓글 수정 실패');
+			}
+		});
+	});
+
+	$('#write-comment').on('click', function (event) {
+		var reviewNo = $(this).attr('data-reviewno');
+		var content = $('#comment-form textarea').val();
+		if (content.length == 0) return;
+
+		var commentData = $('#comment-form').serialize();
+
+		$.ajax({
+			url: "/shop/review/write-comment",
+			method: "POST",
+			data: commentData,
+			success: function (data, status, xhr) {
+				alert('댓글을 달았습니다.');
+				$('#comment-collapse' + reviewNo).collapse('hide'); //hide bootstrap modal
+				$('#comment-form').each(function () {
+					this.reset();
+				});
+				
+				$("#review-list").load('/shop/review/review-list',
+						{ "productNo": productNo },
+						function () {
+							$('#productNo').attr("value", productNo);
+//							$('#star').attr("id","star"+productNo);
+//							$('#star_input').attr("id","star_input"+productNo);
+						});
+			},
+			error: function (xhr, status, err) {
+				alert('fail');
+			}
+		});
+	});
 });

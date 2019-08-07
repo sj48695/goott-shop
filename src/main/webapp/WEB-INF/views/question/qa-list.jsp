@@ -81,50 +81,47 @@
 	  </section>
   
   <!-- 시작 -->
-		<div class="amado-pro-catagory clearfix">
 
 			<div>
 				<br />
 				<div class="container" style="padding-top: 50; text-align: center">
-				<form id="selectform" action="/shop/qa-list" method="POST">
-								
-							
-									<select name="category" id="qaselectcategory">
-										<option value="all">전체</option>
-										<option value="상품문의"
-											<c:if test="${param.category eq '상품문의'}">selected</c:if>>상품문의</option>
-										<option value="교환/반품문의"
-											<c:if test="${param.category eq '교환/반품문의'}">selected</c:if>>교환/반품문의</option>
-										<option value="기타문의"
-											<c:if test="${param.category eq '기타문의'}">selected</c:if>>기타문의</option>
-									</select>
+						<form id="selectform" action="/shop/qa-list" method="POST">
+							<select name="category" id="qaselectcategory" >
+								<option value="all">전체</option>
+								<option value="상품문의"
+									<c:if test="${param.category eq '상품문의'}">selected</c:if>>상품문의</option>
+								<option value="교환/반품문의"
+									<c:if test="${param.category eq '교환/반품문의'}">selected</c:if>>교환/반품문의</option>
+								<option value="기타문의"
+									<c:if test="${param.category eq '기타문의'}">selected</c:if>>기타문의</option>
+							</select>
 						</form>
 					<table class="table table-hover">
 						
 						<tr style="background-color:; height: 50px" >
 							<th style="width: 50px; text-align: center">NO</th>
-							<th style="width: 50px; text-align: center">PRODUCT</th>
-							<th style="width: 100px; text-align: center">CATEGORY</th>
+							<th style="width: 125x; text-align: center">PRODUCT</th>
+							<th style="width: 125px; text-align: center">CATEGORY</th>
 							<th style="width: 400px; text-align: center">CONTENTS</th>
 							<th style="width: 125px; text-align: center">NAME</th>
 							<th style="width: 150px; text-align: center;">DATE</th>
 							<th style="width: 125px; text-align: center">ANSWER</th>
 						</tr>
 						
-						<c:forEach var="notice" items="${noticelist}">
+						
 							<tr style="height: 30px">
-								<td style="text-align: center">${ notice.questionNo }</td>
-								<td style="text-align: center"><strong>${ notice.title }</strong></td>
-								<td style='text-align: left; padding-left: 10px'><strong>${ notice.content }</strong></td>
-								<td style="text-align: center">${ notice.managerID }</td>
-								<td style="text-align: center">${ notice.regDate }</td>
+								<td style="text-align: center">*</td>
+								<td style="text-align: center">*</td>
+								<td style="text-align: center"><strong>공지사항</strong></td>
+								<td style='text-align: left; padding-left: 10px'><strong>+[공지] 교환/반품 절차</strong></td>
+								<td style="text-align: center">manager</td>
+								<td style="text-align: center">2019-08-07</td>
 								<td style="text-align: center"></td>
 							</tr>
-						</c:forEach>
 						<c:forEach var="question" items="${questions}">
 							<tr style="height: 30px">
 								<td style="text-align: center">${ question.questionNo }</td>
-								<td style="text-align: center">${ question.questionNo }</td>
+								<td style="text-align: center"></td>
 								<td style="text-align: center">${ question.category }</td>
 								<td style='text-align: left; padding-left: 10px'>
 								<a	href=<c:if test='${ question.secure eq true}'>
@@ -156,7 +153,6 @@
 
 				</div>
 			</div>
-		</div>
 	</div>
 
 	<!-- Product Catagories Area End -->

@@ -8,8 +8,8 @@
 								<td class="border-bottom text-left" style="padding-left:${ review.depth*20 + 10 }px">
 									<div id='reviewview${ review.reviewNo }' class="container">
 										<div class="col-sm-12 row justify-content-between py-1">
-											${ review.writer } &nbsp;&nbsp; [${ regDate }] 
-											<div style='display:${ loginuser.id eq review.writer ? "block" : "none" }'>
+											${ review.memberId } &nbsp;&nbsp; [${ regDate }] 
+											<div style='display:${ loginuser.memberId eq review.memberId ? "block" : "none" }'>
 												<a class="editreview" data-reviewno='${ review.reviewNo }' href="javascript:">
 													편집
 												</a> &nbsp; 
@@ -18,38 +18,11 @@
 										</div>
 										<span>${ review.content }</span>
 										
-										<div style="width: 30px;height: 30px">
-											<a class="comment-link"
-												data-toggle="collapse" href="#comment-collapse${ review.reviewNo }"
-												aria-controls="comment-collapse${ review.reviewNo }">
-													<img src="/spacerental/resources/images/comment.svg" class="svg">
-											</a>
-										</div>
 
-									</div>
-									<div>
-									<div class="row">
-										<div class="col">
-											<div class="collapse multi-collapse" id="comment-collapse${ review.reviewNo }">
-												<div class="card card-body">
-												<form id="comment-form" class="form-inline row">
-													<input type="hidden" name="reviewNo" value="${ review.reviewNo }">
-									               <input type="hidden" name="spaceNo" id="spaceNo" value=""> 
-									               <input type="hidden" name="writer" value="${ loginuser.id }">
-									               <div class="col-md-12">
-									                  <textarea class="form-control mr-1" name="content" cols="${ 60 - review.depth*5 }" rows="3"></textarea>
-									                  <a class="btn btn-primary py-3 px-4" id="write-comment" 
-									                  	data-reviewno='${ review.reviewNo }' href="javascript:">댓글<br>등록</a>
-									               </div>
-									            </form>
-									            </div>
-											</div>
-										</div>
-									</div>
 									</div>
 									<div id='reviewedit${ review.reviewNo }' style="display: none" class="container">
 										<div class="col-sm-12 row justify-content-between py-1">
-											${ review.writer } &nbsp;&nbsp; [${ regDate }]
+											${ review.memberId } &nbsp;&nbsp; [${ regDate }]
 										</div>
 										<form id="updateform${ review.reviewNo }">
 											<input type="hidden" name="reviewNo" value="${ review.reviewNo }" />

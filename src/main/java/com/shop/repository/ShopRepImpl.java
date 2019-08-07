@@ -8,6 +8,7 @@ import com.shop.mapper.ShopMapper;
 import com.shop.vo.Buy;
 import com.shop.vo.Cart;
 import com.shop.vo.Product;
+import com.shop.vo.Review;
 
 public class ShopRepImpl implements ShopRep {
 
@@ -31,8 +32,15 @@ public class ShopRepImpl implements ShopRep {
 	}
 
 	@Override
-	public List<Product> selectProducts() {
-		List<Product> products = shopMapper.selectProducts();
+	public List<Product> selectProducts(String category, String sorting, String keyfield, String keyword, int start, int count) {
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("category", category);
+		params.put("sorting", sorting);
+		params.put("keyfield", keyfield);
+		params.put("keyword", keyword);
+		params.put("start", start-1);
+		params.put("count", count);
+		List<Product> products = shopMapper.selectProducts(params);
 		return products;
 	}
 
@@ -127,6 +135,67 @@ public class ShopRepImpl implements ShopRep {
 		params.put("rows", rows);
 		List<Buy> buyList = shopMapper.selectLatelyBuyList(params);
 		return buyList;
+	}
+
+	@Override
+	public List<Buy> findMyBuyList(String memberId) {
+		List<Buy> buyList = shopMapper.findMyBuyList(memberId);
+		return buyList;
+	}
+	
+	@Override
+	public int selectProductsCount() {
+		int count = shopMapper.selectProductsCount();
+		return count;
+
+	}
+	@Override
+	public void insertReview(Review review) {
+		shopMapper.insertReview(review);
+	}
+	
+	@Override
+	public void updateReview(Review review) {
+		shopMapper.updateReview(review);
+	}
+	
+	@Override
+	public void deleteReview(int reviewNo) {
+		shopMapper.deleteReview(reviewNo);
+	}
+
+	@Override
+	public ArrayList<Review> selectReviewsByProductNo(int productNo) {
+		List<Review> reviews =
+			shopMapper.selectReviewsByProductNo(productNo);
+		return (ArrayList<Review>)reviews;
+	}
+	
+	@Override
+	public Review selectReviewByReviewNo(int reviewNo) {
+		Review review =
+			shopMapper.selectReviewByReviewNo(reviewNo);
+		return review;
+	}
+	
+	@Override
+	public void updateReviewStep(Review review) {
+		shopMapper.updateReviewStep(review);
+	}
+	
+	@Override
+	public void insertComment(Review review) {
+		shopMapper.insertComment(review);
+	}
+
+	@Override
+	public int selectBuyCountByMemberId(String memberId, int productNo) {
+
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("memberId", memberId);
+		params.put("productNo", productNo);
+		int buyCount = shopMapper.selectBuyCountByMemberId(params);
+		return buyCount;
 	}
 
 }

@@ -96,12 +96,10 @@
 					<div class="jumbotron">
 						<h5 style="text-align: center">현재 장바구니에 담긴 상품이 존재하지 않습니다.</h5>
 					</div>
-					</c:if>
-					
+					</c:if>					
 					<c:if test="${ not empty carts }">
-					<section class="cart_area">
 			        	<div class="cart_inner">
-			          		<div class="table-responsive">
+			              <div class="table-responsive">
 			                  <table class="table">
 								<colgroup>
 									<col width="2%">
@@ -117,15 +115,16 @@
 										<th scope="col">Product</th>
 										<th scope="col">Price</th>
 										<th scope="col">Quantity</th>
-										<th scope="col">Total</th>
+										<th scope="col">SubTotal</th>
 										<th scope="col">delete</th>
 									</tr>
 								</thead>
 								<tbody>
-			                       <c:forEach var="cart" items="${ carts }">
+			                      <c:forEach var="cart" items="${ carts }">
 			                          <tr class="cartlist${ cart.cartNo }">
 			                          	  <td><input type="checkbox" name="checkRow" value="${ cart.cartNo }" onclick="checkRow()"></td>
 			                              <td>
+			                              	<a href="/shop/single-product/${ cart.productNo }">
 			                                  <div class="media">
 			                                      <div class="d-flex">
 			                                          <img src="/shop/resources/files/product-files/${ cart.file.fileName }" width="100" alt="">
@@ -135,6 +134,7 @@
 			                                          <p> - ${ cart.productName }(${ cart.color }/${ cart.size })</p>
 			                                      </div>
 			                                  </div>
+			                                  </a>
 			                              </td>
 			                              <td>
 			                                  <h5><fmt:formatNumber pattern="#,###원">${ cart.price }</fmt:formatNumber></h5>
@@ -156,7 +156,7 @@
 			                              </td>
 			                              <td><a onclick="javascript:removeCart(${ cart.cartNo })">X</a></td>
 			                          </tr>
-			                        </c:forEach>
+			                        </c:forEach><%-- 
 			                          <tr>
 			                          	  <td colspan="3"></td>
 			                              <td>
@@ -169,7 +169,7 @@
 			                                  </h5>
 			                              </td>
 			                              <td></td>
-			                          </tr>
+			                          </tr> --%>
 			                          <tr class="out_button_area">
 			                              <td colspan="6">
 			                              	<input hidden="true" id="checkRows" name="checkRows">
@@ -182,13 +182,60 @@
 			                          </tr>
 			                      </tbody>
 			                  </table>
-			            	</div>
-			        	</div>
-			        	</section>
+			              </div>
+			          </div>
 			      	</c:if>
 				</div>
 				
 				<div class="tab-pane fade" id="order" role="tabpanel" aria-labelledby="order-tab">
+					<h4><strong>주문내역</strong></h4><br>
+					<c:if test="${ empty buyList }">
+					<div class="jumbotron">
+						<h5 style="text-align: center">현재 주문내역이 존재하지 않습니다.</h5>
+					</div>
+					</c:if>
+					<c:if test="${ not empty buyList }">
+					<div class="table-responsive">
+						<table class="table">
+							<thead>
+								<tr>
+									<th scope="col">Product</th>
+									<th scope="col">Quantity</th>
+									<th scope="col">SubTotal</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach var="buy" items="${ buyList }">
+									<tr>
+										<td>
+											<p><a href="/shop/single-product/${ buy.productNo }">${ buy.title }</a></p>
+											<p>- ${ buy.productName }(${ buy.color }/${ buy.size })</p>
+										</td>
+										<td>
+											<h5>${ buy.count }</h5>
+										</td>
+										<td>
+											<p><fmt:formatNumber pattern="#,###원">${ buy.count * buy.price }</fmt:formatNumber></p>
+										</td>
+									</tr>									
+		                            <c:set var="total" value="${ total + (buy.price * buy.count) }"/>
+								</c:forEach>
+								<tr><td colspan="3"/></tr>
+								<tr>
+									<td></td>
+									<td>
+										<h5>Total</h5>
+									</td>
+									<td>
+										<h5 class="subtotal">
+											<fmt:formatNumber pattern="#,###원">${ total }</fmt:formatNumber>
+										</h5>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					</c:if>
 				</div>
 				
 				<div class="tab-pane fade" id="qna" role="tabpanel" aria-labelledby="qna-tab">
