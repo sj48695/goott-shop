@@ -6,11 +6,12 @@ import java.util.List;
 import com.shop.vo.Buy;
 import com.shop.vo.Cart;
 import com.shop.vo.Product;
+import com.shop.vo.Review;
 
 public interface ShopRep {
 	Product selectProductByProductNo(int productNo);
 
-	List<Product> selectProducts();
+	List<Product> selectProducts(String category, String keyfield, String keyword, String keyword2, int start, int count);
 
 	List<HashMap<String, Object>> selectCategories();
 
@@ -35,5 +36,23 @@ public interface ShopRep {
 	void updateProductCountByBuy(int productNo, int count);
 
 	List<Buy> selectLatelyBuyList(String memberId, int rows);
+
+	List<Buy> findMyBuyList(String memberId);
+
+	int selectProductsCount();
+
+	void insertReview(Review review);
+
+	void deleteReview(int reviewNo);
+
+	void updateReview(Review review);
+
+	List<Review> selectReviewsByProductNo(int productNo);
+
+	Review selectReviewByReviewNo(int reviewNo);
+
+	void updateReviewStep(Review parent);
+
+	void insertComment(Review review);
 
 }

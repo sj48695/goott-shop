@@ -39,9 +39,58 @@
 		select productNo, regDate, <include refid="productColumns"/> from product where productNo = #{ productNo }  
 	</select>
 	
-	<select id="selectProducts" resultType="Product">
+	<select id="selectProducts" resultType="Product" parameterType="hashmap">
 		select productNo, regDate, <include refid="productColumns"/> from product
+			<!-- <if test="keyword == '' || category != 'all'">
+				where category like concat('%', #{ category }, '%')
+			</if>
+			<if test="keyword != ''"> -->
+			<choose>
+				<when test="keyfield != 'all'">
+					<if test="keyfield == 'category'">
+						where category like concat('%', #{ keyword }, '%')
+					</if>
+					<if test="keyfield == 'title'">
+						where title like concat('%', #{ keyword }, '%')
+					</if>
+					<if test="keyfield == 'productName'">
+						where productName like concat('%', #{ keyword }, '%')
+					</if>
+					<if test="keyfield == 'category'">
+						where content like concat('%', #{ keyword }, '%')
+					</if>
+				</when>
+				<otherwise>
+					where title like concat('%', #{ keyword }, '%')
+					or productName like concat('%', #{ keyword }, '%')
+					or content like concat('%', #{ keyword }, '%')
+				</otherwise>
+			</choose>
+			<!-- and category like concat('%', #{ category }, '%')
+			</if> -->
+			<if test="sorting == 'regDate'">
+				order by productNo desc
+			</if>
+			<if test="sorting == 'price'">
+				order by price 
+			</if>
+		limit #{ start }, #{ count }
 	</select>
+	
+	<!-- <select id="selectProductsByCategory" resultType="Product">
+		select productNo, regDate, <include refid="productColumns"/> from product
+		<if test="keyfield == 'category'">
+			where category like concat('%', #{ category }, '%')
+		</if>
+		order by regDate desc
+		limit #{ start }, #{ count }
+	</select> -->
+	
+	<select id="selectProductsCount" resultType="int">
+		select count(*) from product
+	</select>
+	
+	
 	
 	<select id="selectCategories" resultMap="categoryMap">
 		select category, count(category) categoryCnt from product group by category
@@ -158,6 +207,88 @@
 		select cartNo, regDate, <include refid="cartColumns"/> from cart where cartNo = #{ cartNo }
 	</select>
 	
+	<!-- =========================================
+						Review 
+	============================================= -->
 	
+	<sql id="reviewBasicColumns">
+		content, memberId, groupNo, step, depth, productNo
+	</sql>
+	
+	<insert id="insertReview" parameterType="Review">
+		INSERT INTO review
+		(
+			<include refid="reviewBasicColumns"/>
+		)
+		VALUES
+		(
+			#{content}
+			, #{memberId}
+			, 1
+			, 1
+			, 0
+			, #{productNo}
+		)
+	</insert><!-- groupNo바꿈 -->
+	
+	<update id="updateReview" parameterType="Review">
+		UPDATE review
+		SET CONTENT = #{ content }
+		WHERE reviewNo = #{ reviewNo }
+	</update>
+	
+	<delete id="deleteReview" parameterType="int">
+		DELETE FROM review			
+		WHERE reviewNo = #{ reviewNo }
+	</delete>	
+	
+	<!-- ============================================
+							reReview 
+		============================================= -->
+	
+	<select id="selectReviewByReviewNo" 
+		parameterType="int" resultType="Review">
+		SELECT reviewNo, <include refid="reviewBasicColumns"/>, regDate
+		FROM review 
+		WHERE reviewNo = #{ reviewNo }
+	</select>
+	
+	<update id="updateReviewStep" parameterType="Review">
+		UPDATE review
+		SET STEP = STEP + 1
+		WHERE GROUPNO = #{ groupNo } AND STEP <![CDATA[>]]> #{ step }
+	</update>
+	
+	<insert id="insertComment" parameterType="Review">
+		INSERT INTO review
+		(
+			<include refid="reviewBasicColumns"/>
+		)
+		VALUES
+		(			
+			#{content}
+			, #{memberId}
+			, #{groupNo}
+			, #{step}
+			, #{depth}
+			, #{productNo}
+		)	
+	</insert>
+	
+	<select id="selectReviewsByProductNo" 
+		parameterType="int" resultType="Review">
+		SELECT reviewNo, <include refid="reviewBasicColumns"/>, regDate
+		FROM review 
+		WHERE productNo = #{ productNo } ORDER BY GROUPNO DESC, STEP ASC 
+	</select>
+	
+	<!-- member buyList -->
+	<select id="findMyBuyList" resultType="Buy" parameterType="String">
+		select p.title, buyNo, buyDate, b.productNo, b.count, b.price, b.productName, b.color, b.size, name, phone, address, orderMsg, memberId
+		from product p inner join buy b 
+		on p.productNo = b.productNo
+		where memberId = #{ memberId } 
+		order by buyDate desc 
+	</select>
 	
 </mapper>

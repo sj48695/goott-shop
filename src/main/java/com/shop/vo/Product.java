@@ -21,5 +21,6 @@ public class Product {
 	
 	private ProductFile file;
 	private ArrayList<ProductFile> files;
+	private ArrayList<Review> reviews;
 }
 
