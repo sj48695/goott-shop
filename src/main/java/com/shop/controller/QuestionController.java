@@ -370,4 +370,30 @@ public class QuestionController {
 		 /*----------------notice---------------*/
 		 
 		 
+	/*----------------mypage---------------*/
+		 
+	@RequestMapping(path = "/account/myQuestionList", method = RequestMethod.GET)
+	public String MyQuestionList(Model model, HttpSession session) {
+		
+		Member loginuser = (Member) session.getAttribute("loginuser");
+		String memberId = loginuser.getMemberId();
+
+		List<Question> questions = questionService.findMyQuestionList(memberId);
+			
+		for(Question question : questions) {
+			question.setAnswer(false);
+			List<QuestionComment> comments = questionService.findCommentListByQuestionNo(question.getQuestionNo());
+			for(QuestionComment comment : comments) {
+				if(comment.getWriter().equals("manager")) {
+					question.setAnswer(true);
+				}
+			}
+		}
+		
+		model.addAttribute("questions", questions);
+		model.addAttribute("loginuser", loginuser);
+		
+		return "account/myQuestionList"; 
+	}
+		 
 }
