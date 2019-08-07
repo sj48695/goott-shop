@@ -49,7 +49,7 @@ public interface ShopService {
 
 	List<Buy> findMyBuyList(String memberId);
 
-	int selectBuyCountByMemberId(String memberId);
+	int selectBuyCountByMemberId(String memberId, int productNo);
 	
 }
 

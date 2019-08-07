@@ -64,6 +64,6 @@ public interface ShopMapper {
 
 	void insertComment(Review review);
 	
-	int selectBuyCountByMemberId(String memberId);
+	int selectBuyCountByMemberId(HashMap<String, Object> params);
 
 }

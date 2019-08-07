@@ -164,7 +164,7 @@ public class ShopController {
 
 		Member loginuser = (Member) session.getAttribute("loginuser");
 		if (loginuser != null) {
-			buyCount = shopService.selectBuyCountByMemberId(loginuser.getMemberId());
+			buyCount = shopService.selectBuyCountByMemberId(loginuser.getMemberId(), productNo);
 		} 
 		model.addAttribute("buyCount",buyCount);
 		model.addAttribute("product", product);

@@ -189,8 +189,12 @@ public class ShopRepImpl implements ShopRep {
 	}
 
 	@Override
-	public int selectBuyCountByMemberId(String memberId) {
-		int buyCount = shopMapper.selectBuyCountByMemberId(memberId);
+	public int selectBuyCountByMemberId(String memberId, int productNo) {
+
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("memberId", memberId);
+		params.put("productNo", productNo);
+		int buyCount = shopMapper.selectBuyCountByMemberId(params);
 		return buyCount;
 	}
 
