@@ -55,4 +55,6 @@ public interface ShopRep {
 
 	void insertComment(Review review);
 
+	int selectBuyCountByMemberId(String memberId);
+
 }

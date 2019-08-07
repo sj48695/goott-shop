@@ -157,5 +157,11 @@ public class ShopServiceImpl implements ShopService {
 		
 		shopRep.insertComment(review);
 	}
+
+	@Override
+	public int selectBuyCountByMemberId(String memberId) {
+		int buyCount = shopRep.selectBuyCountByMemberId(memberId);
+		return buyCount;
+	}
 	
 }

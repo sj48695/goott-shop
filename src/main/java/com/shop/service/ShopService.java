@@ -48,6 +48,8 @@ public interface ShopService {
 	void writeComment(Review review);
 
 	List<Buy> findMyBuyList(String memberId);
+
+	int selectBuyCountByMemberId(String memberId);
 	
 }
 

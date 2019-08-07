@@ -1,12 +1,12 @@
 package com.shop.repository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.shop.vo.Question;
-import com.shop.vo.QuestionFile;
 import com.shop.vo.QuestionComment;
-import com.shop.vo.Question;
+import com.shop.vo.QuestionFile;
 
 public interface QuestionRep {
 
@@ -59,6 +59,8 @@ public interface QuestionRep {
 
 	/*--------------------------*/
 	
-	
+	List<QuestionComment> selectQuestionByQuestionNoWithPaging(HashMap<String, Object> params);
+
+	int selectCommentsCountByQuestionNo(int uploadNo);
 
 }

@@ -333,22 +333,22 @@
 						<div>
 						
 				<!-- 후기 -->
-				<%-- <c:if test="${ product.reviewCheck }"> --%>
+				<c:if test="${ buyCount > 0 }">
 	            <form id="reviewform" class="form-inline row">
-	               <h4 class="text-black col-md-11 py-3"><b>후기</b></h4>
+	               <h4 class="text-black py-3 ml-5"><b>후기</b></h4>
 	               <input type="hidden" name="productNo" id="productNo" value="${ product.productNo }"> 
 	               <input type="hidden" name="memberId" value="${ loginuser.memberId }">
-					<div class="container">
+					<div class="container ml-5">
 						<!-- <div class='starrr' id='star'></div>
 						<br /> 
 						<input type="hidden" name='rating' id='star_input' /> -->
-						<textarea id="review_content" name="content" cols="140" rows="10"></textarea>
-						<div class="d-flex align-items-center justify-content-end">
+						<textarea id="review_content" name="content" cols="150" rows="10"></textarea>
+						<div class="offset-md-9">
 							<a class="gray_btn" id="writereview" href="javascript:">댓글등록</a>
-						</div>					
+						</div>
 					</div>
 				</form>
-	            <%-- </c:if> --%>
+	            </c:if>
 	            
 	            <hr style="border-color: #4a2773;">
 				<!-- review list -->
@@ -406,8 +406,7 @@
 										</div>
 										<form id="updateform${ review.reviewNo }">
 											<input type="hidden" name="reviewNo" value="${ review.reviewNo }" />
-											<textarea class="form-control"name="content" style="width: 550px" rows="3"
-												maxlength="200">${ review.content }</textarea>
+											<textarea class="form-control"name="content" rows="5" maxlength="200">${ review.content }</textarea>
 										</form>
 										<div>
 											<a class="updatereview" href="javascript:" data-reviewno="${ review.reviewNo }">수정</a> &nbsp; 
