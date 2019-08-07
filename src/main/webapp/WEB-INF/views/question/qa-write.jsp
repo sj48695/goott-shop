@@ -11,7 +11,7 @@
 
 	<!-- Product Catagories Area Start -->
 	<div class="products-catagories-area clearfix" style="width: 100%">
-		<div class="amado-pro-catagory clearfix">
+		
 			<h3 style="text-align: center; padding-top: 5%">QnA</h3>
 			<div style="padding-top: 50; text-align: center">
 				<div id="inputcontent">
@@ -70,7 +70,7 @@
 					</form>
 				</div>
 			</div>
-		</div>
+		
 	</div>
 </div>
 
