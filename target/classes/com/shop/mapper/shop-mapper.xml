@@ -7,6 +7,7 @@
 	
 	<sql id="productColumns">title, price, count, content, category, productName, color, size, managerId</sql>
 	<sql id="cartColumns">productNo, count, price, productName, color, size, memberId</sql>
+	<sql id="buyColumns">productNo, count, price, productName, color, size, name, phone, address, orderMsg, memberId</sql>
 
 	<resultMap id="categoryMap" type="java.util.HashMap">
         <result javaType="java.lang.String" column="category" property="categoryName"/>
@@ -32,6 +33,7 @@
 	</resultMap> -->
 	
 	<!-- Product -->
+	
 	
 	<select id="selectProductByProductNo" resultType="Product">
 		select productNo, regDate, <include refid="productColumns"/> from product where productNo = #{ productNo }  
@@ -77,7 +79,7 @@
 		where 
 		<choose>
             <when test="codeList.size != 0">
-                cartNos in 
+                cartNo in 
                 <foreach collection="codeList" item="item" index="index" separator="," open="(" close=")">
                     #{item}
                 </foreach>
@@ -88,6 +90,14 @@
 	<update id="updateCartCntByCartNo" parameterType="hashmap">
 		update cart set count = #{ count } where cartNo = #{ cartNo }	
 	</update>
+
+	<!-- member cart -->
+	
+	<select id="findMyCartList" resultType="Cart" parameterType="String">
+		select cartNo, regDate, productNo, count, price, productName, color, size 
+		from cart
+		where memberId = #{ memberId }
+	</select>
 	
 	<!-- CheckOut -->
 	<select id="selectCheckoutList" resultType="Cart">
@@ -104,4 +114,50 @@
             </when>
         </choose>
 	</select>
+	
+	<!-- Buy -->
+	<insert id="insertBuy" parameterType="Buy" >
+		insert into buy(
+			<include refid="buyColumns"/>
+		) values(
+			#{ productNo },
+			#{ count },
+			#{ price },
+			#{ productName }, 
+			#{ color },
+			#{ size },
+			#{ name },
+			#{ phone },
+			#{ address },
+			#{ orderMsg },
+			#{ memberId }
+		)
+	</insert>
+	
+	<select id="selectBuyList" resultType="Buy">
+		select p.title, buyNo, buyDate, b.productNo, b.count, b.price, b.productName, b.color, b.size, name, phone, address, orderMsg, memberId
+		from product p inner join buy b 
+		where memberId = #{ memberId } 
+		order by buyDate desc
+	</select>
+	
+	<select id="selectLatelyBuyList" resultType="Buy" parameterType="hashmap">
+		select p.title, buyNo, buyDate, b.productNo, b.count, b.price, b.productName, b.color, b.size, name, phone, address, orderMsg, memberId
+		from product p inner join buy b 
+		on p.productNo = b.productNo
+		where memberId = #{ memberId } 
+		order by buyDate desc 
+		limit 0, #{ rows }  
+	</select>
+	
+	<update id="updateProductCountByBuy" parameterType="hashmap">
+		update product set count = count - #{ count } where productNo = #{ productNo }
+	</update>
+
+	<select id="selectCartByCartNo" resultType="Cart">
+		select cartNo, regDate, <include refid="cartColumns"/> from cart where cartNo = #{ cartNo }
+	</select>
+	
+	
+	
 </mapper>

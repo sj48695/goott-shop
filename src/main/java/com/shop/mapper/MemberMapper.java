@@ -10,4 +10,6 @@ public interface MemberMapper {
 
 	Member selectMemberByIdAndPasswd(HashMap<String, Object> params);
 
+	void updateMember(Member member);
+
 }

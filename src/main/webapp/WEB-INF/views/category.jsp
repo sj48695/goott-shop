@@ -49,18 +49,7 @@
           </div>
           <div class="sidebar-filter">
             <div class="top-filter-head">Product Filters</div>
-            <div class="common-filter">
-              <div class="head">Brands</div>
-              <form action="#">
-                <ul>
-                 <li class="filter-list"><input class="pixel-radio" type="radio" id="apple" name="brand"><label for="apple">Apple<span>(29)</span></label></li>
-                  <li class="filter-list"><input class="pixel-radio" type="radio" id="asus" name="brand"><label for="asus">Asus<span>(29)</span></label></li>
-                  <li class="filter-list"><input class="pixel-radio" type="radio" id="gionee" name="brand"><label for="gionee">Gionee<span>(19)</span></label></li>
-                  <li class="filter-list"><input class="pixel-radio" type="radio" id="micromax" name="brand"><label for="micromax">Micromax<span>(19)</span></label></li>
-                  <li class="filter-list"><input class="pixel-radio" type="radio" id="samsung" name="brand"><label for="samsung">Samsung<span>(19)</span></label></li>
-                </ul>
-              </form>
-            </div>
+            
             <div class="common-filter">
               <div class="head">Color</div>
               <form action="#">
@@ -129,14 +118,13 @@
                     <a href="/shop/single-product/${ product.productNo }">
 	                    <img class="card-img" src="/shop/resources/img/product/product1.png" alt="">
 					</a>
-                    <ul class="card-product__imgOverlay">
-                      <li><button><i class="ti-search"></i></button></li>
-                      <li><button><i class="ti-shopping-cart"></i></button></li>
+                    <%-- <ul class="card-product__imgOverlay">
+                      <li><button onclick="location.href='/shop/single-product/${ product.productNo }'"><i class="ti-search"></i></button></li><!-- 
+                      <li><button><i class="ti-shopping-cart"></i></button></li> -->
                       <li><button><i class="ti-heart"></i></button></li>
-                    </ul>
+                    </ul> --%>
                   </div>
                   <div class="card-body">
-                    <p>Accessories</p>
                     <h4 class="card-product__title"><a href="/shop/single-product/${ product.productNo }">${ product.title }</a></h4>
                     <p class="card-product__price"><fmt:formatNumber pattern="#,###￦" >${ product.price }</fmt:formatNumber></p>
                   </div>
