@@ -129,4 +129,10 @@ public class ShopRepImpl implements ShopRep {
 		return buyList;
 	}
 
+	@Override
+	public List<Buy> findMyBuyList(String memberId) {
+		List<Buy> buyList = shopMapper.findMyBuyList(memberId);
+		return buyList;
+	}
+
 }

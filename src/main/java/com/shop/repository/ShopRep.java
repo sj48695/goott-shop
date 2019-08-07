@@ -36,4 +36,6 @@ public interface ShopRep {
 
 	List<Buy> selectLatelyBuyList(String memberId, int rows);
 
+	List<Buy> findMyBuyList(String memberId);
+
 }

@@ -32,6 +32,8 @@ public interface ShopService {
 	List<Cart> findCheckoutList(String memberId, String cartNostrs);
 
 	List<Buy> findLatelyBuyList(String memberId, int rows);
+
+	List<Buy> findMyBuyList(String memberId);
 	
 }
 

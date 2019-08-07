@@ -158,6 +158,13 @@
 		select cartNo, regDate, <include refid="cartColumns"/> from cart where cartNo = #{ cartNo }
 	</select>
 	
-	
+	<!-- member buyList -->
+	<select id="findMyBuyList" resultType="Buy" parameterType="String">
+		select p.title, buyNo, buyDate, b.productNo, b.count, b.price, b.productName, b.color, b.size, name, phone, address, orderMsg, memberId
+		from product p inner join buy b 
+		on p.productNo = b.productNo
+		where memberId = #{ memberId } 
+		order by buyDate desc 
+	</select>
 	
 </mapper>
