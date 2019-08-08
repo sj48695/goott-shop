@@ -15,7 +15,7 @@
 						href="javascript:">편집</a> &nbsp; <a class="deletecomment"
 						href="javascript:" data-commentno="${ comment.commentNo }">삭제</a>
 				</div>
-				<a class="recomment-link btn btn-outline-secondary"
+				<a class="recomment-link button button-subscribe btn-xs"
 					data-commentno="${ comment.commentNo }">댓글 쓰기</a>
 			</div>
 

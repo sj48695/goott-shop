@@ -102,31 +102,7 @@ public class QuestionController {
 //	
 //	}
 	
-	@RequestMapping(path="/qa-write", method = RequestMethod.GET)
-	public String writeForm() {
-		
-		return "question/qa-write"; 
-	}
-	
-	@RequestMapping(path="/qa-write", method = RequestMethod.POST)
-	public String write(Question question, Model model, HttpSession session) {
-		
-		System.out.println(question);
-		
-		
-		Member member = (Member) session.getAttribute("loginuser");
-		if (member != null) {
-			questionService.registerQuestion(question);
-			model.addAttribute("question",question);
-			
-			//return "redirect:qa-list";  //상대경로
-			return "redirect:coding.do";
-		}else {
-			return "redirect:/";
-		}
-		
-	}
-	
+
 	
 	@RequestMapping(path="/qa-detail/{questionNo}", method = RequestMethod.GET)
 	public String detail(@PathVariable int questionNo, Model model) {
@@ -154,8 +130,8 @@ public class QuestionController {
 		  params.put("to", to);
 		  
 	      List<QuestionComment> comments = 
-	    		  questionService.findCommentListByQuestionNo(questionNo);
-	    		  //questionService.findCommentListByQuestionNoWithPaging(params);
+	    		  //questionService.findCommentListByQuestionNo(questionNo);
+	    		  questionService.findCommentListByQuestionNoWithPaging(params);
 	      question.setComments(comments);
 	      
 	      questionService.readCount(questionNo);
@@ -225,41 +201,39 @@ public class QuestionController {
 	    
 	}
 	
-	//@PathVariable : 요청 경로의 {}부분을 데이터로 읽는 annotation
+
 		@RequestMapping(path = "/qa-update/{questionNo}", method = RequestMethod.GET)
 		public String updateForm(@PathVariable  int questionNo, Model model) {
 
 			
 			
 			Question question = questionService.findQuestionByQuestionNo(questionNo);
-			if (question == null) { //uploadno가 유효하지 않은 경우 (데이터베이스에 없는 번호인 경우)
+			if (question == null) { 
 				return "redirect:/question/qa-list";
 			}		
 			List<QuestionFile> files = questionService.findQuestionFilesByQuestionNo(questionNo);
-			question.setFiles((ArrayList<QuestionFile>)files); //Upload : UploadFile == 1 : Many
+			question.setFiles((ArrayList<QuestionFile>)files); 
 			 
 			
-			
-			//조회 결과를 request 객체에 저장 (JSP에서 사용할 수 있도록)
 			model.addAttribute("question", question);
 
 			
 			return "question/qa-update";
 		}
 		
-		//@PathVariable : 요청 경로의 {}부분을 데이터로 읽는 annotation
+		
 		@RequestMapping(path = "/delete-file/{questionNo}/{fileNo}", method = RequestMethod.GET)
 		public String deleteFile(
 				@PathVariable int questionNo, @PathVariable int fileNo, Model model) {
 			
 			QuestionFile file = questionService.findQuestionFileByQuestionFileNo(fileNo);
 			
-			//파일 삭제
+			
 			File f = new File(file.getSavedFileName());
 			if (f.exists()) {
 				f.delete();
 			}		
-			//데이터베이스에서 파일 데이터 삭제		
+					
 			questionService.deleteQuestionFile(fileNo);
 
 			
@@ -270,6 +244,7 @@ public class QuestionController {
 		public String update(MultipartHttpServletRequest req, Question question) {
 
 			MultipartFile mf = req.getFile("attach");
+			questionService.updateQuestion(question);
 			if(mf != null) {
 				
 				ServletContext application = req.getServletContext();
@@ -293,7 +268,7 @@ public class QuestionController {
 					questionService.registerQuestionFile(questionFile);
 					
 					
-					questionService.updateQuestion(question);
+					
 					
 				}catch(Exception ex) {
 					ex.printStackTrace();
@@ -303,6 +278,28 @@ public class QuestionController {
 
 			
 			return "redirect:/qa-detail/" + question.getQuestionNo();
+		}
+		@RequestMapping(path="/qa-write", method = RequestMethod.GET)
+		public String writeForm() {
+			
+			return "question/qa-write"; 
+		}
+		
+		@RequestMapping(path="/qa-write", method = RequestMethod.POST)
+		public String write(Question question, Model model, HttpSession session) {
+			
+			
+			Member member = (Member) session.getAttribute("loginuser");
+			if (member != null) {
+				questionService.registerQuestion(question);
+				model.addAttribute("question",question);
+				
+				//return "redirect:qa-list";  //상대경로
+				return "redirect:coding.do";
+			}else {
+				return "redirect:/";
+			}
+			
 		}
 		
 		/* ================================================================= */

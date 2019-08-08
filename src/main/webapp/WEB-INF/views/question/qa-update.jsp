@@ -21,7 +21,7 @@
 					<div id="inputcontent">
 						<div>
 							<div class="inputsubtitle"></div>
-							<form action="/shop/qa-update" method="post"
+							<form action="/shop/qa-update" id="insertBoardFrm" method="post"
 								enctype="multipart/form-data">
 								<input type="hidden" name="questionNo"
 									value="${ question.questionNo }">
@@ -30,8 +30,8 @@
 									<tr>
 										<th>제목</th>
 										<td><select name="category">
-												<option value="고양이문의" selected="selected">고양이문의</option>
-												<option value="용품문의">용품문의</option>
+												<option value="상품문의" selected="selected">상품문의</option>
+												<option value="교환/반품문의">교환/반품문의</option>
 												<option value="기타문의">기타문의</option>
 										</select></td>
 										<td><input type="text" name="title" style="width: 550px"
@@ -48,12 +48,29 @@
 												style="width: 100%" rows="20" class="form-control">${ question.content }</textarea>
 										</td>
 									</tr>
+									<tr>
+										<th colspan="1">비밀번호</th>
+										<td colspan="2" style="text-align: left">
+										<input type="password" class="form-control" id="pwd" 
+											name="pwd" style="width:100px" required>
+										</td>
+									</tr>
+									<tr>
+										<th colspan="1">비밀글 설정
+										<td colspan="2" style="text-align: left">
+											<input name="secure" id="secure1" type="radio" value="false" checked="checked" >
+											<label for="secure1">공개글</label>
+											<input name="secure" id="secure2" type="radio" value="true" >
+											<label for="secure2">비밀글</label>
+										</td>
+									</tr>
 								</table>
+								<br>
 								<div class="buttons">
-									<input type="submit" value="자료등록" id="insertBoard"
-										class="btn btn-outline-secondary" /> <input
-										id="cancel_button" type="button" value="취소"
-										class="btn btn-outline-secondary" />
+									<input type="submit" value="Write" id="insertBoard"
+										class="button button-subscribe mr-auto mb-1" /> <input
+										id="cancel_button" type="button" value="back"
+										class="button button-subscribe mr-auto mb-1" />
 								</div>
 							</form>
 
