@@ -6,7 +6,7 @@
 <section>
 <jsp:include page="../include/sidebar.jsp"/>
 <div id="content">
-	<form class="form-inline justify-content-end py-3" action="/shop/manager/list-product" method="get">
+	<form class="form-inline py-3" action="/shop/manager/list-product" method="get">
 			<select name="category" class="form-control" id="category_form">
 				<option value="전체" <c:if test="${param.category eq '전체'}">selected</c:if>>전체</option>
 				<option value="가구" <c:if test="${param.category eq '가구'}">selected</c:if>>가구</option>
@@ -15,9 +15,12 @@
                 <option value="주방" <c:if test="${param.category eq '주방'}">selected</c:if>>주방</option>
                 <option value="홈데코" <c:if test="${param.category eq '홈데코'}">selected</c:if>>홈데코</option>
 	      	</select>
-			<%-- <input type="text" class="form-control" name="keyword" value="${ param.keyword }"> 
-			<input type="submit" class="btn btn-dark" value="검색"> --%>
+	      	<div class="offset-7">
+				<input type="text" class="form-control" name="keyword" value="${ param.keyword }"> 
+				<input type="submit" class="btn btn-dark" value="검색">
+			</div>
 	</form>
+	
 	<table class="table table-hover">
 	  <thead>
 	    <tr>

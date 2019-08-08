@@ -56,7 +56,7 @@
 								<th colspan="1">비밀번호</th>
 								<td colspan="2" style="text-align: left">
 								<input type="password" class="form-control" id="pwd" 
-									name="pwd" style="width:100px">
+									name="pwd" style="width:100px" required>
 								</td>
 							</tr>
 							<tr>
@@ -72,8 +72,8 @@
 						</table>
 						<br>
 						<div class="buttons">
-							<input type="submit" value="자료등록" id="insertBoard" class="button button-subscribe mr-auto mb-1" /> 
-							<input id="cancel_button" type="button" value="취소" class="button button-subscribe mr-auto mb-1" />
+							<input type="submit" value="Write" id="insertBoard" class="button button-subscribe mr-auto mb-1" /> 
+							<input id="cancel_button" type="button" value="back" class="button button-subscribe mr-auto mb-1" />
 						</div>
 					</form>
 				</div>

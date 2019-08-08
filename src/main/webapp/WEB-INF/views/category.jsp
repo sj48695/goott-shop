@@ -91,7 +91,7 @@
           </div> --%>
         </div>
         <div class="col-xl-9 col-lg-8 col-md-7">
-				<form action="/shop/category/search" method="GET">
+			<form action="/shop/category/search" method="GET">
 					<!-- Start Filter Bar -->
 					<div class="filter-bar d-flex flex-wrap align-items-center">
 						<div class="sorting mr-auto">
@@ -118,31 +118,33 @@
 					</div>
 				</form>
 				<!-- End Filter Bar -->
-         <!-- Start Best Seller -->
-			<section class="lattest-product-area pb-40 category-list">
-				<div class="row">
-					<c:forEach var="product" items="${ products }">
-						<div class="col-md-6 col-lg-4">
-							<div class="card text-center card-product">
-								<div class="card-product__img">
-									<a href="/shop/single-product/${ product.productNo }"> 
-										<img class="card-img" src="/shop/resources/img/product/product1.png">
-									</a>
-								</div>
-								<div class="card-body">
-									<h4 class="card-product__title">
-										<a href="/shop/single-product/${ product.productNo }">${ product.title }</a>
-									</h4>
-									<p class="card-product__price">
-										<fmt:formatNumber pattern="#,###￦">${ product.price }</fmt:formatNumber>
-									</p>
-								</div>
-							</div>
-						</div>
-					</c:forEach>
-				</div>
-			</section>
-			<!-- End Best Seller -->
+	          <!-- Start Best Seller -->
+	          <section class="lattest-product-area pb-40 category-list">
+	            <div class="row">
+	            <c:forEach var="product" items="${ products }">
+	              <div class="col-md-6 col-lg-4">
+	                <div class="card text-center card-product">
+	                  <div class="card-product__img">
+	                    <a href="/shop/single-product/${ product.productNo }">
+		                    <img class="card-img" src="/shop/resources/files/product-files/${ product.file.fileName }" alt="">
+						</a>
+	                    <%-- <ul class="card-product__imgOverlay">
+	                      <li><button onclick="location.href='/shop/single-product/${ product.productNo }'"><i class="ti-search"></i></button></li><!-- 
+	                      <li><button><i class="ti-shopping-cart"></i></button></li> -->
+	                      <li><button><i class="ti-heart"></i></button></li>
+	                    </ul> --%>
+	                  </div>
+	                  <div class="card-body">
+	                    <h4 class="card-product__title"><a href="/shop/single-product/${ product.productNo }">${ product.title }</a></h4>
+	                    <p class="card-product__price"><fmt:formatNumber pattern="#,###￦" >${ product.price }</fmt:formatNumber></p>
+	                  </div>
+	                </div>
+	              </div>
+				</c:forEach>
+	            </div>
+	          </section>
+	          <!-- End Best Seller -->
+        
         </div>
       </div>
     </div>

@@ -107,14 +107,18 @@ public class ManagerController {
 	}
 	
 	@RequestMapping(value="/list-product", method = RequestMethod.GET)
-	public String listProduct(Model model, String category){
+	public String listProduct(Model model, String category, String keyword){
 		
 		if (category == null) {
 			category = "전체";
 		}
 		
+		if (keyword == null) {
+			keyword = "";
+		}
+		
 		// 전체리스트
-		List<Product> products = managerService.findProductList(category);
+		List<Product> products = managerService.findProductList(category,keyword);
 		if(products == null) {
 			return "redirect:/";
 		}
@@ -201,6 +205,7 @@ public class ManagerController {
 					managerService.updateProductFile(productFile);
 					
 					product.setFile(productFile);
+					
 				}
 			}
 

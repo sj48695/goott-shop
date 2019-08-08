@@ -41,28 +41,5 @@ function secureSubmit(){
 
 
 
-//브라우저가 html을 모두 읽고 처리할 준비가 되었을 때 호출 할 함수 지정
-window.addEventListener('load',function(event){//js의 main 함수 역할
-	var btnCancel =document.querySelector('#cancel_button');
-	btnCancel.addEventListener('click', function(event) {
-		location.href="/shop/qa-list";//주소창에 list을 입력하고 엔터
-		//history.back(); //브라우저의 이전 버튼을 클릭
-	});
-	
-	var btnDelete = document.querySelector('#delete_button');
-	btnDelete.addEventListener('click', function(event){
-		var ok = confirm("${question.questionNo}번 자료를 삭제할까요?");//의사 확인문장
-		if(ok){
-		//<a 를 통한 요청이므로 주소 뒤에 ?key=value 형식을 써서 데이터 전송
-		location.href="/shop/delete/${ question.questionNo }";
-		}
-	});
-	
-	var btnUpdate = document.querySelector('#update_button');
-	btnUpdate.addEventListener('click', function(event){
-		//<a 를 통한 요청이므로 주소 뒤에 ?key=value 형식을 써서 데이터 전송
-		location.href="/shop/qa-update/${ question.questionNo }";
-	});
-	
-});
+
 

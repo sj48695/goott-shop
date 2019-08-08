@@ -2,26 +2,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:include page="../include/header.jsp"/>
-
-	<!-- ================ start banner area ================= -->	
-	<!-- <section class="blog-banner-area" id="category">
-		<div class="container h-100">
-			<div class="blog-banner">
-				<div class="text-center">
-					<h1>상품 등록</h1>
-					<nav aria-label="breadcrumb" class="banner-breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Checkout</li>
-            </ol>
-          </nav>
-				</div>
-			</div>
-    </div>
-	</section> -->
-	<!-- ================ end banner area ================= -->
-  
-  
   <!--================Checkout Area =================-->
   <section>
   <jsp:include page="../include/sidebar.jsp"/>
@@ -91,13 +71,13 @@
 								<i class="sp_icon ico_alert"></i>대표이미지는 필수 입력입니다.
 							</p>
 						</div>
-						<div class="col-md-12 form-group">
+						<div class="col-md-12 form-group box_form">
 								<span class="tit">이미지<label for="sp_adrs"><span class="ico_required">*</span></label></span>
 								<p class="option">
 									2048 * 1158 권장, 한 장당 최대 3MB<span class="txt_guide">(최대 10장)</span>
 								</p>
-								<div class="file ">
-									<div class="inner inner_imgs">이미지 파일을 추가해 주세요. (JPG, JPEG, PNG)</div>
+								<div class="file"> 
+									<div class="inner inner_imgs row">
 										<c:forEach var="file" items="${ product.files }" varStatus="i">
 											<div class="col-md-3" style="top:-25px">
 												<div class="img-wrap mt-4">
@@ -106,6 +86,8 @@
 												</div>
 											</div>
 										</c:forEach>
+										
+										</div>
 									<div class="btn_box">
 										<label class="imgBtn btn" for="imgFile"><div>파일첨부</div> 
 											<input type="file" class="_fileRel" name="imgFile" id="imgFile" style="display: none;"

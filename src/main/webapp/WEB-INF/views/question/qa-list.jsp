@@ -124,12 +124,12 @@
 								<td style="text-align: center"></td>
 								<td style="text-align: center">${ question.category }</td>
 								<td style='text-align: left; padding-left: 10px'>
-								<a	href=<c:if test='${ question.secure eq true}'>
-								"/../shop/pwCheck/${ question.questionNo }" 
-								</c:if>
-								<c:if test='${ question.secure eq false}'>
-								 "/../shop/qa-detail/${ question.questionNo }" 
-								</c:if>>
+								<a   href=<c:if test="${ question.secure eq true && loginuser.memberId ne 'manager' }">
+		                        "/../shop/pwCheck/${ question.questionNo }" 
+		                        </c:if>
+		                        <c:if test="${ question.secure eq false || loginuser.memberId eq 'manager' }">
+		                         "/../shop/qa-detail/${ question.questionNo }" 
+		                        </c:if>>
 								${ question.title }</a>
 								<c:if test='${ question.secure eq true }'>
 								<i class="fa fa-lock"></i>

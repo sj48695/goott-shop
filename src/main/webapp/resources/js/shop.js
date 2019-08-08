@@ -16,7 +16,7 @@ function readURL(input,target) {
 			
 			var reader = new FileReader();
 			reader.onload = function(e) {
-				var result = "<img width='200' height='200' src='" + e.target.result + "'>";
+				var result = "<img class='fileImg' src='" + e.target.result + "'>";
 				target.append(result);
 				console.log(result);
 				index++;
@@ -75,6 +75,12 @@ $(function(){
 	});
 });
 
+//var currentPosition = parseInt($("#detail_box").css("top")); 
+//$(window).scroll(function() { 
+//	// 현재 스크롤 위치
+//	var position = $(window).scrollTop(); 
+//	$("#detail_box").stop().animate({"top":position+currentPosition+"px"},1000); 
+//});
 
 
 $(function() {
@@ -235,7 +241,7 @@ function checkAll(rows){
       if( $("#th_checkAll").is(':checked') ){
         $("input[name=checkRow]").prop("checked", true);
         //$("#checkRows").attr("value",rows);
-        $('#delete').attr('onclick','javascript:removeCart(' + rows + ')');
+        $('#delete').attr('onclick','javascript:removeCart("' + rows + '")');
         $('#buy').attr('href','/shop/checkout/cart/' + rows);
       }else{
         $("input[name=checkRow]").prop("checked", false);
@@ -257,7 +263,7 @@ function checkRow() {
 		}
 		$("#checkRows").attr("value", checkRows);
 		if (checkRows != null) {
-			$('#delete').attr('onclick', 'javascript:removeCart(' + checkRows + ')');
+			$('#delete').attr('onclick', 'javascript:removeCart("' + checkRows + '")');
 			$('#buy').attr('onclick', '');
 			$('#buy').attr('href', '/shop/checkout/cart/' + checkRows);
 			

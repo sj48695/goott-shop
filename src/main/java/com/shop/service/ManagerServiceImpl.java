@@ -54,8 +54,8 @@ public class ManagerServiceImpl implements ManagerService{
 	}
 	
 	@Override
-	public List<Product> findProductList(String category) {
-		List<Product> products = managerRep.selectProduct(category);
+	public List<Product> findProductList(String category,String keyword) {
+		List<Product> products = managerRep.selectProduct(category,keyword);
 		
 		return products;
 	}
@@ -95,7 +95,7 @@ public class ManagerServiceImpl implements ManagerService{
 	
 	@Override
 	public void updateProductFile(ProductFile productFile) {
-		// TODO Auto-generated method stub
+		managerRep.updateProductFile(productFile);
 		
 	}
 
