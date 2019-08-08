@@ -56,7 +56,7 @@
 								<th colspan="1">비밀번호</th>
 								<td colspan="2" style="text-align: left">
 								<input type="password" class="form-control" id="pwd" 
-									name="pwd" style="width:100px">
+									name="pwd" style="width:100px" required>
 								</td>
 							</tr>
 							<tr>
