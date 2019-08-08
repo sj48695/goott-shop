@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.shop.mapper.ManagerMapper;
+import com.shop.vo.Buy;
 import com.shop.vo.Product;
 import com.shop.vo.ProductFile;
 
@@ -97,6 +98,13 @@ public class ManagerRepImpl implements ManagerRep{
 		
 		managerMapper.deleteProductFile(productFileNo);
 		
+	}
+
+	@Override
+	public List<Buy> selectProductOrderList() {
+		List<Buy> order = managerMapper.selectProductOrderList();
+		
+		return order;
 	}
 
 }

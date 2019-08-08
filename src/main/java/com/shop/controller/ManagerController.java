@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.shop.common.Util;
 import com.shop.service.ManagerService;
+import com.shop.vo.Buy;
 import com.shop.vo.Member;
 import com.shop.vo.Product;
 import com.shop.vo.ProductFile;
@@ -50,6 +51,7 @@ public class ManagerController {
 				userFileName = titleImg.getOriginalFilename();
 				if (userFileName.contains("\\")) { // iexplore 경우
 					// C:\AAA\BBB\CCC.png -> CCC.png
+					
 					userFileName = userFileName.substring(userFileName.lastIndexOf("\\") + 1);
 				}
 				if (userFileName != null && userFileName.length() > 0) { // 내용이 있는 경우
@@ -276,5 +278,19 @@ public class ManagerController {
 		managerService.deleteProductFile(productFileNo);
 
 		return "success" ; 
+	}
+	
+	@RequestMapping(value="/order-list", method = RequestMethod.GET)
+	public String productOrderList(Model model){
+		
+		// 전체리스트
+		List<Buy> order = managerService.findProductOrderList();
+		if(order == null) {
+			return "redirect:/";
+		}
+
+		model.addAttribute("order", order);
+		
+		return "/manager/order-list";
 	}
 }

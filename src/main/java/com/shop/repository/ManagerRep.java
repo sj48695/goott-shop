@@ -2,6 +2,7 @@ package com.shop.repository;
 
 import java.util.List;
 
+import com.shop.vo.Buy;
 import com.shop.vo.Product;
 import com.shop.vo.ProductFile;
 
@@ -28,5 +29,7 @@ public interface ManagerRep {
 	ProductFile selectProductFileByProductFileNo(int productFileNo);
 
 	void deleteProductFile(int productFileNo);
+
+	List<Buy> selectProductOrderList();
 
 }
