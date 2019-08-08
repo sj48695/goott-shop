@@ -41,18 +41,10 @@ public class ShopController {
 	@RequestMapping(value="/category", method = RequestMethod.GET)
 	public String productList(Model model, String category, String sorting, String keyfield, String keyword){
 //		List<Product> products = shopService.findProducts("all", "regDate", "all", "", 1, pageSize);
-		if(sorting == null) {
-			sorting = "regDate";
-		}
-		if(keyfield == null) {
-			keyfield = "all";
-		}
-		if(keyword == null) {
-			keyword = "";
-		}
-		if(category == null) {
-			category = "all";
-		}
+		if(sorting == null) {sorting = "regDate";}
+		if(keyfield == null) {keyfield = "all";}
+		if(keyword == null) {keyword = "";}
+		if(category == null) {category = "all";}
 		List<Product> products = shopService.findProducts(category, sorting, keyfield, keyword, 1, pageSize);
 		List<HashMap<String, Object>> categories = shopService.findCategories();
 		List<String> colors = shopService.findColors();
