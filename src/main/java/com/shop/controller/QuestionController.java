@@ -126,7 +126,7 @@ public class QuestionController {
 		
 		  HashMap<String, Object> params = new HashMap<String, Object>();
 		  params.put("questionNo", questionNo);
-		  params.put("from", from);
+		  params.put("from", from-1);
 		  params.put("to", to);
 		  
 	      List<QuestionComment> comments = 
@@ -330,6 +330,10 @@ public class QuestionController {
 		@RequestMapping(value = "/comment-list", method = RequestMethod.POST)
 		public String commentList(int questionNo, int pageNo, Model model) {
 	
+			if(pageNo == 0) {
+				pageNo=1;
+			}
+			
 			int pageSize = 3;
 			int currentPage = pageNo;
 	
@@ -338,7 +342,8 @@ public class QuestionController {
 	
 			HashMap<String, Object> params = new HashMap<String, Object>();
 			params.put("questionNo", questionNo);
-			params.put("from", from);
+			System.out.println(from);
+			params.put("from", from-1);
 			params.put("to", to);
 	
 			List<QuestionComment> comments = 
