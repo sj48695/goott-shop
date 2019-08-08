@@ -75,12 +75,14 @@ $(function(){
 	});
 });
 
-//var currentPosition = parseInt($("#detail_box").css("top")); 
-//$(window).scroll(function() { 
-//	// 현재 스크롤 위치
-//	var position = $(window).scrollTop(); 
-//	$("#detail_box").stop().animate({"top":position+currentPosition+"px"},1000); 
-//});
+/*var currentPosition = parseInt($("#detail_box").css("top")); 
+$(window).scroll(function() { 
+	// 현재 스크롤 위치
+	var scrollPosition = $(window).height() + $(window).scrollTop();
+	var position = $(document).scrollTop(); 
+	$("#detail_box").stop().animate({"top":position+currentPosition+"px"},1000); 
+	
+});*/
 
 
 $(function() {

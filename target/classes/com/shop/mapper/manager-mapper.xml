@@ -33,12 +33,24 @@
 	<select id="selectProduct" resultType="Product" parameterType="hashmap">
 		select <include refid="productBasicColumns"/>, productNo, managerId
 		from product
-			<if test="keyword != ''">
-				where title like concat('%', #{ keyword }, '%')
-			</if>
-			<if test='category != "전체"'>
-				where category like concat('%', #{ category }, '%')
-			</if>
+		<if test="keyword != ''">
+			<choose>
+				<when test='category != "전체"'>
+					where category like concat('%', #{ category }, '%')
+					and title like concat('%', #{ keyword }, '%')
+				</when>
+				<otherwise>
+					where title like concat('%', #{ keyword }, '%')
+				</otherwise>
+			</choose>
+		</if>
+		<if test="keyword == ''">
+			<choose>
+				<when test='category != "전체"'>
+					where category like concat('%', #{ category }, '%')
+				</when>
+			</choose>
+		</if>
 		order by productNo desc
 	</select>
 
@@ -96,5 +108,13 @@
 		delete from product
 		where productNo = #{ productNo }
 	</delete>
+	
+	<!-- 상품별 구매현황 -->
+	<select id="selectProductOrderlist" resultType="Product">
+		select count(title)
+		from buy b, product p
+		where b.productno = p.productno
+		group by p.title;
+	</select>
 	
 </mapper>
