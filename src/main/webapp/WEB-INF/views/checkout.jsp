@@ -113,10 +113,13 @@
                     <div class="order_box">
                         <h2>Your Order</h2>
                         <ul class="list">
-                            <li><a href="#"><h4>Product <span>Quantity</span><span>Total</span></h4></a></li>
+                            <li><a href="#"><h4>Product <span class="middle">Quantity</span><span>Total</span></h4></a></li>
                          <c:forEach var="product" items="${ products }">
+                         	<li><a href="/shop/single-product/${ product.productNo }">${ product.title }
+                            		-${ product.productName }(${ product.color }/${ product.size })</a></li>
                             <li>
-                            	<a href="#">${ product.productName }
+                            	<a href="#">
+                            	
 	                            	<span class="middle">${ product.count }개</span> 
 	                            	<span class="last">
 	                                  	<fmt:formatNumber pattern="#,###원">${ product.price * product.count }</fmt:formatNumber>

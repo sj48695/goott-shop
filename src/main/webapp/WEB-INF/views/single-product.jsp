@@ -125,20 +125,24 @@
 		<div class="container">
 			<ul class="nav nav-tabs" id="myTab" role="tablist">
 				<li class="nav-item">
-					<a class="nav-link" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">Description</a>
+					<a class="nav-link active" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">Description</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" id="specification-tab" data-toggle="tab" href="#specification" role="tab" aria-controls="specification"
 					 aria-selected="false">Specification</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link active" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review"
+					<a class="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review"
 					 aria-selected="false">Reviews</a>
 				</li>
 			</ul>
 			<div class="tab-content" id="myTabContent">
-				<div class="tab-pane fade" id="description" role="tabpanel" aria-labelledby="description-tab">
-					<p>${ product.content }</p>
+				<div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
+					<%-- 줄바꿈 문자열을 저장하고 있는 변수 만들기 --%>
+<c:set var="enter" value="
+" />
+               <p>${ fn:replace(product.content, enter, '<br>') }</p>
+					
 				</div>
 				<div class="tab-pane fade" id="specification" role="tabpanel" aria-labelledby="specification-tab">
 					<div class="table-responsive">
@@ -181,7 +185,7 @@
 					</div>
 				</div>
 				
-				<div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
+				<div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
 					
 						<div>
 						
@@ -274,7 +278,7 @@
 				<c:if test="${ empty product.reviews or product.reviews[0].reviewNo eq 0 }">
 					<table id="review-list" class="w-100 m-auto border-top">
 						<tr>
-							<td>등록된 후기가 없습니다.</td>
+							<th class="py-5 text-center">등록된 후기가 없습니다.</th>
 						</tr>
 					</table>
 				</c:if>

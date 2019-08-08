@@ -41,33 +41,33 @@
 	
 	<select id="selectProducts" resultType="Product" parameterType="hashmap">
 		select productNo, regDate, <include refid="productColumns"/> from product
-			<!-- <if test="keyword == '' || category != 'all'">
-				where category like concat('%', #{ category }, '%')
+			
+			<if test="category != 'all'">
+				<if test="keyword == ''"><!-- 검색하지 않을때 -->
+					where category like concat('%', #{ category }, '%')
+				</if>
+				<if test="keyword != ''"><!-- 검색할 때 -->
+				<choose>
+					<when test="keyfield != 'all'">
+						<if test="keyfield == 'title'">
+							where title like concat('%', #{ keyword }, '%')
+						</if>
+						<if test="keyfield == 'productName'">
+							where productName like concat('%', #{ keyword }, '%')
+						</if>
+						<if test="keyfield == 'category'">
+							where content like concat('%', #{ keyword }, '%')
+						</if>
+					</when>
+					<otherwise>
+						where (title like concat('%', #{ keyword }, '%')
+						or productName like concat('%', #{ keyword }, '%')
+						or content like concat('%', #{ keyword }, '%'))
+					</otherwise>
+				</choose>
+				and category like concat('%', #{ category }, '%')
+				</if>
 			</if>
-			<if test="keyword != ''"> -->
-			<choose>
-				<when test="keyfield != 'all'">
-					<if test="keyfield == 'category'">
-						where category like concat('%', #{ keyword }, '%')
-					</if>
-					<if test="keyfield == 'title'">
-						where title like concat('%', #{ keyword }, '%')
-					</if>
-					<if test="keyfield == 'productName'">
-						where productName like concat('%', #{ keyword }, '%')
-					</if>
-					<if test="keyfield == 'category'">
-						where content like concat('%', #{ keyword }, '%')
-					</if>
-				</when>
-				<otherwise>
-					where title like concat('%', #{ keyword }, '%')
-					or productName like concat('%', #{ keyword }, '%')
-					or content like concat('%', #{ keyword }, '%')
-				</otherwise>
-			</choose>
-			<!-- and category like concat('%', #{ category }, '%')
-			</if> -->
 			<if test="sorting == 'regDate'">
 				order by productNo desc
 			</if>

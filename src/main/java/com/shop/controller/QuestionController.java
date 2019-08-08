@@ -328,12 +328,25 @@ public class QuestionController {
 		}
 		
 		@RequestMapping(value = "/comment-list", method = RequestMethod.POST)
-		public String commentList(int questionNo, Model model) {
-			
-			List<QuestionComment> comments = questionService.findCommentListByQuestionNo(questionNo);
+		public String commentList(int questionNo, int pageNo, Model model) {
+	
+			int pageSize = 3;
+			int currentPage = pageNo;
+	
+			int from = (currentPage - 1) * pageSize + 1;
+			int to = from + pageSize;
+	
+			HashMap<String, Object> params = new HashMap<String, Object>();
+			params.put("questionNo", questionNo);
+			params.put("from", from);
+			params.put("to", to);
+	
+			List<QuestionComment> comments = 
+					//questionService.findCommentListByQuestionNo(questionNo);
+					questionService.findCommentListByQuestionNoWithPaging(params);
 			model.addAttribute("comments", comments);
-			
-			return "question/comments"; 
+	
+			return "question/comments";
 		}
 		
 		@RequestMapping(value = "/delete-comment", method = RequestMethod.GET)
