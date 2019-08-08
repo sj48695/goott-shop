@@ -35,7 +35,6 @@
                      <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Shop</a>
                         <ul class="dropdown-menu">
                            <li class="nav-item"><a class="nav-link" href="/shop/category">Shop Category</a></li>
-                           <li class="nav-item"><a class="nav-link" href="/shop/confirmation">Confirmation</a></li>
                            <li class="nav-item"><a class="nav-link" href="/shop/cart">Shopping Cart</a></li>
                         </ul>
                      </li>

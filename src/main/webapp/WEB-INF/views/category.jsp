@@ -38,7 +38,7 @@
                 	<input type="hidden" name="start" value="0">
                   <ul>
                   	<li class="filter-list">
-                    	<input class="pixel-radio" type="radio" id="all" name="category" value="all">
+                    	<input class="pixel-radio" type="radio" id="all" name="category" value="all" ${ category eq 'all' ? "checked" : "" }>
                     	<label for="all">전체
                     		<span> (<fmt:formatNumber pattern="#,###"> ${ allCount }</fmt:formatNumber>)</span>
                     	</label>
@@ -46,7 +46,7 @@
                   <c:forEach var="categorys" items="${ categories }">
                     <li class="filter-list">
                     	<input class="pixel-radio" type="radio" id="${ categorys.categoryName }" name="category" value="${ categorys.categoryName }"
-                    		${ category eq categorys.categoryName ? "selected" : "" }>
+                    		${ category eq categorys.categoryName ? "checked" : "" }>
                     	<label for="${ categorys.categoryName }">${ categorys.categoryName }
                     		<span> (<fmt:formatNumber pattern="#,###"> ${ categorys.categoryCnt }</fmt:formatNumber>)</span>
                     	</label>
