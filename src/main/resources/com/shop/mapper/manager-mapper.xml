@@ -111,10 +111,9 @@
 	
 	<!-- 상품별 구매현황 -->
 	<select id="selectProductOrderlist" resultType="Product">
-		select count(title)
-		from buy b, product p
-		where b.productno = p.productno
-		group by p.title;
+		select count(productno)
+		from buy
+		group by productno;
 	</select>
 	
 </mapper>
