@@ -373,7 +373,8 @@ $(function() {
 			success: function(data, status, xhr) {
 				 alert(data);
 				$("#comment-list").load('/shop/comment-list', 
-										{ "questionNo" : ${  question.questionNo } }, 
+										{ "questionNo" : ${  question.questionNo },
+											"pageNo":1}, 
 										function() {})
 			},
 			error: function(xhr, status, err) {
@@ -474,7 +475,8 @@ $(function() {
 					this.reset();
 				});
 				$("#comment-list").load('/shop/comment-list', 
-						{ "questionNo" : ${ question.questionNo } }, 
+						{ "questionNo" : ${ question.questionNo } ,
+						"pageNo":1}, 
 						function() {})
 				
 			},
@@ -495,7 +497,7 @@ $(function() {
 
 
 <div class="modal" id="write-recomment-modal">
-	<div class="modal-dialog">
+	<div class="modal-dialog" style="padding-top: 5%">
 		<div class="modal-content">
 
 			<!-- Modal Header -->

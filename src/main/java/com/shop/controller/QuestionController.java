@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.shop.common.Util;
+import com.shop.service.ManagerService;
 import com.shop.service.QuestionService;
 import com.shop.service.ShopService;
 import com.shop.vo.Member;
@@ -43,6 +44,10 @@ public class QuestionController {
 	@Autowired
 	@Qualifier("shopService")
 	private ShopService shopService;
+	
+	@Autowired
+	@Qualifier("managerService")
+	private ManagerService managerService;
 	
 	@RequestMapping(path = "/qa-list", method = RequestMethod.GET)
 	public String list(Model model) {
@@ -118,7 +123,9 @@ public class QuestionController {
 	      question.setFiles((ArrayList<QuestionFile>)files); 
 	      
 	      
-	      int pageSize = 2;
+	      
+	      
+	      int pageSize = 4;
 		  int currentPage = 1;
 		
 		  int from = (currentPage - 1) * pageSize + 1;
@@ -126,7 +133,7 @@ public class QuestionController {
 		
 		  HashMap<String, Object> params = new HashMap<String, Object>();
 		  params.put("questionNo", questionNo);
-		  params.put("from", from);
+		  params.put("from", from-1);
 		  params.put("to", to);
 		  
 	      List<QuestionComment> comments = 
@@ -150,7 +157,11 @@ public class QuestionController {
 	public String productSelectForm(Model model ) {
 		
 		
+		
 		List<Product> products = shopService.findProducts("all", "regDate", "all", "", 1, 10);
+		for(Product product : products) {
+			product.setFile(managerService.findUploadFile(product.getProductNo()));
+		}
 		
 		model.addAttribute("products", products);
 		
@@ -329,8 +340,12 @@ public class QuestionController {
 		
 		@RequestMapping(value = "/comment-list", method = RequestMethod.POST)
 		public String commentList(int questionNo, int pageNo, Model model) {
+			
+			if(pageNo == 0) {
+				pageNo=1;
+			}
 	
-			int pageSize = 3;
+			int pageSize = 4;
 			int currentPage = pageNo;
 	
 			int from = (currentPage - 1) * pageSize + 1;
