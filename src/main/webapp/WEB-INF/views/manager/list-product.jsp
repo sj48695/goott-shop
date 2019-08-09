@@ -33,15 +33,17 @@
 	    </tr>
 	  </thead>
 	  <tbody>
+	  	<c:set var="num" value="${ allCount }"/>
 	  	<c:forEach var="product" items="${ products }" varStatus="status">
 	    	<tr>
-		      <th scope="row">${ product.productNo }</th>
+		      <th scope="row">${ num }</th>
 			      <td><img src="/shop/resources/files/product-files/${ product.file.fileName }" style="width: 50px; padding-right:10px"></td>
 			      		<td><a href="/shop/manager/detail/${ product.productNo }">${ product.title }</a></td>
 			      <td><fmt:formatNumber value="${ product.price }" pattern="#,###" />원</td>
 			      <td>${ product.count }</td>
-			      <td>${ product.regDate }</td>
+			      <td><fmt:formatDate value="${ product.regDate }" pattern="YYYY-MM-dd" /></td>
 		    </tr>
+	  	<c:set var="num" value="${ num - 1 }"/>
 	    </c:forEach>
 	  </tbody>
 	</table>

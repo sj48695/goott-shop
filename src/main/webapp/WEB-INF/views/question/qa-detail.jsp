@@ -111,6 +111,7 @@
 
 
 					<!-- write comment area -->
+					<c:if test="${ loginuser ne null }">
 					<form id="commentform">
 						<input type="hidden" name="questionNo"
 							value="${ question.questionNo }" /> <input type="hidden"
@@ -130,6 +131,7 @@
 							</tr>
 						</table>
 					</form>
+					</c:if>
 					<!-- comment list -->
 					<div>
 						<br>
@@ -374,7 +376,11 @@ $(function() {
 				 alert(data);
 				$("#comment-list").load('/shop/comment-list', 
 										{ "questionNo" : ${  question.questionNo },
+<<<<<<< HEAD
 											"pageNo":1}, 
+=======
+											"pageNo" : 1 }, 
+>>>>>>> branch 'master' of https://github.com/sj48695/goott-shop
 										function() {})
 			},
 			error: function(xhr, status, err) {
@@ -475,8 +481,8 @@ $(function() {
 					this.reset();
 				});
 				$("#comment-list").load('/shop/comment-list', 
-						{ "questionNo" : ${ question.questionNo } ,
-						"pageNo":1}, 
+						{ "questionNo" : ${ question.questionNo },
+							"pageNo" : 1 }, 
 						function() {})
 				
 			},

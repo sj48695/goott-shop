@@ -163,6 +163,10 @@ public class QuestionController {
 			product.setFile(managerService.findUploadFile(product.getProductNo()));
 		}
 		
+		for(Product product : products) {
+			product.setFile(managerService.findUploadFile(product.getProductNo()));
+		}
+		
 		model.addAttribute("products", products);
 		
 		return "question/productSelect"; 
@@ -344,8 +348,8 @@ public class QuestionController {
 			if(pageNo == 0) {
 				pageNo=1;
 			}
-	
-			int pageSize = 4;
+			
+			int pageSize = 3;
 			int currentPage = pageNo;
 	
 			int from = (currentPage - 1) * pageSize + 1;
@@ -353,7 +357,7 @@ public class QuestionController {
 	
 			HashMap<String, Object> params = new HashMap<String, Object>();
 			params.put("questionNo", questionNo);
-			params.put("from", from);
+			params.put("from", from-1);
 			params.put("to", to);
 	
 			List<QuestionComment> comments = 
