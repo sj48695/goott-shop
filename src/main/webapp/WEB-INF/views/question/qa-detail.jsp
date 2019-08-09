@@ -111,6 +111,7 @@
 
 
 					<!-- write comment area -->
+					<c:if test="${ loginuser ne null }">
 					<form id="commentform">
 						<input type="hidden" name="questionNo"
 							value="${ question.questionNo }" /> <input type="hidden"
@@ -130,6 +131,7 @@
 							</tr>
 						</table>
 					</form>
+					</c:if>
 					<!-- comment list -->
 					<div>
 						<br>

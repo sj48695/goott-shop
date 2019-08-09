@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.shop.common.Util;
+import com.shop.service.ManagerService;
 import com.shop.service.QuestionService;
 import com.shop.service.ShopService;
 import com.shop.vo.Member;
@@ -43,6 +44,10 @@ public class QuestionController {
 	@Autowired
 	@Qualifier("shopService")
 	private ShopService shopService;
+	
+	@Autowired
+	@Qualifier("managerService")
+	private ManagerService managerService;
 	
 	@RequestMapping(path = "/qa-list", method = RequestMethod.GET)
 	public String list(Model model) {
@@ -151,6 +156,10 @@ public class QuestionController {
 		
 		
 		List<Product> products = shopService.findProducts("all", "regDate", "all", "", 1, 10);
+		
+		for(Product product : products) {
+			product.setFile(managerService.findUploadFile(product.getProductNo()));
+		}
 		
 		model.addAttribute("products", products);
 		
@@ -342,7 +351,6 @@ public class QuestionController {
 	
 			HashMap<String, Object> params = new HashMap<String, Object>();
 			params.put("questionNo", questionNo);
-			System.out.println(from);
 			params.put("from", from-1);
 			params.put("to", to);
 	
