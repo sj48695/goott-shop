@@ -156,13 +156,15 @@ public class QuestionController {
 	@RequestMapping(path="/productSelect", method = RequestMethod.GET)
 	public String productSelectForm(Model model ) {
 		
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("category", "all");
+		params.put("sorting", "regDate");
+		params.put("keyfield", "all");
+		params.put("keyword", "");
+		params.put("start", 1);
+		params.put("count", 10);
 		
-		
-		List<Product> products = shopService.findProducts("all", "regDate", "all", "", 1, 10);
-		for(Product product : products) {
-			product.setFile(managerService.findUploadFile(product.getProductNo()));
-		}
-		
+		List<Product> products = shopService.findProducts(params);
 		for(Product product : products) {
 			product.setFile(managerService.findUploadFile(product.getProductNo()));
 		}

@@ -154,7 +154,7 @@ public class ManagerController {
 		
 		model.addAttribute("product", product);
 		
-		return "manager/detail2";
+		return "manager/detail";
 	}
 	
 	@RequestMapping(value="/update-product/{productNo}", method = RequestMethod.GET)

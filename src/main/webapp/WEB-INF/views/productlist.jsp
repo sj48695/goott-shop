@@ -7,7 +7,7 @@
 			<div class="card text-center card-product">
 				<div class="card-product__img">
 					<a href="/shop/single-product/${ product.productNo }"> 
-						<img class="card-img" src="/shop/resources/img/product/product1.png">
+						<img class="card-img" src="/shop/resources/files/product-files/${ product.file.fileName }">
 					</a>
 				</div>
 				<div class="card-body">
@@ -15,7 +15,7 @@
 						<a href="/shop/single-product/${ product.productNo }">${ product.title }</a>
 					</h4>
 					<p class="card-product__price">
-						<fmt:formatNumber pattern="#,###￦">${ product.price }</fmt:formatNumber>
+						<fmt:formatNumber pattern="#,###￦" value="${ product.price }"/>
 					</p>
 				</div>
 			</div>

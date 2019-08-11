@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<c:set var="title" value="Aroma Shop - Register" scope="request"/>
 <jsp:include page="../include/header.jsp"/>  
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
   <!-- ================ start banner area ================= -->	

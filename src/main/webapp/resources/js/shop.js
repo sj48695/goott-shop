@@ -244,6 +244,7 @@ function checkAll(rows){
         $("input[name=checkRow]").prop("checked", true);
         //$("#checkRows").attr("value",rows);
         $('#delete').attr('onclick','javascript:removeCart("' + rows + '")');
+		$('#buy').attr('onclick', '');
         $('#buy').attr('href','/shop/checkout/cart/' + rows);
       }else{
         $("input[name=checkRow]").prop("checked", false);

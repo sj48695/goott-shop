@@ -32,14 +32,7 @@ public class ShopRepImpl implements ShopRep {
 	}
 
 	@Override
-	public List<Product> selectProducts(String category, String sorting, String keyfield, String keyword, int start, int count) {
-		HashMap<String, Object> params = new HashMap<String, Object>();
-		params.put("category", category);
-		params.put("sorting", sorting);
-		params.put("keyfield", keyfield);
-		params.put("keyword", keyword);
-		params.put("start", start-1);
-		params.put("count", count);
+	public List<Product> selectProducts(HashMap<String, Object> params) {
 		List<Product> products = shopMapper.selectProducts(params);
 		return products;
 	}
@@ -196,6 +189,12 @@ public class ShopRepImpl implements ShopRep {
 		params.put("productNo", productNo);
 		int buyCount = shopMapper.selectBuyCountByMemberId(params);
 		return buyCount;
+	}
+
+	@Override
+	public int selectProductsCountByCategory(HashMap<String, Object> params) {
+		int productsCount = shopMapper.selectProductsCountByCategory(params);
+		return productsCount;
 	}
 
 }

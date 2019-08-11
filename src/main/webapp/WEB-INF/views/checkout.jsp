@@ -3,6 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<c:set var="nav" value="shop" scope="request"/>
+<c:set var="title" value="confirmation" scope="request"/>
 <jsp:include page="include/header.jsp"/>
 <!-- ================ start banner area ================= -->	
 <section class="blog-banner-area" id="category">
@@ -32,11 +34,11 @@
                 <div class="col-lg-8">
                     <h3>Billing Details</h3>
                     <div class="row">
-                      	<div class="col-md-6 form-group p_star">
+                      	<div class="col-md-6 form-group">
                             <input type="text" class="form-control" id="name_from"
                             	placeholder="이름" value="${ loginuser.name }" readonly>
                         </div>
-                        <div class="col-md-6 form-group p_star">
+                        <div class="col-md-6 form-group row">
                             <input type="text" class="form-control" id="phone_from"
                             	placeholder="핸드폰 번호" value="${ loginuser.phone }" readonly>
                         </div>
@@ -44,27 +46,18 @@
                             <input type="text" class="form-control" id="email_from"
                             	placeholder="Email Address" value="이메일@naver.com" readonly="readonly">
                         </div> -->
-                        <div class="col-md-4 form-group p_star">
+                        <div class="col-md-4 form-group">
                             <input type="text" class="form-control" id="postCode_from" readonly
                             	placeholder="우편번호" value="${ loginuser.postCode}">
                         </div>
-                        <div class="col-md-8 form-group p_star">
+                        <div class="col-md-8 form-group row">
                             <input type="text" class="form-control" id="roadAddr_from" readonly
                             	placeholder="도로명주소" value="${ loginuser.roadAddr}">
-                        </div>
-                        <div class="col-md-4 form-group p_star"></div>
-                        <div class="col-md-8 form-group p_star">
                             <input type="text" class="form-control" id="jibunAddr_from" readonly
                             	placeholder="지번주소" value="${ loginuser.jibunAddr }">
-                        </div>
-                        <div class="col-md-4 form-group p_star"></div>
-                        <div class="col-md-8 form-group p_star">
-                            <input type="text" class="form-control" id="detailAddr_from" readonly
+                            <input type="text" class="form-control col" id="detailAddr_from" readonly
                             	placeholder="상세주소" value="${ loginuser.detailAddr }">
-                        </div>
-                        <div class="col-md-4 form-group p_star"></div>
-                        <div class="col-md-8 form-group p_star">
-                            <input type="text" class="form-control" id="extraAddr_from" readonly
+                            <input type="text" class="form-control col" id="extraAddr_from" readonly
                             	placeholder="Address line 01" value="${ loginuser.extraAddr }">
                         </div>
                     	<div class="col-md-12 form-group">
@@ -77,29 +70,24 @@
                         <div class="col-md-6 form-group p_star">
                             <input type="text" class="form-control" id="name_to" name="name" placeholder="Name">
                         </div>
-                        <div class="col-md-6 form-group p_star">
+                        <div class="col-md-6 form-group row">
                             <input type="text" class="form-control" id="phone_to" name="phone" placeholder="Phone number">
                         </div>
                         <!-- <div class="col-md-12 form-group p_star">
                             <input type="text" class="form-control" id="email_to" name="email" placeholder="Email Address">
                         </div> -->
+                        
+						<div class="col-md-12 form-group">
+							<input type="button" class="button addrBtn col-md-4 py-2 text-white" value="우편번호 찾기">
+						</div>
                         <div class="col-md-4 form-group">
 							<input type="text" class="form-control" id="postcode" name="postCode" placeholder="우편번호">
 						</div>
-						<div class="col-md-8 form-group">
-							<input type="text" class="form-control" id="roadAddress" name="roadAddr" placeholder="도로명주소"><br>
-						</div>
-						<div class="col-md-4 form-group">
-							<input type="button" class="button addrBtn col py-2 text-white" value="우편번호 찾기">
-						</div>
-						<div class="col-md-8 form-group">
+						<div class="col-md-8 form-group row">
+							<input type="text" class="form-control" id="roadAddress" name="roadAddr" placeholder="도로명주소">
 							<input type="text" class="form-control" id="jibunAddress" name="jibunAddr" placeholder="지번주소">
-						</div>
-						
-                        <div class="col-md-4 form-group p_star"></div>
-						<div class="col-md-8 form-group">
-							<input type="text" class="form-control col-md-6" id="detailAddress" name="detailAddr" placeholder="상세주소">&nbsp;&nbsp;&nbsp;&nbsp;
-							<input type="text" class="form-control col-md-5" id="extraAddress" name="extraAddr" placeholder="참고항목">
+							<input type="text" class="form-control col" id="detailAddress" name="detailAddr" placeholder="상세주소">
+							<input type="text" class="form-control col" id="extraAddress" name="extraAddr" placeholder="참고항목">
 						</div>
                         <div class="col-md-12 form-group mb-0">
                             <div class="creat_account">

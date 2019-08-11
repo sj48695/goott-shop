@@ -24,6 +24,7 @@ import com.shop.vo.Cart;
 import com.shop.vo.Member;
 import com.shop.vo.Product;
 import com.shop.vo.ProductFile;
+import com.shop.vo.QuestionComment;
 import com.shop.vo.Review;
 
 @Controller
@@ -39,30 +40,87 @@ public class ShopController {
 	private ManagerService managerService;
 	
 	@RequestMapping(value="/category", method = RequestMethod.GET)
-	public String productList(Model model, String category, String sorting, String keyfield, String keyword){
+	public String category(Model model
+			, String category, String sorting, String keyfield, String keyword) {
+//			, int lastPage){
 //		List<Product> products = shopService.findProducts("all", "regDate", "all", "", 1, pageSize);
-		if(sorting == null) {sorting = "regDate";}
-		if(keyfield == null) {keyfield = "all";}
+		if(sorting == null || sorting.equals("")) {sorting = "regDate";}
+		if(keyfield == null|| keyfield.equals("")) {keyfield = "all";}
 		if(keyword == null) {keyword = "";}
-		if(category == null) {category = "all";}
-		List<Product> products = shopService.findProducts(category, sorting, keyfield, keyword, 1, pageSize);
+		if(category == null|| category.equals("")) {category = "all";}
+		
+		int pageSize = 6;
+		int currentPage = 1;
+
+		int start = (currentPage - 1) * pageSize + 1;
+		//int count = start + pageSize;
+
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("category", category);
+		params.put("sorting", sorting);
+		params.put("keyfield", keyfield);
+		params.put("keyword", keyword);
+		params.put("start", start - 1);
+		params.put("count", pageSize);
+
+		List<Product> products = shopService.findProducts(params);
 		List<HashMap<String, Object>> categories = shopService.findCategories();
 		List<String> colors = shopService.findColors();
-		
-		for(Product product : products) {
+
+		for (Product product : products) {
 			product.setFile(managerService.findUploadFile(product.getProductNo()));
 		}
 
 		int allCount = shopService.findProductsCount();
+		int productsCount = shopService.findProductsCountByCategory(params);
+		
+
+		int page1 = (int) Math.floor( productsCount / pageSize );
+		int page2 = ( productsCount % pageSize ) > 0 ? 1 : 0;
+		int lastPage = page1 + page2;
 
 		model.addAttribute("colors", colors);
 		model.addAttribute("categories", categories);
 		model.addAttribute("category", category);
-		model.addAttribute("allCount",allCount);
+		model.addAttribute("allCount", allCount);
+		model.addAttribute("lastPage", lastPage);
+		model.addAttribute("productsCount", productsCount);
 		model.addAttribute("products", products);
 		model.addAttribute("keyfield", keyfield);
 		model.addAttribute("keyword", keyword);
 		return "category";
+	}
+	
+	@RequestMapping(value="/product-list", method = RequestMethod.POST)
+	public String productList(Model model, String category, String sorting, String keyfield, String keyword, int pageNo){
+		if(sorting == null || sorting.equals("")) {sorting = "regDate";}
+		if(keyfield == null|| keyfield.equals("")) {keyfield = "all";}
+		if(keyword == null) {keyword = "";}
+		if(category == null|| category.equals("")) {category = "all";}
+		if(pageNo == 0) {pageNo=1;}
+		
+		int pageSize = 6;
+		int currentPage = pageNo;
+
+		int start = (currentPage - 1) * pageSize + 1;
+		//int count = start + pageSize;
+
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("category", category);
+		params.put("sorting", sorting);
+		params.put("keyfield", keyfield);
+		params.put("keyword", keyword);
+		params.put("start", start - 1);
+		params.put("count", pageSize);
+
+		List<Product> products = shopService.findProducts(params);
+
+		for (Product product : products) {
+			product.setFile(managerService.findUploadFile(product.getProductNo()));
+		}
+		
+		model.addAttribute("products", products);
+		return "productlist";
 	}
 	
 	@RequestMapping(value="/cart", method = RequestMethod.GET)
@@ -153,6 +211,9 @@ public class ShopController {
 	public String confirmaion(@PathVariable int rows, Model model, HttpSession session){
 		Member loginuser = (Member) session.getAttribute("loginuser");
 		List<Buy> buyList = shopService.findLatelyBuyList(loginuser.getMemberId(),rows);
+		for(Buy buy : buyList) {
+			buy.setFile(managerService.findUploadFile(buy.getProductNo()));
+		}
 		System.out.println(buyList);
 		model.addAttribute(buyList);
 		return "confirmation";
@@ -203,7 +264,7 @@ public class ShopController {
 		Member loginuser = (Member) session.getAttribute("loginuser");
 		String memberId = loginuser.getMemberId();
 		
-		List<Cart> carts = shopService.findMyCartList(memberId);
+		List<Cart> carts = shopService.findCartList(memberId);
 		
 		model.addAttribute("carts", carts);
 		model.addAttribute("loginuser", loginuser);

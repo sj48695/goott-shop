@@ -18,7 +18,8 @@ public class AuthInterceptor extends HandlerInterceptorAdapter { // class 상속
 		String uri = req.getRequestURI();
 		
 		if (uri.contains("/qa-write") || uri.contains("/qa-update") 
-				|| uri.contains("/cart") || uri.contains("/checkout/") || uri.contains("/manager") 
+				|| uri.contains("/cart") || uri.contains("/checkout/") || uri.contains("/confirmation/")
+				|| uri.contains("/manager") 
 				|| uri.contains("/account/mypage") || uri.contains("/account/update") ) {
 			HttpSession session = req.getSession();
 			if (session.getAttribute("loginuser") == null) {//로그인하지 않은 경우				

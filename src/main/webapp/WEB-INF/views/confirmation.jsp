@@ -3,6 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<c:set var="nav" value="shop" scope="request"/>
+<c:set var="title" value="confirmation" scope="request"/>
 <jsp:include page="include/header.jsp"/>  
 	<!-- ================ start banner area ================= -->	
 	<section class="blog-banner-area" id="category">
@@ -32,7 +34,7 @@
 				<table class="table">
 					<thead>
 						<tr>
-							<th scope="col">Product</th>
+							<th scope="col" colspan="2">Product</th>
 							<th scope="col">Quantity</th>
 							<th scope="col">SubTotal</th>
 						</tr>
@@ -40,6 +42,12 @@
 					<tbody>
 						<c:forEach var="buy" items="${ buyList }">
 							<tr>
+								<td>
+									<div class="d-flex">
+										<img src="/shop/resources/files/product-files/${ buy.file.fileName }"
+											width="100" alt="">
+									</div>
+								</td>
 								<td>
 									<p>${ buy.title }</p>
 									<p>- ${ buy.productName }(${ buy.color }/${ buy.size })</p>
@@ -51,12 +59,11 @@
 									<p><fmt:formatNumber pattern="#,###원">${ buy.count * buy.price }</fmt:formatNumber></p>
 								</td>
 							</tr>
-							
-                                  	<c:set var="total" value="${ total + (buy.price * buy.count) }"/>
+							<c:set var="total" value="${ total + (buy.price * buy.count) }"/>
 						</c:forEach>
-						<tr><td colspan="3"/></tr>
+						<tr><td colspan="4"/></tr>
 						<tr>
-							<td></td>
+							<td colspan="2"></td>
 							<td>
 								<h5>Total</h5>
 							</td>

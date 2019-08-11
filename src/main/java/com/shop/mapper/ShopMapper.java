@@ -66,4 +66,6 @@ public interface ShopMapper {
 	
 	int selectBuyCountByMemberId(HashMap<String, Object> params);
 
+	int selectProductsCountByCategory(HashMap<String, Object> params);
+
 }

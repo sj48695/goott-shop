@@ -3,6 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<c:set var="nav" value="shop" scope="request"/>
+<c:set var="title" value="category" scope="request"/>
 <jsp:include page="include/header.jsp"/>
 	<!-- ================ start banner area ================= -->	
 	<section class="blog-banner-area" id="category">
@@ -131,11 +133,6 @@
 	                    <a href="/shop/single-product/${ product.productNo }">
 		                    <img class="card-img" src="/shop/resources/files/product-files/${ product.file.fileName }" alt="">
 						</a>
-	                    <%-- <ul class="card-product__imgOverlay">
-	                      <li><button onclick="location.href='/shop/single-product/${ product.productNo }'"><i class="ti-search"></i></button></li><!-- 
-	                      <li><button><i class="ti-shopping-cart"></i></button></li> -->
-	                      <li><button><i class="ti-heart"></i></button></li>
-	                    </ul> --%>
 	                  </div>
 	                  <div class="card-body">
 	                    <h4 class="card-product__title"><a href="/shop/single-product/${ product.productNo }">${ product.title }</a></h4>
@@ -147,7 +144,141 @@
 	            </div>
 	          </section>
 	          <!-- End Best Seller -->
-        
+        		<div id="pager" class="text-center">
+		       		<button id="first" class="btn" data-pageno="-1" onclick="javascript:" disabled><<</button>
+		       		<button id="prev" class="btn" data-pageno="-1" onclick="javascript:" disabled><</button>
+			        <c:forEach var="idx" begin="1" end="${ lastPage }">
+			        	<button class="pageno btn" 
+			        		data-pageno="${ idx }" onclick='javascript:'>${ idx }</button>
+			        </c:forEach>
+		       		<button id="next" class="btn " data-pageno="-1" onclick="javascript:" disabled>></button>
+		       		<button id="last" class="btn " data-pageno="-1" onclick="javascript:" disabled>>></button>
+			    </div>
+			    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
+				
+				 <script type="text/javascript">
+						function recalc() {
+							var page1 = Math.floor( ${ productsCount } / pageSize );
+							var page2 = (${ productsCount } % pageSize) > 0 ? 1 : 0;
+							lastPage = page1 + page2;
+						}
+					    
+						var currentPage = 1;
+						var pagerSize = recalc();
+						var pageSize = 3;
+						var productsCount = ${ productsCount };	
+						var lastPage = recalc();
+						
+					    function loadComments() {
+							$(".category-list").load('/shop/product-list', 
+													{ "category" : '${category}',
+														"sorting" : '${sorting}',
+														"keyfield" : '${keyfield}',
+														"keyword" : '${keyword}',
+														"lastPage" : lastPage,
+														"pageNo": currentPage },
+													function() {});
+						}
+					    $(function() {
+					    	
+					    	var pageOne = $('#pager button.pageno:first');
+					    	//pageOne.text("[" + pageOne.text() + "]")
+					    	
+					    	$('#pager #first').on('click', function(event) {
+					    		if (currentPage == 1) {
+					    			return;
+					    		}
+					    		
+					    		currentPage = 1;
+					    		$('#pager .pageno').each(function(idx, item) {
+					    			$(this).attr('data-pageno', idx + 1);
+					    			$(this).text( (idx + 1));
+					    		});
+					    		
+					    		loadComments();
+					    	});
+					    	
+					    	$('#pager #prev').on('click', function(event) {
+					    		if (currentPage == 1) {
+					    			return;
+					    		}
+					    		
+					    		var pageNo = $('#pager .pageno:first').attr("data-pageno");
+					    		if (currentPage == pageNo) {
+					    			$('#pager .pageno').each(function(idx, item) {
+						    			$(this).attr('data-pageno', currentPage - (pagerSize - idx));
+						    			$(this).text( (currentPage - (pagerSize - idx) ));
+						    		});
+					    		}
+					    		
+					    		currentPage--;	
+					    		
+					    		loadComments();
+					    	});
+					    	
+					    	$('#pager .pageno').on('click', function(event) {
+					    		var pageNo = $(this).attr('data-pageno');
+					    		if (pageNo == currentPage) {
+					    			return;
+					    		}
+					    		
+					    		$(this).css('background-color','blue');
+					    		$(this).css('color','white');
+					    		var tmp = $("#pager button[data-pageno=" + currentPage +"]");
+					    		tmp.css('background-color','#DDDDDD');
+					    		tmp.css('color','black');
+					    		currentPage = parseInt(pageNo);
+					    		
+					    		loadComments();
+					    	});
+					    	
+					    	$('#pager #last').on('click', function(event) {
+					    		if (currentPage == lastPage) {
+					    			return;
+					    		}
+					    		
+					    		currentPage = lastPage;
+					    		var firstItem = lastPage - (lastPage % pagerSize) + 1;
+					    		$('#pager .pageno').each(function(idx, item) {
+					    			// $(this).attr('data-pageno', lastPage - (pagerSize - idx) + 1);
+					    			// $(this).text( (lastPage - (pagerSize - idx) + 1 ));
+					    			if (firstItem + idx <= lastPage) {
+						    			$(this).attr('data-pageno', firstItem + idx);
+						    			$(this).text(firstItem + idx);
+					    			} else {
+					    				$(this).attr('data-pageno', -1);
+						    			$(this).text("");
+					    			}
+					    		});
+					    		
+					    		loadComments();
+					    	});
+					    	
+					    	$('#pager #next').on('click', function(event) {
+					    		if (currentPage == lastPage) {
+					    			return;
+					    		}
+					    		
+					    		var pageNo = $('#pager .pageno:last').attr("data-pageno");
+					    		if (currentPage == pageNo) {
+					    			$('#pager .pageno').each(function(idx, item) {
+					    				if ((currentPage + idx + 1) <= lastPage) {
+							    			$(this).attr('data-pageno', (currentPage + idx + 1));
+							    			$(this).text((currentPage + idx + 1));
+					    				} else {
+					    					$(this).attr('data-pageno', -1);
+							    			$(this).text("");
+					    				}
+						    		});
+					    		}
+					    		
+					    		currentPage++;
+					    		
+					    		loadComments();
+					    	});
+					    });
+				    </script>
         </div>
       </div>
     </div>

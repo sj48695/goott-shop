@@ -1,6 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<c:set var="nav" value="home" scope="request"/>
+<c:set var="title" value="Aroma Shop - Home" scope="request"/>
 <jsp:include page="include/header.jsp"/>
   <main class="site-main">
     
