@@ -183,7 +183,8 @@
 					    $(function() {
 					    	
 					    	var pageOne = $('#pager button.pageno:first');
-					    	//pageOne.text("[" + pageOne.text() + "]")
+					    	pageOne.css('background-color','blue');
+					    	pageOne.css('color','white');
 					    	
 					    	$('#pager #first').on('click', function(event) {
 					    		if (currentPage == 1) {
