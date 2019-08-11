@@ -168,11 +168,12 @@ public class ShopController {
 	@RequestMapping(value="/cart_cntupdate", method = RequestMethod.GET)
 	@ResponseBody
 	public String updateCart(int cartNo, int count, int price
-			, int total_before, int subtotal_before){
+			, int total_before){
 		DecimalFormat fm = new DecimalFormat("#,###");
 		int total_after = price * count;
-		int subtotal_after = subtotal_before-total_before+total_after;
-		String result = fm.format(total_after) + "/" +fm.format(subtotal_after);//total, subtotal
+		//int subtotal_after = subtotal_before-total_before+total_after;
+		//String result = fm.format(total_after) + "/" +fm.format(subtotal_after);//total, subtotal
+		String result = fm.format(total_after);
 		shopService.updateCartCntByCartNo(cartNo, count);
 		return result;
 	}
@@ -201,7 +202,7 @@ public class ShopController {
 			cart.setMemberId(loginuser.getMemberId());
 			shopService.registerCart(cart);
 
-			return "redirect:/checkout/cart/" + cart.getProductNo();
+			return "redirect:/checkout/cart/" + cart.getCartNo();
 		} else {
 			return "redirect:/";
 		}

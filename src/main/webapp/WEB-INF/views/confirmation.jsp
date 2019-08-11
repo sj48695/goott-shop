@@ -34,7 +34,7 @@
 				<table class="table">
 					<thead>
 						<tr>
-							<th scope="col" colspan="2">Product</th>
+							<th scope="col">Product</th>
 							<th scope="col">Quantity</th>
 							<th scope="col">SubTotal</th>
 						</tr>
@@ -43,14 +43,15 @@
 						<c:forEach var="buy" items="${ buyList }">
 							<tr>
 								<td>
-									<div class="d-flex">
-										<img src="/shop/resources/files/product-files/${ buy.file.fileName }"
-											width="100" alt="">
-									</div>
-								</td>
-								<td>
-									<p>${ buy.title }</p>
-									<p>- ${ buy.productName }(${ buy.color }/${ buy.size })</p>
+									<a class="row" href="/shop/single-product/${ buy.productNo }">
+										<div class="col-3 text-center">
+										<img src="/shop/resources/files/product-files/${ buy.file.fileName }" width="100">
+										</div>
+										<div class="col-9 py-4">
+											<p class="mb-0">${ buy.title }</p>
+											<p class="mb-0">- ${ buy.productName }(${ buy.color }/${ buy.size })</p>
+										</div>
+									</a>
 								</td>
 								<td>
 									<h5>${ buy.count }</h5>
@@ -61,9 +62,9 @@
 							</tr>
 							<c:set var="total" value="${ total + (buy.price * buy.count) }"/>
 						</c:forEach>
-						<tr><td colspan="4"/></tr>
+						<tr><td colspan="3"/></tr>
 						<tr>
-							<td colspan="2"></td>
+							<td></td>
 							<td>
 								<h5>Total</h5>
 							</td>

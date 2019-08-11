@@ -214,7 +214,7 @@
 								<c:forEach var="buy" items="${ buyList }">
 									<tr>
 										<td class="px-4">
-											<a class="row" href="/shop/single-product/${ cart.productNo }">
+											<a class="row" href="/shop/single-product/${ buy.productNo }">
 												<div class="col-2">
 												<img src="/shop/resources/files/product-files/${ buy.file.fileName }" width="100">
 												</div>

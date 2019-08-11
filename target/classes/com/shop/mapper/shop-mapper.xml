@@ -132,7 +132,7 @@
 		where memberId = #{ memberId }
 	</select>
 	
-	<insert id="insertCart" parameterType="Cart" >
+	<insert id="insertCart" parameterType="Cart">
 		insert into cart(
 			<include refid="cartColumns"/>
 		) values(
@@ -144,6 +144,10 @@
 			#{ size },
 			#{ memberId }
 		)
+		
+		<selectKey keyProperty="cartNo" resultType="int">
+	        SELECT LAST_INSERT_ID()
+	   </selectKey>
 	</insert>
 	
 	<delete id="deleteCart" >

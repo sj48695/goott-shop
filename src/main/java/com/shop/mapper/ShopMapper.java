@@ -28,7 +28,7 @@ public interface ShopMapper {
 
 	List<Cart> selectCarts(String memberId);
 
-	void insertCart(Cart cart);
+	int insertCart(Cart cart);
 
 	void deleteCart(HashMap<String, Object> params);
 
