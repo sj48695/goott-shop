@@ -4,6 +4,8 @@
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<c:set var="nav" value="qna" scope="request"/>
+<c:set var="title" value="Aroma Shop - Q&A" scope="request"/>
 <jsp:include page="/WEB-INF/views/include/header.jsp" />
 
 
@@ -377,6 +379,7 @@ $(function() {
 				$("#comment-list").load('/shop/comment-list', 
 										{ "questionNo" : ${  question.questionNo },
 											"pageNo" : 1 }, 
+
 										function() {})
 			},
 			error: function(xhr, status, err) {

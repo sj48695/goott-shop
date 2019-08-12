@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page session="false" language="java" contentType="text/html; charset=utf-8"
 	     pageEncoding="utf-8"%>
-
+<c:set var="title" value="Aroma Shop - MyPage" scope="request"/>
 <jsp:include page="../include/header.jsp"/>  
 	<!-- ================ start banner area ================= -->	
 	<section class="blog-banner-area" id="category">
@@ -18,8 +18,8 @@
 	<!-- ================ end banner area ================= -->
   
   <!--================Order Details Area =================--> 
-	<section class="product_description_area">
-		<div style="width:70%; margin-left:275px">
+	<section class="product_description_area container">
+		<div>
 			<ul class="nav nav-tabs" id="myTab" role="tablist"> 
 				<li class="nav-item">
 		          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="flase">내정보</a>
@@ -94,14 +94,14 @@
 					<h4><strong>장바구니</strong></h4><br>
 					<c:if test="${ empty carts }">
 					<div class="jumbotron">
-						<h5 style="text-align: center">현재 장바구니에 담긴 상품이 존재하지 않습니다.</h5>
+						<h5 class="text-center">현재 장바구니에 담긴 상품이 존재하지 않습니다.</h5>
 					</div>
 					</c:if>					
 					<c:if test="${ not empty carts }">
 			        	<div class="cart_inner">
 			              <div class="table-responsive">
 			                  <table class="table">
-								<colgroup>
+			                  	<colgroup>
 									<col width="2%">
 									<col width="45%">
 									<col width="15%">
@@ -122,8 +122,8 @@
 								<tbody>
 			                      <c:forEach var="cart" items="${ carts }">
 			                          <tr class="cartlist${ cart.cartNo }">
-			                          	  <td><input type="checkbox" name="checkRow" value="${ cart.cartNo }" onclick="checkRow()"></td>
-			                              <td>
+			                          	  <td class="px-4"><input type="checkbox" name="checkRow" value="${ cart.cartNo }" onclick="checkRow()"></td>
+			                              <td class="px-4">
 			                              	<a href="/shop/single-product/${ cart.productNo }">
 			                                  <div class="media">
 			                                      <div class="d-flex">
@@ -136,10 +136,10 @@
 			                                  </div>
 			                                  </a>
 			                              </td>
-			                              <td>
+			                              <td class="px-3">
 			                                  <h5><fmt:formatNumber pattern="#,###원">${ cart.price }</fmt:formatNumber></h5>
 			                              </td>
-			                              <td>
+			                              <td class="px-3">
 			                                  <div class="product_count">
 			                                      <input type="text" name="qty" id="sst${ cart.cartNo }" maxlength="12" value="${ cart.count }" title="Quantity:"
 			                                          class="input-text qty">
@@ -147,14 +147,14 @@
 			                                      <button class="reduced items-count" type="button" onclick="reduced(${ cart.cartNo },  ${ cart.price })"><i class="ti-angle-down"></i></button>
 			                                  </div>
 			                              </td>
-			                              <td>
+			                              <td class="px-3">
 			                              	  <input hidden="true" id="total_before${ cart.cartNo }" value="${ cart.price * cart.count }">
 			                                  <h5 class="total${ cart.cartNo }">
 			                                  	<fmt:formatNumber pattern="#,###원">${ cart.price * cart.count }</fmt:formatNumber>
 			                                  	<c:set var="total" value="${ total + (cart.price * cart.count) }"/>
 			                                  </h5>
 			                              </td>
-			                              <td><a onclick="javascript:removeCart(${ cart.cartNo })">X</a></td>
+			                              <td class="text-center px-3"><a onclick="javascript:removeCart(${ cart.cartNo })">X</a></td>
 			                          </tr>
 			                        </c:forEach><%-- 
 			                          <tr>
@@ -191,31 +191,43 @@
 					<h4><strong>주문내역</strong></h4><br>
 					<c:if test="${ empty buyList }">
 					<div class="jumbotron">
-						<h5 style="text-align: center">현재 주문내역이 존재하지 않습니다.</h5>
+						<h5 class="text-center">현재 주문내역이 존재하지 않습니다.</h5>
 					</div>
 					</c:if>
 					<c:if test="${ not empty buyList }">
 					<div class="table-responsive">
 						<table class="table">
+							<colgroup>
+								<col width="*">
+								<col width="10%">
+								<col width="15%">
+							</colgroup>
 							<thead>
 								<tr>
 									<th scope="col">Product</th>
-									<th scope="col">Quantity</th>
-									<th scope="col">SubTotal</th>
+									<th scope="col" class="text-center">Quantity</th>
+									<th scope="col" class="text-center">SubTotal</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:set var="total" value="0"/>
 								<c:forEach var="buy" items="${ buyList }">
 									<tr>
-										<td>
-											<p><a href="/shop/single-product/${ buy.productNo }">${ buy.title }</a></p>
-											<p>- ${ buy.productName }(${ buy.color }/${ buy.size })</p>
+										<td class="px-4">
+											<a class="row" href="/shop/single-product/${ buy.productNo }">
+												<div class="col-2">
+												<img src="/shop/resources/files/product-files/${ buy.file.fileName }" width="100">
+												</div>
+												<div class="col-10 py-4">
+													<p class="mb-0">${ buy.title }</p>
+													<p class="mb-0">- ${ buy.productName }(${ buy.color }/${ buy.size })</p>
+												</div>
+											</a>
 										</td>
-										<td>
+										<td class="text-center px-4">
 											<h5>${ buy.count }</h5>
 										</td>
-										<td>
+										<td class="text-center px-4">
 											<p><fmt:formatNumber pattern="#,###원">${ buy.count * buy.price }</fmt:formatNumber></p>
 										</td>
 									</tr>									
@@ -224,10 +236,10 @@
 								<tr><td colspan="3"/></tr>
 								<tr>
 									<td></td>
-									<td>
+									<td class="px-4">
 										<h5>Total</h5>
 									</td>
-									<td>
+									<td class="px-4">
 										<h5 class="subtotal">
 											<fmt:formatNumber pattern="#,###원">${ total }</fmt:formatNumber>
 										</h5>
@@ -243,23 +255,30 @@
 					<h4><strong>QnA</strong></h4><br>
 					<c:if test="${ empty questions }">
 					<div class="jumbotron">
-						<h5 style="text-align: center">현재 작성된 QnA가 존재하지 않습니다.</h5>
+						<h5 class="text-center">현재 작성된 QnA가 존재하지 않습니다.</h5>
 					</div>
 					</c:if>
 					<c:if test="${ not empty questions }">
-						<table class="table table-hover">						
+						<table class="table table-hover">	
+							<colgroup>
+								<col width="5%">
+								<col width="15%">
+								<col width="50%">
+								<col width="18%">
+								<col width="10%">
+							</colgroup>					
 							<tr>
-								<th style="width: 50px; text-align: center">NO</th>
-								<th style="width: 150px; text-align: center">CATEGORY</th>
-								<th style="width: 300px; text-align: center">CONTENTS</th>
-								<th style="width: 150px; text-align: center">DATE</th>
-								<th style="width: 125px; text-align: center">ANSWER</th>
+								<th scope="col">NO</th>
+								<th scope="col" class="text-center">CATEGORY</th>
+								<th scope="col">CONTENTS</th>
+								<th scope="col" class="text-center">DATE</th>
+								<th scope="col" class="text-center">ANSWER</th>
 							</tr>						
 							<c:forEach var="question" items="${questions}">
 								<tr>
-									<td style="text-align: center">${ question.questionNo }</td>
-									<td style="text-align: center">${ question.category }</td>
-									<td style='text-align: left; padding-left: 10px'>
+									<td class="text-center px-3">${ question.questionNo }</td>
+									<td class="text-center px-4">${ question.category }</td>
+									<td class="text-left px-4">
 									<a	href=<c:if test='${ question.secure eq true}'>
 									"/../shop/pwCheck/${ question.questionNo }" 
 									</c:if>
@@ -273,8 +292,8 @@
 									
 									&nbsp;&nbsp;[${ question.recnt }]
 									</td>
-									<td style="text-align: center">${ question.regDate }</td>
-									<td style="text-align: center">${ question.answer ? "답변완료" : "답변대기" }
+									<td class="text-center px-2">${ question.regDate }</td>
+									<td class="text-center px-2">${ question.answer ? "답변완료" : "답변대기" }
 								</tr>
 							</c:forEach>
 						</table>

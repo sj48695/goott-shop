@@ -3,6 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<c:set var="nav" value="shop" scope="request"/>
+<c:set var="title" value="shop" scope="request"/>
 <jsp:include page="include/header.jsp"/>	
 <style>
 .optLabel{

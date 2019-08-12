@@ -172,13 +172,14 @@ function increase(cartNo, price) {
 				"cartNo" : cartNo,
 				"count" : result.value,
 				"price" : price,
-				"total_before" : $('#total_before'+cartNo).attr("value"),
-				"subtotal_before" : $('#subtotal_before').attr("value")
+				"total_before" : $('#total_before'+cartNo).attr("value")
+//				,
+//				"subtotal_before" : $('#subtotal_before').attr("value")
 			},
 			success:function(data, status, xhr){
 				var datas = data.split("/");
 				$('.total'+cartNo).text(datas[0]+"원");
-				$('.subtotal').text(datas[1]+"원");
+//				$('.subtotal').text(datas[1]+"원");
 			},
 			error:function(status, xhr, err){
 				alert(err);
@@ -200,13 +201,14 @@ function reduced(cartNo, price) {
 				"cartNo" : cartNo,
 				"count" : result.value,
 				"price" : price,
-				"total_before" : $('#total_before'+cartNo).attr("value"),
-				"subtotal_before" : $('#subtotal_before').attr("value")
+				"total_before" : $('#total_before'+cartNo).attr("value")
+//				,
+//				"subtotal_before" : $('#subtotal_before').attr("value")
 			},
 			success:function(data, status, xhr){
 				var datas = data.split("/");
 				$('.total'+cartNo).text(datas[0]+"원");
-				$('.subtotal').text(datas[1]+"원");
+//				$('.subtotal').text(datas[1]+"원");
 			},
 			error:function(status, xhr, err){
 				alert(err);
@@ -244,6 +246,7 @@ function checkAll(rows){
         $("input[name=checkRow]").prop("checked", true);
         //$("#checkRows").attr("value",rows);
         $('#delete').attr('onclick','javascript:removeCart("' + rows + '")');
+		$('#buy').attr('onclick', '');
         $('#buy').attr('href','/shop/checkout/cart/' + rows);
       }else{
         $("input[name=checkRow]").prop("checked", false);

@@ -123,6 +123,8 @@ public class QuestionController {
 	      question.setFiles((ArrayList<QuestionFile>)files); 
 	      
 	      
+	      
+	      
 	      int pageSize = 2;
 		  int currentPage = 1;
 		
@@ -154,9 +156,15 @@ public class QuestionController {
 	@RequestMapping(path="/productSelect", method = RequestMethod.GET)
 	public String productSelectForm(Model model ) {
 		
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("category", "all");
+		params.put("sorting", "regDate");
+		params.put("keyfield", "all");
+		params.put("keyword", "");
+		params.put("start", 1);
+		params.put("count", 10);
 		
-		List<Product> products = shopService.findProducts("all", "regDate", "all", "", 1, 10);
-		
+		List<Product> products = shopService.findProducts(params);
 		for(Product product : products) {
 			product.setFile(managerService.findUploadFile(product.getProductNo()));
 		}
@@ -338,12 +346,12 @@ public class QuestionController {
 		
 		@RequestMapping(value = "/comment-list", method = RequestMethod.POST)
 		public String commentList(int questionNo, int pageNo, Model model) {
-	
+			
 			if(pageNo == 0) {
 				pageNo=1;
 			}
 			
-			int pageSize = 3;
+			int pageSize = 2;
 			int currentPage = pageNo;
 	
 			int from = (currentPage - 1) * pageSize + 1;

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -19,7 +18,6 @@ import com.shop.service.ShopService;
 import com.shop.vo.Buy;
 import com.shop.vo.Cart;
 import com.shop.vo.Member;
-import com.shop.vo.Product;
 import com.shop.vo.Question;
 
 @Controller
@@ -88,15 +86,22 @@ public class AccountController {
 		Member member = (Member) session.getAttribute("loginuser");
 		String memberId = member.getMemberId();
 		
-		List<Cart> carts = shopService.findMyCartList(memberId);
+		List<Cart> carts = shopService.findCartList(memberId);
 		List<Buy> buyList = shopService.findMyBuyList(member.getMemberId());
 		List<Question> questions = questionService.findMyQuestionList(memberId);
 		
+		String rows = "";
 		for(Cart cart : carts) {
+			rows = rows + cart.getCartNo() + ",";
 			cart.setFile(managerService.findUploadFile(cart.getProductNo()));
+		}
+		
+		for(Buy buy : buyList) {
+			buy.setFile(managerService.findUploadFile(buy.getProductNo()));
 		}
 
 		model.addAttribute("member", member);
+		model.addAttribute("rows", rows);
 		model.addAttribute("carts", carts);
 		model.addAttribute("buyList", buyList);
 		model.addAttribute("questions", questions);

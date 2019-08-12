@@ -2,6 +2,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<c:set var="nav" value="meneger" scope="request"/>
+<c:set var="title" value="Aroma Shop - ManageMent" scope="request"/>
 <jsp:include page="../include/header.jsp"/>
 <section>
 <jsp:include page="../include/sidebar.jsp"/>

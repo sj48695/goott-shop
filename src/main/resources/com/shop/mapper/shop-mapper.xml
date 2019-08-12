@@ -42,11 +42,14 @@
 	<select id="selectProducts" resultType="Product" parameterType="hashmap">
 		select productNo, regDate, <include refid="productColumns"/> from product
 			
-			<if test="category != 'all'">
+			
 				<if test="keyword == ''"><!-- 검색하지 않을때 -->
+					<if test="category != 'all'">
 					where category like concat('%', #{ category }, '%')
+					</if>
 				</if>
 				<if test="keyword != ''"><!-- 검색할 때 -->
+				<if test="category != 'all'">
 				<choose>
 					<when test="keyfield != 'all'">
 						<if test="keyfield == 'title'">
@@ -67,7 +70,27 @@
 				</choose>
 				and category like concat('%', #{ category }, '%')
 				</if>
-			</if>
+				<if test="category == 'all'">
+				<choose>
+					<when test="keyfield != 'all'">
+						<if test="keyfield == 'title'">
+							where title like concat('%', #{ keyword }, '%')
+						</if>
+						<if test="keyfield == 'productName'">
+							where productName like concat('%', #{ keyword }, '%')
+						</if>
+						<if test="keyfield == 'category'">
+							where content like concat('%', #{ keyword }, '%')
+						</if>
+					</when>
+					<otherwise>
+						where title like concat('%', #{ keyword }, '%')
+						or productName like concat('%', #{ keyword }, '%')
+						or content like concat('%', #{ keyword }, '%')
+					</otherwise>
+				</choose>
+				</if>
+				</if>
 			<if test="sorting == 'regDate'">
 				order by productNo desc
 			</if>
@@ -109,7 +132,7 @@
 		where memberId = #{ memberId }
 	</select>
 	
-	<insert id="insertCart" parameterType="Cart" >
+	<insert id="insertCart" parameterType="Cart">
 		insert into cart(
 			<include refid="cartColumns"/>
 		) values(
@@ -121,6 +144,10 @@
 			#{ size },
 			#{ memberId }
 		)
+		
+		<selectKey keyProperty="cartNo" resultType="int">
+	        SELECT LAST_INSERT_ID()
+	   </selectKey>
 	</insert>
 	
 	<delete id="deleteCart" >
@@ -295,6 +322,43 @@
 		select count(*) from house.buy b 
 		where b.memberId = #{ memberId }
 		and productNo = #{ productNo }
+	</select>
+	
+	<select id="selectProductsCountByCategory" resultType="int" parameterType="hashmap">
+		select count(*) from product
+			
+			<if test="category != 'all'">
+				<if test="keyword == ''"><!-- 검색하지 않을때 -->
+					where category like concat('%', #{ category }, '%')
+				</if>
+				<if test="keyword != ''"><!-- 검색할 때 -->
+				<choose>
+					<when test="keyfield != 'all'">
+						<if test="keyfield == 'title'">
+							where title like concat('%', #{ keyword }, '%')
+						</if>
+						<if test="keyfield == 'productName'">
+							where productName like concat('%', #{ keyword }, '%')
+						</if>
+						<if test="keyfield == 'category'">
+							where content like concat('%', #{ keyword }, '%')
+						</if>
+					</when>
+					<otherwise>
+						where (title like concat('%', #{ keyword }, '%')
+						or productName like concat('%', #{ keyword }, '%')
+						or content like concat('%', #{ keyword }, '%'))
+					</otherwise>
+				</choose>
+				and category like concat('%', #{ category }, '%')
+				</if>
+			</if>
+			<if test="sorting == 'regDate'">
+				order by productNo desc
+			</if>
+			<if test="sorting == 'price'">
+				order by price 
+			</if>
 	</select>
 	
 </mapper>

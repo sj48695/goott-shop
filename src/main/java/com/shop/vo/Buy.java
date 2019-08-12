@@ -1,6 +1,7 @@
 package com.shop.vo;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 import lombok.Data;
 
@@ -21,6 +22,8 @@ public class Buy {
 	private String orderMsg;
 	private String memberId;
 
+	private ProductFile file;
+	private ArrayList<ProductFile> files;
 	private String title;
 	private int cnt;
 	

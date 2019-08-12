@@ -3,6 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<c:set var="nav" value="shop" scope="request"/>
+<c:set var="title" value="confirmation" scope="request"/>
 <jsp:include page="include/header.jsp"/>  
 	<!-- ================ start banner area ================= -->	
 	<section class="blog-banner-area" id="category">
@@ -41,8 +43,15 @@
 						<c:forEach var="buy" items="${ buyList }">
 							<tr>
 								<td>
-									<p>${ buy.title }</p>
-									<p>- ${ buy.productName }(${ buy.color }/${ buy.size })</p>
+									<a class="row" href="/shop/single-product/${ buy.productNo }">
+										<div class="col-3 text-center">
+										<img src="/shop/resources/files/product-files/${ buy.file.fileName }" width="100">
+										</div>
+										<div class="col-9 py-4">
+											<p class="mb-0">${ buy.title }</p>
+											<p class="mb-0">- ${ buy.productName }(${ buy.color }/${ buy.size })</p>
+										</div>
+									</a>
 								</td>
 								<td>
 									<h5>${ buy.count }</h5>
@@ -51,8 +60,7 @@
 									<p><fmt:formatNumber pattern="#,###원">${ buy.count * buy.price }</fmt:formatNumber></p>
 								</td>
 							</tr>
-							
-                                  	<c:set var="total" value="${ total + (buy.price * buy.count) }"/>
+							<c:set var="total" value="${ total + (buy.price * buy.count) }"/>
 						</c:forEach>
 						<tr><td colspan="3"/></tr>
 						<tr>

@@ -1,6 +1,5 @@
 package com.shop.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,7 +12,7 @@ public interface ShopService {
 
 	Product findProductByProductNo(int productNo);
 
-	List<Product> findProducts(String category, String keyfield, String keyword, String keyword2, int start, int count);
+	List<Product> findProducts(HashMap<String, Object> params);
 
 	List<HashMap<String, Object>> findCategories();
 
@@ -50,6 +49,8 @@ public interface ShopService {
 	List<Buy> findMyBuyList(String memberId);
 
 	int selectBuyCountByMemberId(String memberId, int productNo);
+
+	int findProductsCountByCategory(HashMap<String, Object> params);
 	
 }
 

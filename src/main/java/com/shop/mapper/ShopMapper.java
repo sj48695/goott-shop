@@ -28,7 +28,7 @@ public interface ShopMapper {
 
 	List<Cart> selectCarts(String memberId);
 
-	void insertCart(Cart cart);
+	int insertCart(Cart cart);
 
 	void deleteCart(HashMap<String, Object> params);
 
@@ -65,5 +65,7 @@ public interface ShopMapper {
 	void insertComment(Review review);
 	
 	int selectBuyCountByMemberId(HashMap<String, Object> params);
+
+	int selectProductsCountByCategory(HashMap<String, Object> params);
 
 }

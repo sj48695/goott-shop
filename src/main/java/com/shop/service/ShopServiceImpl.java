@@ -31,8 +31,8 @@ public class ShopServiceImpl implements ShopService {
 	}
 
 	@Override
-	public List<Product> findProducts(String category, String sorting, String keyfield, String keyword, int start, int count) {
-		List<Product> products = shopRep.selectProducts(category, sorting, keyfield, keyword, start, count);
+	public List<Product> findProducts(HashMap<String, Object> params) {
+		List<Product> products = shopRep.selectProducts(params);
 		return products;
 	}
 
@@ -162,6 +162,12 @@ public class ShopServiceImpl implements ShopService {
 	public int selectBuyCountByMemberId(String memberId, int productNo) {
 		int buyCount = shopRep.selectBuyCountByMemberId(memberId, productNo);
 		return buyCount;
+	}
+
+	@Override
+	public int findProductsCountByCategory(HashMap<String, Object> params) {
+		int productsCount = shopRep.selectProductsCountByCategory(params);
+		return productsCount;
 	}
 	
 }

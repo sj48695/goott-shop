@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" language="java" contentType="text/html; charset=utf-8"
 	     pageEncoding="utf-8"%>
-
+<c:set var="title" value="Aroma Shop - Update" scope="request"/>
 <jsp:include page="../include/header.jsp"/>  
 	<!-- ================ start banner area ================= -->	
 	<section class="blog-banner-area" id="category">
