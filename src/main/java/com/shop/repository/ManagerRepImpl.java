@@ -107,4 +107,11 @@ public class ManagerRepImpl implements ManagerRep{
 		return order;
 	}
 
+	@Override
+	public List<Buy> selectProductsOrderCount() {
+		List<Buy> orderCnt = managerMapper.selectProductsOrderCount();
+		
+		return orderCnt;
+	}
+
 }

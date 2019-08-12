@@ -71,13 +71,13 @@
 								<%--eq: 같은애를 찾는  / 로그인한 사용자와 글의 작성자가 같으면 삭제, 수정 버튼 활성화--%>
 								<c:if test="${ loginuser.memberId eq question.uploader }">
 									<input type="button" id="update_button"
-										class="button button-subscribe mr-auto mb-1" value="edit" />
+										class="button button-subscribe mr-auto mb-1" value="Edit" />
 									<input type="button" id="delete_button"
-										class="button button-subscribe mr-auto mb-1" value="delete" />
+										class="button button-subscribe mr-auto mb-1" value="Delete" />
 								</c:if>
 
 								<input type="button" id="cancel_button"
-									class="button button-subscribe mr-auto mb-1" value="back" /> <br> <br>
+									class="button button-subscribe mr-auto mb-1" value="Back" /> <br> <br>
 									<script type="text/javascript">
 									//브라우저가 html을 모두 읽고 처리할 준비가 되었을 때 호출 할 함수 지정
 									window.addEventListener('load',function(event){//js의 main 함수 역할
@@ -111,6 +111,7 @@
 
 
 					<!-- write comment area -->
+					<c:if test="${ loginuser ne null }">
 					<form id="commentform">
 						<input type="hidden" name="questionNo"
 							value="${ question.questionNo }" /> <input type="hidden"
@@ -130,6 +131,7 @@
 							</tr>
 						</table>
 					</form>
+					</c:if>
 					<!-- comment list -->
 					<div>
 						<br>
@@ -155,22 +157,22 @@
 
 												<c:if test='${ loginuser.memberId eq "manager" }'>
 													<a class="editcomment "
-														data-commentno='${ comment.commentNo }' href="javascript:">편집</a>
+														data-commentno='${ comment.commentNo }' href="javascript:">edit</a>
 													<a class="deletecomment " href="javascript:"
-														data-commentno="${ comment.commentNo }">삭제</a>
+														data-commentno="${ comment.commentNo }">delete</a>
 												</c:if>
 												<c:if test='${ loginuser.memberId ne "manager" }'>
 													<div
 														style='display:${ loginuser.memberId eq comment.writer ? "block" : "none" }'>
 														<a class="editcomment "
 															data-commentno='${ comment.commentNo }'
-															href="javascript:">편집</a> <a class="deletecomment "
+															href="javascript:">edit</a> <a class="deletecomment "
 															href="javascript:"
-															data-commentno="${ comment.commentNo }">삭제</a>
+															data-commentno="${ comment.commentNo }">delete</a>
 													</div>
 												</c:if>
 												<br /> <a class="recomment-link button button-subscribe btn-xs" 
-													data-commentno="${ comment.commentNo }">댓글 쓰기</a>
+													data-commentno="${ comment.commentNo }">WriteComment</a>
 											</div> <!-- 수정 -->
 											<div id='commentedit${ comment.commentNo }'
 												style="display: none">
@@ -185,9 +187,9 @@
 												<br />
 												<div>
 													<a class="updatecomment "
-														href="javascript:" data-commentno="${ comment.commentNo }">수정</a>
+														href="javascript:" data-commentno="${ comment.commentNo }">edit</a>
 													&nbsp; <a class="cancel "
-														data-commentno="${ comment.commentNo }" href="javascript:">취소</a>
+														data-commentno="${ comment.commentNo }" href="javascript:">back</a>
 												</div>
 
 											</div>
@@ -373,7 +375,8 @@ $(function() {
 			success: function(data, status, xhr) {
 				 alert(data);
 				$("#comment-list").load('/shop/comment-list', 
-										{ "questionNo" : ${  question.questionNo } }, 
+										{ "questionNo" : ${  question.questionNo },
+											"pageNo" : 1 }, 
 										function() {})
 			},
 			error: function(xhr, status, err) {
@@ -474,7 +477,8 @@ $(function() {
 					this.reset();
 				});
 				$("#comment-list").load('/shop/comment-list', 
-						{ "questionNo" : ${ question.questionNo } }, 
+						{ "questionNo" : ${ question.questionNo },
+							"pageNo" : 1 }, 
 						function() {})
 				
 			},
@@ -495,7 +499,7 @@ $(function() {
 
 
 <div class="modal" id="write-recomment-modal">
-	<div class="modal-dialog">
+	<div class="modal-dialog" style="padding-top: 5%">
 		<div class="modal-content">
 
 			<!-- Modal Header -->
@@ -518,9 +522,9 @@ $(function() {
 			<!-- Modal footer -->
 			<div class="modal-footer">
 				<button type="button" id="write-recomment"
-					class="button button-subscribe btn-xs">댓글 등록</button>
+					class="button button-subscribe btn-xs">WriteComment</button>
 				<button type="button" class="button button-subscribe btn-xs"
-					data-dismiss="modal">취소</button>
+					data-dismiss="modal">Back</button>
 			</div>
 
 		</div>

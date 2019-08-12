@@ -12,6 +12,10 @@
 		fileName, flag, productNo
 	</sql>
 	
+	<sql id="buyBasicColumns">
+		productNo, count, price, productName, color, size, name, phone, address, orderMsg, memberId
+	</sql>
+	
 	<!-- insert가 완료된 후 keyColumn(resumeNo)의 값을 vo의 keyProperty(resumeNo)에 저장 -->
 	<insert id="insertProduct" parameterType="Product"
 			useGeneratedKeys="true" keyColumn="productNo" keyProperty="productNo">
@@ -110,10 +114,19 @@
 	</delete>
 	
 	<!-- 상품별 구매현황 -->
-	<select id="selectProductOrderlist" resultType="Product">
+	<select id="selectProductOrderList" resultType="Buy">
+		select p.title, sum(b.count) as cnt
+		from buy b, product p
+		where b.productno = p.productno
+		group by b.productno
+	</select>
+	
+	<!-- 상품별 구매 갯수 -->
+	<select id="selectProductsOrderCount" resultType="Buy" parameterType="int">
 		select count(productno)
 		from buy
-		group by productno;
+		group by productno
+		having productno = #{ productNo }
 	</select>
 	
 </mapper>

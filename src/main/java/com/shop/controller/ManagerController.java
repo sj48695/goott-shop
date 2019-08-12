@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,8 +19,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.shop.common.Util;
 import com.shop.service.ManagerService;
+import com.shop.service.ShopService;
 import com.shop.vo.Buy;
-import com.shop.vo.Member;
 import com.shop.vo.Product;
 import com.shop.vo.ProductFile;
 
@@ -32,6 +31,10 @@ public class ManagerController {
 	@Autowired
 	@Qualifier("managerService")
 	private ManagerService managerService;
+
+	@Autowired
+	@Qualifier("shopService")
+	private ShopService shopService;
 	
 	
 	@RequestMapping(value="/write-product", method = RequestMethod.GET)
@@ -104,7 +107,7 @@ public class ManagerController {
 			e.printStackTrace();
 		}
 		
-		return "redirect:/";
+		return "redirect:/manager/list-product";
 	
 	}
 	
@@ -129,7 +132,8 @@ public class ManagerController {
 			product.setFile(managerService.findUploadFile(product.getProductNo()));
 		}
 		
-
+		int allCount = shopService.findProductsCount();
+		model.addAttribute("allCount", allCount);
 		model.addAttribute("products", products);
 		
 		return "/manager/list-product";
@@ -288,9 +292,10 @@ public class ManagerController {
 		if(order == null) {
 			return "redirect:/";
 		}
-
+		
 		model.addAttribute("order", order);
 		
 		return "/manager/order-list";
 	}
+
 }

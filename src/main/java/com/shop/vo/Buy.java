@@ -22,5 +22,6 @@ public class Buy {
 	private String memberId;
 
 	private String title;
+	private int cnt;
 	
 }

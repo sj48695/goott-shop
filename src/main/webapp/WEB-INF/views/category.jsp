@@ -32,22 +32,23 @@
             <div class="head">Browse Categories</div>
             <ul class="main-categories">
               <li class="common-filter">
-                <form action="/shop/category/search" method="post" onchange="category()">
+                <form action="/shop/category" method="get" onchange="javascrip:this.submit()">
                 	<input type="hidden" name="keyfield" value="all">
                 	<input type="hidden" name="keyword" value="">
                 	<input type="hidden" name="start" value="0">
                   <ul>
                   	<li class="filter-list">
-                    	<input class="pixel-radio" type="radio" id="all" name="category" value="전체">
+                    	<input class="pixel-radio" type="radio" id="all" name="category" value="all" ${ category eq 'all' ? "checked" : "" }>
                     	<label for="all">전체
                     		<span> (<fmt:formatNumber pattern="#,###"> ${ allCount }</fmt:formatNumber>)</span>
                     	</label>
                     </li>
-                  <c:forEach var="category" items="${ categories }">
+                  <c:forEach var="categorys" items="${ categories }">
                     <li class="filter-list">
-                    	<input class="pixel-radio" type="radio" id="${ category }" name="category" value="${ category }">
-                    	<label for="${ category }">${ category.categoryName }
-                    		<span> (<fmt:formatNumber pattern="#,###"> ${ category.categoryCnt }</fmt:formatNumber>)</span>
+                    	<input class="pixel-radio" type="radio" id="${ categorys.categoryName }" name="category" value="${ categorys.categoryName }"
+                    		${ category eq categorys.categoryName ? "checked" : "" }>
+                    	<label for="${ categorys.categoryName }">${ categorys.categoryName }
+                    		<span> (<fmt:formatNumber pattern="#,###"> ${ categorys.categoryCnt }</fmt:formatNumber>)</span>
                     	</label>
                     </li>
                   </c:forEach>
@@ -91,7 +92,9 @@
           </div> --%>
         </div>
         <div class="col-xl-9 col-lg-8 col-md-7">
-			<form action="/shop/category/search" method="GET">
+			<form action="/shop/category" method="GET">
+			
+                	<input type="hidden" name="category" value="${category}">
 					<!-- Start Filter Bar -->
 					<div class="filter-bar d-flex flex-wrap align-items-center">
 						<div class="sorting mr-auto">

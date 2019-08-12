@@ -33,5 +33,7 @@ public interface ManagerMapper {
 	void deleteProductFile(int productFileNo);
 	
 	List<Buy> selectProductOrderList();
+	
+	List<Buy> selectProductsOrderCount();
 
 }

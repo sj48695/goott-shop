@@ -123,5 +123,12 @@ public class ManagerServiceImpl implements ManagerService{
 		
 		return order;
 	}
+
+	@Override
+	public List<Buy> findProductsOrderCount() {
+		List<Buy> orderCnt = managerRep.selectProductsOrderCount();
+		
+		return orderCnt;
+	}
 	
 }

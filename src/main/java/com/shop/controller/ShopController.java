@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale.Category;
 
 import javax.servlet.http.HttpSession;
 
@@ -38,8 +39,13 @@ public class ShopController {
 	private ManagerService managerService;
 	
 	@RequestMapping(value="/category", method = RequestMethod.GET)
-	public String productList(Model model){
-		List<Product> products = shopService.findProducts("all", "regDate", "all", "", 1, pageSize);
+	public String productList(Model model, String category, String sorting, String keyfield, String keyword){
+//		List<Product> products = shopService.findProducts("all", "regDate", "all", "", 1, pageSize);
+		if(sorting == null) {sorting = "regDate";}
+		if(keyfield == null) {keyfield = "all";}
+		if(keyword == null) {keyword = "";}
+		if(category == null) {category = "all";}
+		List<Product> products = shopService.findProducts(category, sorting, keyfield, keyword, 1, pageSize);
 		List<HashMap<String, Object>> categories = shopService.findCategories();
 		List<String> colors = shopService.findColors();
 		
@@ -51,24 +57,7 @@ public class ShopController {
 
 		model.addAttribute("colors", colors);
 		model.addAttribute("categories", categories);
-		model.addAttribute("allCount",allCount);
-		model.addAttribute("products", products);
-		return "category";
-	}
-	
-	@RequestMapping(value="/category/search", method = RequestMethod.GET)
-	public String searchCategory(Model model, String sorting, String keyfield, String keyword){
-		List<Product> products = shopService.findProducts("all", sorting, keyfield, keyword, 1, pageSize);
-		List<HashMap<String, Object>> categories = shopService.findCategories();
-		List<String> colors = shopService.findColors();
-		
-		for(Product product : products) {
-			product.setFile(managerService.findUploadFile(product.getProductNo()));
-		}
-		
-		int allCount = shopService.findProductsCount();
-		model.addAttribute("colors", colors);
-		model.addAttribute("categories", categories);
+		model.addAttribute("category", category);
 		model.addAttribute("allCount",allCount);
 		model.addAttribute("products", products);
 		model.addAttribute("keyfield", keyfield);
@@ -154,7 +143,7 @@ public class ShopController {
 			cart.setMemberId(loginuser.getMemberId());
 			shopService.registerCart(cart);
 
-			return "/checkout/cart/" + cart.getProductNo();
+			return "redirect:/checkout/cart/" + cart.getProductNo();
 		} else {
 			return "redirect:/";
 		}

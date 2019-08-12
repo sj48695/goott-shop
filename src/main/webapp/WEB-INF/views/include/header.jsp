@@ -35,7 +35,6 @@
                      <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Shop</a>
                         <ul class="dropdown-menu">
                            <li class="nav-item"><a class="nav-link" href="/shop/category">Shop Category</a></li>
-                           <li class="nav-item"><a class="nav-link" href="/shop/confirmation">Confirmation</a></li>
                            <li class="nav-item"><a class="nav-link" href="/shop/cart">Shopping Cart</a></li>
                         </ul>
                      </li>
@@ -45,9 +44,6 @@
                            <li class="nav-item"><a class="nav-link" href="/shop/qa-list">QnA</a></li>
                         </ul>
                      </li>
-                     <c:if test="${ loginuser.memberId eq 'manager' }">
-                     	<li class="nav-item"><a class="nav-link" href="/shop/manager/list-product">Manager</a></li>
-                     </c:if>
                   </ul>
                   <ul class="nav-shop ml-auto mr-auto">
                          <li class="nav-item"><button><i class="ti-search"></i></button></li>
@@ -61,7 +57,8 @@
                      </c:when>
                      <c:otherwise>
 						<li class="nav-item">
-							<a class="nav-link" href="/shop/account/mypage" style="text-decoration: none">${ loginuser.memberId }님 환영합니다.</a>
+							<a class="nav-link" href='${ loginuser.memberId eq "manager" ? "/shop/manager/list-product" : "/shop/account/mypage" }'
+  								style="text-decoration: none">${ loginuser.memberId }님 환영합니다.</a>
 						</li>
 						<li class="nav-item">
 							<a class="button button-header" href="/shop/account/logout">Logout</a>

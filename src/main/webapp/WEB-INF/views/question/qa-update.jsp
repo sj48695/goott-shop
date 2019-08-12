@@ -69,7 +69,7 @@
 								<div class="buttons">
 									<input type="submit" value="Write" id="insertBoard"
 										class="button button-subscribe mr-auto mb-1" /> <input
-										id="cancel_button" type="button" value="back"
+										id="cancel_button" type="button" value="Back"
 										class="button button-subscribe mr-auto mb-1" />
 								</div>
 							</form>

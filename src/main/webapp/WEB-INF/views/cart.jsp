@@ -50,6 +50,11 @@
 						</tr>
 					</thead>
 					<tbody>
+						<c:if test="${ carts eq '[]' }">
+						<tr>
+							<th colspan="6" class="py-5 text-center">장바구니에 등록된 상품이 없습니다.</th>
+						</tr>
+						</c:if>
                       <c:forEach var="cart" items="${ carts }">
                           <tr class="cartlist${ cart.cartNo }">
                           	  <td><input type="checkbox" name="checkRow" value="${ cart.cartNo }" onclick="checkRow()"></td>
@@ -84,7 +89,7 @@
                                   	<c:set var="total" value="${ total + (cart.price * cart.count) }"/>
                                   </h5>
                               </td>
-                              <td><a onclick="javascript:removeCart(${ cart.cartNo })">X</a></td>
+                              <td><a onclick="javascript:removeCart('${ cart.cartNo }')">X</a></td>
                           </tr>
                         </c:forEach><%-- 
                           <tr>

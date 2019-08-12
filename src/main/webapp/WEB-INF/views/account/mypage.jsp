@@ -205,6 +205,7 @@
 								</tr>
 							</thead>
 							<tbody>
+								<c:set var="total" value="0"/>
 								<c:forEach var="buy" items="${ buyList }">
 									<tr>
 										<td>

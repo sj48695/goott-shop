@@ -32,4 +32,6 @@ public interface ManagerRep {
 
 	List<Buy> selectProductOrderList();
 
+	List<Buy> selectProductsOrderCount();
+
 }

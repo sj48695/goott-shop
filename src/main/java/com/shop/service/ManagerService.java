@@ -35,4 +35,6 @@ public interface ManagerService {
 
 	List<Buy> findProductOrderList();
 
+	List<Buy> findProductsOrderCount();
+
 }
