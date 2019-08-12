@@ -125,7 +125,7 @@ public class QuestionController {
 	      
 	      
 	      
-	      int pageSize = 4;
+	      int pageSize = 2;
 		  int currentPage = 1;
 		
 		  int from = (currentPage - 1) * pageSize + 1;
@@ -351,7 +351,7 @@ public class QuestionController {
 				pageNo=1;
 			}
 			
-			int pageSize = 3;
+			int pageSize = 2;
 			int currentPage = pageNo;
 	
 			int from = (currentPage - 1) * pageSize + 1;
